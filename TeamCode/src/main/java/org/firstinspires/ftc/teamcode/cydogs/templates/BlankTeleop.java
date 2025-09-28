@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 public class BlankTeleop extends LinearOpMode {
 
     // declare variables here
-    //
     private DcMotor BackLeftWheel;
     private DcMotor FrontLeftWheel;
     private DcMotor BackRightWheel;
@@ -33,14 +32,14 @@ public class BlankTeleop extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        //    Do initialization things here
+        // Execute initialization actions here
         initializeWheels();
         initializeDevices();
         initializePositions();
 
 
         while (opModeIsActive()) {
-            // do op mode things here
+            // Execute OpMode actions here
             driveChassis();
             manageDriverControls();
 
@@ -53,7 +52,7 @@ public class BlankTeleop extends LinearOpMode {
         {
             // do something if triangle is pushed
         }
-        if(gamepad1.square)
+        else if(gamepad1.square)
         {
             // do something if square is pushed
         }
@@ -68,7 +67,7 @@ public class BlankTeleop extends LinearOpMode {
         FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
 
         // INITIALIZATION BLOCKS:
-        // > Reverse motors'/servos' direction as needed
+        // > Reverse motors'/servos' direction as needed. FORWARD is default.
         BackLeftWheel.setDirection(DcMotor.Direction.REVERSE);
         FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
         BackRightWheel.setDirection(DcMotor.Direction.FORWARD);
@@ -78,11 +77,12 @@ public class BlankTeleop extends LinearOpMode {
         BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         FrontRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        // > Clear Encoders of prior data
+        // > Ensure motors are stopped; necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
         FrontLeftWheel.setPower(0);
         FrontRightWheel.setPower(0);
         BackLeftWheel.setPower(0);
         BackRightWheel.setPower(0);
+        // > Clear Encoders of prior data; necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
         BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -112,7 +112,8 @@ public class BlankTeleop extends LinearOpMode {
         gamepad1_LeftStickXValue = gamepad1.left_stick_x;
         gamepad1_TriggersValue = gamepad1.right_trigger - gamepad1.left_trigger;
 
-        if (gamepad1_RightStickYValue != 0 || gamepad1_RightStickXValue != 0 || gamepad1_LeftStickYValue != 0 || gamepad1_LeftStickXValue != 0 || gamepad1_TriggersValue != 0) {
+        if (gamepad1_RightStickYValue != 0 || gamepad1_RightStickXValue != 0 || gamepad1_LeftStickYValue != 0 || gamepad1_LeftStickXValue != 0 || gamepad1_TriggersValue != 0)
+        {
             // Set robot's move forward(+) or backwards(-) power
             Straight = lowSpeedDrive * (0.75 * Math.pow(gamepad1_LeftStickYValue, 3) + 0.25 * gamepad1_LeftStickYValue);
             // Set robot's strafe right(+) or left(-) power
@@ -123,11 +124,14 @@ public class BlankTeleop extends LinearOpMode {
             FastStraight = highSpeedDrive * gamepad1_RightStickYValue;
             // Set robot's fast strafe right(+) or left(-) power
             FastStrafe = highSpeedDrive * gamepad1_RightStickXValue;
-            BackLeftWheel.setPower((((Straight + FastStraight) - Strafe) - FastStrafe) + Rotate);
-            BackRightWheel.setPower((Straight + FastStraight + Strafe + FastStrafe) - Rotate);
+            // MOve all wheels based on the above calculations, using formulas for Mecanum wheels.
+            BackLeftWheel.setPower(Straight + FastStraight - Strafe - FastStrafe + Rotate);
+            BackRightWheel.setPower(Straight + FastStraight + Strafe + FastStrafe - Rotate);
             FrontLeftWheel.setPower(Straight + FastStraight + Strafe + FastStrafe + Rotate);
-            FrontRightWheel.setPower((((Straight + FastStraight) - Strafe) - FastStrafe) - Rotate);
-        } else {
+            FrontRightWheel.setPower(Straight + FastStraight - Strafe - FastStrafe - Rotate);
+        }
+        else
+        {
             // Stop all motors if their controls are not touched
             BackLeftWheel.setPower(0);
             BackRightWheel.setPower(0);
