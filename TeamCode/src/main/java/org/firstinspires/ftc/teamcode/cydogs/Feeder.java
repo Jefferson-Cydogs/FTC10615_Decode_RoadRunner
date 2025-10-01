@@ -11,24 +11,16 @@ private LinearOpMode opMode;
 
 private CRServo left_feeder;
 private CRServo right_feeder;
-
-    public Feeder(LinearOpMode opMode,String left_feeder){
+    public Feeder(LinearOpMode opMode){
     this.opMode= opMode;
     left_feeder=opMode.hardwareMap.get(CRServo.class,"left_feeder");
-
-    }
-
-    public Feeder(LinearOpMode opMode,String right_feeder){
-        this.opMode= opMode;
         right_feeder=opMode.hardwareMap.get(CRServo.class,"right_feeder");
-
     }
     public void MoveFeeder(){
         left_feeder.setPower(0.6);
         right_feeder.setPower(-0.6);
-
+        opMode.sleep(200);
+        left_feeder.setPower(0.0);
+        right_feeder.setPower(0.0);
     }
-
-
-
 }
