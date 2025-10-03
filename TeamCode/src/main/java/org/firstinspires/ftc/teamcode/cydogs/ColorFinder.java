@@ -5,7 +5,6 @@ import android.graphics.Color;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.teamcode.cydogs.chassis.MegalodogChassis;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 public class ColorFinder {
@@ -23,12 +22,10 @@ public class ColorFinder {
     public static final float BLUE_HUE_HIGH = 260f;
 
     private final LinearOpMode opMode;
-    private final MegalodogChassis chassis;
     private final NormalizedColorSensor colorSensor;
 
-    public ColorFinder(LinearOpMode opMode, MegalodogChassis chassis, String FunColor) {
+    public ColorFinder(LinearOpMode opMode, String FunColor) {
         this.opMode = opMode;
-        this.chassis = chassis;
         HardwareMap hw = opMode.hardwareMap;
         this.colorSensor = hw.get(NormalizedColorSensor.class, FunColor);
         if (colorSensor instanceof SwitchableLight) {
@@ -42,11 +39,9 @@ public class ColorFinder {
 
     public enum TargetColor {RED, BLUE}
 
-    public boolean driveUntilTape(TargetColor targetColor, double drivePower, long timeoutMs) {
-        long start = System.currentTimeMillis();
+    public boolean SeeColor(TargetColor targetColor) {
         int consecutiveHits = 0;
-        chassis.MoveStraight(500, 0.5, 500);
-        while (opMode.opModeIsActive() && (System.currentTimeMillis() - start) < timeoutMs) {
+        while (opMode.opModeIsActive()) {
 
             NormalizedRGBA colors = colorSensor.getNormalizedColors();
             float[] hsv = new float[3];
