@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.cydogs;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
-public class led {
+public class ColorLight {
 
     public static final double SERVO_MIN = 0.0;
     public static final double SERVO_MAX = 1.0;
@@ -11,7 +11,7 @@ public class led {
     private LinearOpMode opMode;
     private Servo myServo;
 
-    public led(LinearOpMode opMode, String servoName) {
+    public ColorLight(LinearOpMode opMode) {
         this.opMode = opMode;
         myServo = opMode.hardwareMap.get(Servo.class, "led");
     }
