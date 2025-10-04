@@ -6,6 +6,11 @@ public class Launcher {
     public static final double MOTOR_MIN = -1.0;
     public static final double MOTOR_MAX = 1.0;
 
+    public void initLauncher(){
+        Launcher.setDirection(DcMotor.Direction.FORWARD);
+        Launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+    }
+
     public LinearOpMode opMode;
     public DcMotor Launche;
 
@@ -21,5 +26,6 @@ public class Launcher {
    public void turnPowerOff(){
         Launche.setPower(0);
    }
+   int Launcher;
 
 }
