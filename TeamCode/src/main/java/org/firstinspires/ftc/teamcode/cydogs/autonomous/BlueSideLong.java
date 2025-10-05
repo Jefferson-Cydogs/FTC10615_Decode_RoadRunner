@@ -33,14 +33,14 @@ Chassis.ResetWheelConfig();
         if (opModeIsActive()) {
             // Put code that should run during the active mode HERE in this area
 // I'm assuming that I am starting facing the obelisk with the motif pattern
-            Chassis.MoveStraight(1820,0.5,100);
+            Chassis.MoveStraight(1790,0.5,100);
             Chassis.RotateLeft(47.0,0.5,100);
             Chassis.MoveStraight(610,0.5,100);
             launcher.runAtPower(0.5);
             BothFeeders.MoveFeeder();
             launcher.turnPowerOff();
             Chassis.RotateLeft(130,0.5,100);
-            Chassis.MoveStraight(2370,0.5,100);
+            Chassis.MoveStraight(2270,0.5,100);
             Chassis.StrafeRight(770,0.5,100);
         }
     }
