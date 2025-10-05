@@ -1,12 +1,14 @@
 package org.firstinspires.ftc.teamcode.cydogs;
 import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
+@Autonomous(name= "Blue_Basket_sample", group= "Autonomous")
 public class Launcher {
     public static final double MOTOR_MIN = -1.0;
     public static final double MOTOR_MAX = 1.0;
