@@ -39,10 +39,10 @@ public class WheelieChassis {
         //    configuration, and trust me it can be mapped to the DCMotor class.  If it's
         //    not a motor, then code later on will throw errors when it tries to do motor
         //    things with a non motor.
-        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
-        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
-        FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
-        BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
+        FrontRightWheel = hardwareMap.get(DcMotor.class, "rightFrontWheel");
+        BackRightWheel = hardwareMap.get(DcMotor.class, "rightBackWheel");
+        FrontLeftWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
+        BackLeftWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
 
         ResetWheelConfig();
 
@@ -178,5 +178,3 @@ public class WheelieChassis {
         myOpMode.sleep(WaitTime);
     }
 }
-
-
