@@ -13,7 +13,7 @@ public class ColorLight {
 
     public ColorLight(LinearOpMode opMode) {
         this.opMode = opMode;
-        myServo = opMode.hardwareMap.get(Servo.class, "led");
+        myServo = opMode.hardwareMap.get(Servo.class, "artifactIndicatorLight");
     }
 
     public void SetColor(double ColorNumber, long waitMs) {

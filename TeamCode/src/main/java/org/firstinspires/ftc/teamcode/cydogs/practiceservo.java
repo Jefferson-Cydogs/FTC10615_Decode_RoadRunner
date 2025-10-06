@@ -8,7 +8,7 @@ public class practiceservo {
     private Servo wonderServo;
     private LinearOpMode operatorMode;
 
-    public ExampleServo(LinearOpMode operatorMode, String servoName){
+    public void ExampleServo(LinearOpMode operatorMode, String servoName){
         this.operatorMode = operatorMode;
         wonderServo = operatorMode.hardwareMap.get(Servo.class, servoName);
 
