@@ -34,10 +34,12 @@ public class ColorFinderGP {
 
 
     public enum TargetColor {PURPLE, GREEN}
+    boolean isHit = false;
 
-    public boolean SeeColor(TargetColor targetColor) {
+    public String SeeColor(TargetColor targetColor) {
         int consecutiveHits = 0;
-        while (opMode.opModeIsActive()) {
+        while (consecutiveHits<REQUIRED_CONSECUTIVE_HITS) {
+
 
             NormalizedRGBA colors = colorSensor.getNormalizedColors();
             float[] hsv = new float[3];
@@ -45,7 +47,6 @@ public class ColorFinderGP {
             int g = (int) (colors.green * 255);
             int b = (int) (colors.blue * 255);
             Color.RGBToHSV(r, g, b, hsv);
-            boolean isHit = false;
             if (targetColor == TargetColor.PURPLE) {
                 isHit = isPurple(hsv);
             } else if (targetColor == TargetColor.GREEN) {
@@ -53,27 +54,33 @@ public class ColorFinderGP {
             }
             if (isHit) {
                 consecutiveHits++;
-            } else {
-                consecutiveHits = 0;
             }
+            if ((consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) && (targetColor==TargetColor.PURPLE)) {
+                return "Purple";
+            } else if ((consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) && (targetColor==TargetColor.GREEN)) {
+                return "Green";
+            }
+            else return "Nothing";
 
-
-            opMode.sleep(1000);
         }
-        return consecutiveHits >= REQUIRED_CONSECUTIVE_HITS;
-    }
-            private boolean isPurple(float[] hsv){
-                float h = hsv[0], s = hsv[1], v = hsv[2];
-                boolean huelsPurple =
-                        (h >= PURPLE_HUE_LOW && h <= PURPLE_HUE_HIGH);
-                return huelsPurple && s >= MIN_SATURATION && v >= MIN_VALUE;
-            }
-            private boolean isGreen ( float[] hsv){
-                float h = hsv[0], s = hsv[1], v = hsv[2];
-                boolean huelsGreen =
-                        (h >= GREEN_HUE_LOW && h <= GREEN_HUE_HIGH);
-                return huelsGreen && s >= MIN_SATURATION && v >= MIN_VALUE;
+        return "bob";
 
-            }
+    }
+
+    private boolean isPurple(float[] hsv) {
+        float h = hsv[0], s = hsv[1], v = hsv[2];
+        boolean huelsPurple =
+                (h >= PURPLE_HUE_LOW && h <= PURPLE_HUE_HIGH);
+        return huelsPurple && s >= MIN_SATURATION && v >= MIN_VALUE;
+    }
+
+    private boolean isGreen(float[] hsv) {
+        float h = hsv[0], s = hsv[1], v = hsv[2];
+        boolean huelsGreen =
+                (h >= GREEN_HUE_LOW && h <= GREEN_HUE_HIGH);
+        return huelsGreen && s >= MIN_SATURATION && v >= MIN_VALUE;
+
+    }
+
 
 }
