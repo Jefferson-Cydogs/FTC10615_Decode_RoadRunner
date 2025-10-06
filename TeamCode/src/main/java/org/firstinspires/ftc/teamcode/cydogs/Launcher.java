@@ -1,31 +1,36 @@
 package org.firstinspires.ftc.teamcode.cydogs;
+import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-
+@Autonomous(name= "Blue_Basket_sample", group= "Autonomous")
 public class Launcher {
     public static final double MOTOR_MIN = -1.0;
     public static final double MOTOR_MAX = 1.0;
 
     public void initLauncher(){
-        Launcher.setDirection(DcMotor.Direction.FORWARD);
-        Launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
     }
 
     public LinearOpMode opMode;
-    public DcMotor Launche;
+    public DcMotor Launcher;
 
     public Launcher(LinearOpMode opMode){
         this.opMode = opMode;
-        Launche = opMode.hardwareMap.get(DcMotor.class,"launcher");
-        Launche.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        Launcher = opMode.hardwareMap.get(DcMotor.class,"launcher");
+        Launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
     }
     public void runAtPower(double power){
         power = Math.max(MOTOR_MIN, Math.min(MOTOR_MAX, power));
-        Launche.setPower(power);
+        Launcher.setPower(power);
     }
    public void turnPowerOff(){
-        Launche.setPower(0);
+        Launcher.setPower(0);
    }
-   int Launcher;
 
 }
