@@ -17,7 +17,7 @@ public class ColorFinder {
     public static final float RED_HUE_HIGH_1 = 20f;
     public static final float RED_HUE_HIGH_2 = 360f;
     public static final float RED_HUE_LOW_2 = 340f;
-
+    public String ColorFound;
     public static final float BLUE_HUE_LOW = 190f;
     public static final float BLUE_HUE_HIGH = 260f;
 
@@ -39,9 +39,9 @@ public class ColorFinder {
 
     public enum TargetColor {RED, BLUE}
 
-    public boolean SeeColor(TargetColor targetColor) {
+    public String SeeColor(TargetColor targetColor) {
         int consecutiveHits = 0;
-        while (opMode.opModeIsActive()) {
+        while (consecutiveHits<REQUIRED_CONSECUTIVE_HITS) {
 
             NormalizedRGBA colors = colorSensor.getNormalizedColors();
             float[] hsv = new float[3];
@@ -57,18 +57,19 @@ public class ColorFinder {
             }
             if (isHit) {
                 consecutiveHits++;
-            } else {
-                consecutiveHits = 0;
             }
-            opMode.telemetry.addData("Target", targetColor);
-            opMode.telemetry.addData("HSV", "H:%1f S:%2f V:%2f", hsv[0], hsv[1], hsv[2]);
-            opMode.telemetry.addData("Consecutive Hits", consecutiveHits + "/" + REQUIRED_CONSECUTIVE_HITS);
-            opMode.telemetry.update();
+            if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS && targetColor== TargetColor.RED){
+                ColorFound= "Red";
+            }
+            else if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS && targetColor== TargetColor.BLUE){
+                ColorFound= "Blue";
+            }
+            else {
+                ColorFound="Nothing";
+            }
 
-
-            opMode.sleep(1000);
         }
-        return consecutiveHits >= REQUIRED_CONSECUTIVE_HITS;
+        return ColorFound;
     }
             private boolean isRed(float[] hsv){
                 float h = hsv[0], s = hsv[1], v = hsv[2];
