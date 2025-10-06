@@ -17,7 +17,7 @@ public class WheelieChassis {
     private double ticksPerRevolution=384.5;
 
     // mmPer90DegreeRotation needs to be configured for each robot based on it's chassis size
-    private double mmPer90DegreeRotation=454.22;
+    private double mmPer90DegreeRotation=400;
 
     private double strafeCompensation = 1.081;
     public enum Direction {LEFT, CENTER, RIGHT}
@@ -39,10 +39,10 @@ public class WheelieChassis {
         //    configuration, and trust me it can be mapped to the DCMotor class.  If it's
         //    not a motor, then code later on will throw errors when it tries to do motor
         //    things with a non motor.
-        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
-        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
-        FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
-        BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
+        FrontRightWheel = hardwareMap.get(DcMotor.class, "rightFrontWheel");
+        BackRightWheel = hardwareMap.get(DcMotor.class, "rightBackWheel");
+        FrontLeftWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
+        BackLeftWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
 
         ResetWheelConfig();
 
@@ -60,7 +60,7 @@ public class WheelieChassis {
         FrontRightWheel.setDirection(DcMotor.Direction.FORWARD);
         BackRightWheel.setDirection(DcMotor.Direction.FORWARD);
         FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
-        BackLeftWheel.setDirection(DcMotor.Direction.REVERSE);
+        BackLeftWheel.setDirection(DcMotor.Direction.FORWARD);
 
         // > Set motors' ZeroPower behavior
         FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);

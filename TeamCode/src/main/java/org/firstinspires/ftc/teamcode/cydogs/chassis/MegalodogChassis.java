@@ -5,9 +5,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-
-public DcMotor FrontLeftWheel;
 public class MegalodogChassis {
+    public DcMotor FrontLeftWheel;
     public DcMotor FrontRightWheel;
     public DcMotor BackLeftWheel;
     public DcMotor BackRightWheel;
@@ -39,10 +38,10 @@ public class MegalodogChassis {
         //    configuration, and trust me it can be mapped to the DCMotor class.  If it's
         //    not a motor, then code later on will throw errors when it tries to do motor
         //    things with a non motor.
-        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
-        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
-        FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
-        BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
+        FrontRightWheel = hardwareMap.get(DcMotor.class, "frontRightWheel");
+        BackRightWheel = hardwareMap.get(DcMotor.class, "backRightWheel");
+        FrontLeftWheel = hardwareMap.get(DcMotor.class, "frontLeftWheel");
+        BackLeftWheel = hardwareMap.get(DcMotor.class, "backLeftWheel");
 
         ResetWheelConfig();
 

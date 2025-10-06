@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-@Autonomous(name= "Blue_Basket_sample", group= "Autonomous")
+
 public class Launcher {
     public static final double MOTOR_MIN = -1.0;
     public static final double MOTOR_MAX = 1.0;
