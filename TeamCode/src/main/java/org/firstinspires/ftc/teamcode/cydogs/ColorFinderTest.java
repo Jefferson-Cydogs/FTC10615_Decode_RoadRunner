@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Disabled
+
 @TeleOp
 public class ColorFinderTest extends LinearOpMode {
 
@@ -23,13 +23,16 @@ public class ColorFinderTest extends LinearOpMode {
 
         // Execute initialization actions here
 
-        ColorFinderGP myColorFinder = new ColorFinderGP(this,"HotPink");
+        ColorFinderGP myColorFinder = new ColorFinderGP(this,"artifactColorSensor");
 
-        while (opModeIsActive()) {
-            // Execute OpMode actions here
-            FindingColor=myColorFinder.SeeColorGP(ColorFinderGP.TargetColor.GREEN);
-            telemetry.addData("The color found",FindingColor);
-            telemetry.update();
+        waitForStart();
+        if (opModeIsActive()) {
+            while (opModeIsActive()) {
+                // Execute OpMode actions here
+                FindingColor = myColorFinder.SeeColorGP(ColorFinderGP.TargetColor.GREEN);
+                telemetry.addData("The color found", FindingColor);
+                telemetry.update();
+            }
         }
     }
 

@@ -24,10 +24,10 @@ public class ColorFinder {
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
 
-    public ColorFinder(LinearOpMode opMode, String FunColor) {
+    public ColorFinder(LinearOpMode opMode, String artifactColorSensor) {
         this.opMode = opMode;
         HardwareMap hw = opMode.hardwareMap;
-        this.colorSensor = hw.get(NormalizedColorSensor.class, FunColor);
+        this.colorSensor = hw.get(NormalizedColorSensor.class, artifactColorSensor);
         if (colorSensor instanceof SwitchableLight) {
             try {
                 ((SwitchableLight) colorSensor).enableLight(true);
