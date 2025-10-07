@@ -16,7 +16,7 @@ public class ColorFinderGP {
     public static final float PURPLE_HUE_HIGH = 330f;
     public static final float GREEN_HUE_LOW = 90f;
     public static final float GREEN_HUE_HIGH = 150f;
-
+    public String ColorFoundGP;
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
 
@@ -36,7 +36,7 @@ public class ColorFinderGP {
     public enum TargetColor {PURPLE, GREEN}
     boolean isHit = false;
 
-    public String SeeColor(TargetColor targetColor) {
+    public String SeeColorGP(TargetColor targetColor) {
         int consecutiveHits = 0;
         while (consecutiveHits<REQUIRED_CONSECUTIVE_HITS) {
 
@@ -56,15 +56,15 @@ public class ColorFinderGP {
                 consecutiveHits++;
             }
             if ((consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) && (targetColor==TargetColor.PURPLE)) {
-                return "Purple";
+                ColorFoundGP= "Purple";
             } else if ((consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) && (targetColor==TargetColor.GREEN)) {
-                return "Green";
+                ColorFoundGP= "Green";
             }
-            else return "Nothing";
+            else ColorFoundGP="Nothing";
 
         }
-        return "bob";
 
+        return ColorFoundGP;
     }
 
     private boolean isPurple(float[] hsv) {
