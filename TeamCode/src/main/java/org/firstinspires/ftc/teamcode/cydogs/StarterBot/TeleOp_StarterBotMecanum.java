@@ -82,8 +82,8 @@ public class TeleOp_StarterBotMecanum extends LinearOpMode {
         LAUNCH = "LAUNCH";
         LAUNCHING = "LAUNCHING";
         launchState = IDLE;
-        LAUNCHER_TARGET_VELOCITY = 1600;
-        LAUNCHER_MIN_VELOCITY = 1550;
+        LAUNCHER_TARGET_VELOCITY = 1500;
+        LAUNCHER_MIN_VELOCITY = 1450;
         launchTime = new ElapsedTime();
     }
 
@@ -91,6 +91,7 @@ public class TeleOp_StarterBotMecanum extends LinearOpMode {
      * Describe this function...
      */
     private void initMotors() {
+        leftBackWheel.setDirection(DcMotor.Direction.REVERSE);
         leftFrontWheel.setDirection(DcMotor.Direction.REVERSE);
         launcher.setDirection(DcMotor.Direction.FORWARD);
         launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
