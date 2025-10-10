@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.StarterBot;
 
+import static java.lang.Math.*;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -7,14 +9,14 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "Teleop_StarterBotMecanum")
+//@TeleOp(name = "Teleop_StarterBotMecanum")
 public class TeleOp_StarterBotMecanum extends LinearOpMode {
 
-    private DcMotor launcher;
     private DcMotor leftFrontWheel;
     private DcMotor rightFrontWheel;
     private DcMotor leftBackWheel;
     private DcMotor rightBackWheel;
+    private DcMotor launcher;
     private CRServo leftFeeder;
     private CRServo rightFeeder;
 
@@ -43,20 +45,22 @@ public class TeleOp_StarterBotMecanum extends LinearOpMode {
      */
     @Override
     public void runOpMode() {
-        launcher = hardwareMap.get(DcMotor.class, "launcher");
         leftFrontWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
         rightFrontWheel = hardwareMap.get(DcMotor.class, "rightFrontWheel");
         leftBackWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
         rightBackWheel = hardwareMap.get(DcMotor.class, "rightBackWheel");
+        launcher = hardwareMap.get(DcMotor.class, "launcher");
         leftFeeder = hardwareMap.get(CRServo.class, "leftFeeder");
         rightFeeder = hardwareMap.get(CRServo.class, "rightFeeder");
 
         // Put initialization blocks here.
         createVariables();
         initMotors();
+
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
+
             while (opModeIsActive()) {
                 // Put loop blocks here.
                 mecanumDrive(-gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.right_trigger - gamepad1.left_trigger);
@@ -88,7 +92,7 @@ public class TeleOp_StarterBotMecanum extends LinearOpMode {
     }
 
     /**
-     * Describe this function...
+     * This initializes the motors and servos
      */
     private void initMotors() {
         leftBackWheel.setDirection(DcMotor.Direction.REVERSE);
@@ -107,29 +111,43 @@ public class TeleOp_StarterBotMecanum extends LinearOpMode {
     }
 
     /**
-     * This takes input from the joysticks, and applies power to the left and right
-     * drive motor to move the robot as requested by the driver. "arcade" refers to
-     * the control style we're using here. Much like a classic arcade game, when you
-     * move the left joystick forward both motors work to drive the robot forward, and
-     * when you move the right joystick left and right both motors work to rotate the
-     * robot. Combinations of these inputs can be used to create more complex maneuvers.
+     * This takes input from the joysticks, and applies power to all 4 drive motors
+     * to move the robot as requested by the driver.
      */
     private void mecanumDrive(float forward, float strafe, float rotate) {
-        double forwardPower;
-        double strafePower;
-        double rotatePower;
+        double leftFrontPower;
+        double rightFrontPower;
+        double leftBackPower;
+        double rightBackPower;
+        double maxPower;
 
-        forwardPower = 0.8 * (0.75 * Math.pow(forward, 3) + 0.25 * forward);
-        strafePower = 0.8 * (0.75 * Math.pow(strafe, 3) + 0.25 * strafe);
-        rotatePower = 0.8 * (0.75 * Math.pow(rotate, 3) + 0.25 * rotate);
-        leftFrontWheel.setPower(forwardPower + strafePower + rotatePower);
-        rightFrontWheel.setPower(forwardPower - strafePower - rotatePower);
-        leftBackWheel.setPower(forwardPower - strafePower + rotatePower);
-        rightBackWheel.setPower(forwardPower + strafePower - rotatePower);
+        forward = (float) (0.8 * (0.75 * pow(forward, 3) + (0.25 * forward)));
+        strafe = (float) (0.8 * (0.75 * pow(strafe, 3) + 0.25 * strafe));
+        rotate = (float) (0.8 * (0.75 * pow(rotate, 3) + 0.25 * rotate));
+        leftFrontPower = forward + strafe + rotate;
+        rightFrontPower = forward - strafe - rotate;
+        leftBackPower = forward - strafe + rotate;
+        rightBackPower = forward + strafe - rotate;
+        // Normalize powers if any exceed 1.0
+        maxPower = max(
+            abs(leftFrontPower),
+            max(abs(rightFrontPower),
+                max(abs(leftBackPower), abs(rightBackPower)))
+        );
+        if (maxPower > 1.0) {
+            leftFrontPower /= maxPower;
+            rightFrontPower /= maxPower;
+            leftBackPower /= maxPower;
+            rightBackPower /= maxPower;
+        }
+        leftFrontWheel.setPower(leftFrontPower);
+        rightFrontWheel.setPower(rightFrontPower);
+        leftBackWheel.setPower(leftBackPower);
+        rightBackWheel.setPower(rightBackPower);
     }
 
     /**
-     * Describe this function...
+     * This takes input from the driver pressing a button to launch the artifact
      */
     private void launch(boolean shotRequested) {
         if (launchState.equals(IDLE)) {
@@ -155,4 +173,3 @@ public class TeleOp_StarterBotMecanum extends LinearOpMode {
         }
     }
 }
-
