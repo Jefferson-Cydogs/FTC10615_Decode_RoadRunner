@@ -27,8 +27,8 @@ public class Test_Rotate extends LinearOpMode {
 
         if (opModeIsActive()) {
 
-           // wheels.RotateLeft(90, 0.55, 500);
-            wheels.MoveStraight(1000, 0.5, 50);
+            wheels.RotateLeft(90, 0.55, 500);
+           // wheels.MoveStraight(1000, 0.5, 50);
             sleep(5000);
             //This is where we would scan the obelisk
         }
