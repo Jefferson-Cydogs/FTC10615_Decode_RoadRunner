@@ -3,13 +3,11 @@ package org.firstinspires.ftc.teamcode.cydogs.StarterBot;
 import static java.lang.Math.*;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-//@TeleOp(name = "Teleop_StarterBotMecanum")
 public class TeleOp_StarterBotMecanum extends LinearOpMode {
 
     private DcMotor leftFrontWheel;
@@ -115,15 +113,16 @@ public class TeleOp_StarterBotMecanum extends LinearOpMode {
      * to move the robot as requested by the driver.
      */
     private void mecanumDrive(float forward, float strafe, float rotate) {
+        double deadZone = 0.05;
         double leftFrontPower;
         double rightFrontPower;
         double leftBackPower;
         double rightBackPower;
         double maxPower;
 
-        forward = (float) (0.8 * (0.75 * pow(forward, 3) + (0.25 * forward)));
-        strafe = (float) (0.8 * (0.75 * pow(strafe, 3) + 0.25 * strafe));
-        rotate = (float) (0.8 * (0.75 * pow(rotate, 3) + 0.25 * rotate));
+        forward = abs(forward) > deadZone ? (float) (0.8 * (0.75 * pow(forward, 3) + (0.25 * forward))) : 0;
+        strafe = abs(strafe) > deadZone ? (float) (0.8 * (0.75 * pow(strafe, 3) + 0.25 * strafe)) : 0;
+        rotate = abs(rotate) > deadZone ? (float) (0.8 * (0.75 * pow(rotate, 3) + 0.25 * rotate)) : 0;
         leftFrontPower = forward + strafe + rotate;
         rightFrontPower = forward - strafe - rotate;
         leftBackPower = forward - strafe + rotate;
