@@ -19,7 +19,7 @@ private CRServo right_feeder;
         right_feeder.setDirection(CRServo.Direction.REVERSE);
     }
     public void MoveFeeder(){
-        left_feeder.setPower(0.6);
+        left_feeder.setPower(-0.6);
         right_feeder.setPower(-0.6);
         opMode.sleep(200);
         left_feeder.setPower(0.0);

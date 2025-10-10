@@ -33,15 +33,19 @@ public class Blue_Basket_sample extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            light.SetColor(0.5, 100);
+            light.SetColor(0.45, 100);
             //purple (0.91)
             wheels.MoveStraight(2070, 0.55, 100);
             wheels.RotateLeft(135, 0.55, 500);
             //This is where we would scan the obelisk
-            wheels.RotateLeft(50,0.55,500);
-            wheels.MoveStraight(1075, 0.55, 100);
-            shooter.runAtPower(0.4);
-            sleep(3000);
+            wheels.RotateLeft(40,0.55,500);
+            wheels.MoveStraight(1100, 0.55, 150);
+            shooter.runAtPower(0.6);
+            sleep(3500);
+            pusher.MoveFeeder();
+            sleep(2000);
+            pusher.MoveFeeder();
+            sleep(2150);
             pusher.MoveFeeder();
             shooter.turnPowerOff();
             wheels.MoveStraight(-1075,0.55,100);

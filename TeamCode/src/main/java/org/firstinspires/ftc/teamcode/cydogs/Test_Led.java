@@ -28,6 +28,7 @@ public class Test_Led extends LinearOpMode {
     private double lowSpeedDrive = 0.3;
     private double rotateSpeedDrive = 0.7;
 double lightColorNumber = 0;
+    ColorLight light;
 
     @Override
     public void runOpMode() {
@@ -36,15 +37,15 @@ double lightColorNumber = 0;
         initializeWheels();
         initializeDevices();
         initializePositions();
-        ColorLight light = new ColorLight(this);
+        light = new ColorLight(this);
 
-
+        waitForStart();
         while (opModeIsActive()) {
             // Execute OpMode actions here
             driveChassis();
             manageDriverControls();
-telemetry.addData("lightColor:", lightColorNumber);
-telemetry.update();
+            telemetry.addData("lightColor:", lightColorNumber);
+            telemetry.update();
         }
     }
 
@@ -52,13 +53,27 @@ telemetry.update();
     {
         if(gamepad1.y)
         {
-            lightColorNumber+= 0.05;
-            // do something if triangle is pushed
+            light.SetColor(lightColorNumber,0);
+            lightColorNumber+= 0.01;
+            sleep(150);// do something if triangle is pushed
         }
         else if(gamepad1.a)
         {
-            lightColorNumber-= 0.05;
+            lightColorNumber-= 0.01;
+            sleep(150);
+            light.SetColor(lightColorNumber,0);
             // do something if square is pushed
+            //0.05 red-ish orange
+            // 0.1 yellow
+            // 0.15 light green
+            // 0.2 green
+            // 0.25 green
+            // 0.3 light blue
+            // 0.35 dark blue
+            // 0.4 purple
+            // 0.45 pink-ish purple
+            // 0.5-1.0 white
+
         }
 
     }
