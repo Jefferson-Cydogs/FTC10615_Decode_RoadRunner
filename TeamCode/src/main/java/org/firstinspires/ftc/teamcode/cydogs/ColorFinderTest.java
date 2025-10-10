@@ -15,7 +15,7 @@ public class ColorFinderTest extends LinearOpMode {
     private float gamepad1_LeftStickYValue;
     private float gamepad1_LeftStickXValue;
     private float gamepad1_TriggersValue;
-    private String FindingColor;
+    private String FindingColor="";
 
 
     @Override
@@ -29,9 +29,13 @@ public class ColorFinderTest extends LinearOpMode {
         if (opModeIsActive()) {
             while (opModeIsActive()) {
                 // Execute OpMode actions here
-                FindingColor = myColorFinder.SeeColorGP(ColorFinderGP.TargetColor.GREEN);
-                telemetry.addData("The color found", FindingColor);
-                telemetry.update();
+
+                if(gamepad1.y){
+                    FindingColor = myColorFinder.SeeColorGP(ColorFinderGP.TargetColor.GREEN);
+                    telemetry.addData("The color found", FindingColor);
+                    telemetry.update();
+                    sleep(500);
+                }
             }
         }
     }
