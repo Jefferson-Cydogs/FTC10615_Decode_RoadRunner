@@ -17,7 +17,7 @@ public class WheelieChassis {
     private double ticksPerRevolution=384.5;
 
     // mmPer90DegreeRotation needs to be configured for each robot based on it's chassis size
-    private double mmPer90DegreeRotation=400;
+    private double mmPer90DegreeRotation=785;
 
     private double strafeCompensation = 1.081;
     public enum Direction {LEFT, CENTER, RIGHT}
@@ -60,7 +60,7 @@ public class WheelieChassis {
         FrontRightWheel.setDirection(DcMotor.Direction.FORWARD);
         BackRightWheel.setDirection(DcMotor.Direction.FORWARD);
         FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
-        BackLeftWheel.setDirection(DcMotor.Direction.FORWARD);
+        BackLeftWheel.setDirection(DcMotor.Direction.REVERSE);
 
         // > Set motors' ZeroPower behavior
         FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
