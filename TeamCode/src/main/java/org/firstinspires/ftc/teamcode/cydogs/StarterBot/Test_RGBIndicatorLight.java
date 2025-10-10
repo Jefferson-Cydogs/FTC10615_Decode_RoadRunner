@@ -1,10 +1,8 @@
 package org.firstinspires.ftc.teamcode.cydogs.StarterBot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@TeleOp(name = "Test_RGBIndicatorLight")
 public class Test_RGBIndicatorLight extends LinearOpMode {
 
     private Servo artifactIndicatorLight;
@@ -17,9 +15,11 @@ public class Test_RGBIndicatorLight extends LinearOpMode {
         artifactIndicatorLight = hardwareMap.get(Servo.class, "artifactIndicatorLight");
 
         // Put initialization blocks here.
+
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
+
             while (opModeIsActive()) {
                 // Put loop blocks here.
                 if (gamepad1.a) {

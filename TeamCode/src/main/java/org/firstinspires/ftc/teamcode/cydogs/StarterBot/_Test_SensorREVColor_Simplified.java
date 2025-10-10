@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.cydogs.StarterBot;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -9,13 +8,12 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@TeleOp(name = "_Test_SensorREVColor_Simplified")
 public class _Test_SensorREVColor_Simplified extends LinearOpMode {
 
     private ColorSensor artifactColorSensor_REV_ColorRangeSensor;
 
     /**
-     * This OpMode demonstrates the color and distance features of the REV sensor.
+     * This OpMode uses the color and distance features of the REV V3 sensor.
      */
     @Override
     public void runOpMode() {
@@ -27,9 +25,11 @@ public class _Test_SensorREVColor_Simplified extends LinearOpMode {
 
         // Adjust the gain.
         ((NormalizedColorSensor) artifactColorSensor_REV_ColorRangeSensor).setGain(2);
+
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
+
             while (opModeIsActive()) {
                 // Display distance info.
                 telemetry.addData("Dist to tgt (cm)", ((DistanceSensor) artifactColorSensor_REV_ColorRangeSensor).getDistance(DistanceUnit.CM));
