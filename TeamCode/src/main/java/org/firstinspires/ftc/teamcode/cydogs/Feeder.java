@@ -21,7 +21,7 @@ private CRServo right_feeder;
     public void MoveFeeder(){
         left_feeder.setPower(-0.6);
         right_feeder.setPower(-0.6);
-        opMode.sleep(160);
+        opMode.sleep(200);
         left_feeder.setPower(0.0);
         right_feeder.setPower(0.0);
     }

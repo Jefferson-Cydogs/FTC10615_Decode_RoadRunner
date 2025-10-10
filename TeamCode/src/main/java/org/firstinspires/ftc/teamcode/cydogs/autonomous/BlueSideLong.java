@@ -39,11 +39,11 @@ public class BlueSideLong extends LinearOpMode {
             launcher.runAtPower(0.6);
             sleep(2000);
             BothFeeders.MoveFeeder();
-            sleep(1000);
+            sleep(2000);
             BothFeeders.MoveFeeder();
             sleep(2000);
             BothFeeders.MoveFeeder();
-            sleep(1000);
+            sleep(3000);
             launcher.turnPowerOff();
             Chassis.RotateLeft(130,0.5,100);
             Chassis.MoveStraight(2280,0.5,100);
