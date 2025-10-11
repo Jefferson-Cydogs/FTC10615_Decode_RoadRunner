@@ -33,20 +33,22 @@ public class BlueSideLong extends LinearOpMode {
         if (opModeIsActive()) {
             // Put code that should run during the active mode HERE in this area
             //I'm assuming that I am starting facing the obelisk with the motif pattern on the blue side*//
-            Chassis.MoveStraight(2580,0.5,100);
+            Chassis.MoveStraight(2600,0.5,100);
             Chassis.RotateLeft(48.0,0.5,100);
-            Chassis.MoveStraight(1200,0.5,100);
+            Chassis.MoveStraight(1250,0.5,500);
             launcher.runAtPower(0.6);
+            sleep(3530);
+            BothFeeders.MoveFeeder();
+            sleep(2300);
+            BothFeeders.MoveFeeder();
+            sleep(2300);
+            BothFeeders.MoveFeeder();
             sleep(2000);
-            BothFeeders.MoveFeeder();
-            sleep(1000);
-            BothFeeders.MoveFeeder();
-            sleep(2000);
-            BothFeeders.MoveFeeder();
-            sleep(1000);
             launcher.turnPowerOff();
-            Chassis.RotateLeft(130,0.5,100);
-            Chassis.MoveStraight(2280,0.5,100);
+            Chassis.RotateLeft(180,0.5,100);
+            Chassis.MoveStraight(850,0.5,100);
+            Chassis.RotateRight(40,0.5,100);
+            Chassis.MoveStraight(1350,0.5,100);
         }
     }
 
