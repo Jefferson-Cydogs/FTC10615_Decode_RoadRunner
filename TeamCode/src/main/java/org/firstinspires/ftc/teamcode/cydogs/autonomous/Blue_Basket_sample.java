@@ -35,21 +35,22 @@ public class Blue_Basket_sample extends LinearOpMode {
         if (opModeIsActive()) {
             light.SetColor(0.45, 100);
             //purple (0.91)
-            wheels.MoveStraight(2070, 0.55, 100);
+            wheels.MoveStraight(1800, 0.55, 100);
             wheels.RotateLeft(135, 0.55, 500);
             //This is where we would scan the obelisk
-            wheels.RotateLeft(40,0.55,500);
-            wheels.MoveStraight(1100, 0.55, 150);
+            wheels.RotateLeft(45,0.55,500);
+            wheels.MoveStraight(1150, 0.55, 150);
             shooter.runAtPower(0.6);
-            sleep(3500);
+            sleep(3530);
+            pusher.MoveFeeder();
+            sleep(2300);
+            pusher.MoveFeeder();
+            sleep(2300);
             pusher.MoveFeeder();
             sleep(2000);
-            pusher.MoveFeeder();
-            sleep(2150);
-            pusher.MoveFeeder();
             shooter.turnPowerOff();
-            wheels.MoveStraight(-1075,0.55,100);
-            wheels.RotateRight(50, 0.55, 100);
+            wheels.MoveStraight(-700,0.55,100);
+            wheels.RotateRight(45, 0.55, 100);
             wheels.MoveStraight(-1800, .55,100);
           //  wheels.StrafeRight(1600,.55,100);
             // Put code that should run during the active mode HERE in this area
