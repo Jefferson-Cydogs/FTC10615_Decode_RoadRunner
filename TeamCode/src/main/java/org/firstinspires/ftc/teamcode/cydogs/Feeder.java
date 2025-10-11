@@ -17,12 +17,23 @@ private CRServo right_feeder;
     left_feeder=opMode.hardwareMap.get(CRServo.class,"leftFeeder");
         right_feeder=opMode.hardwareMap.get(CRServo.class,"rightFeeder");
         right_feeder.setDirection(CRServo.Direction.REVERSE);
+
     }
-    public void MoveFeeder(){
+ /*   public void MoveFeeder(int runTime){
+        left_feeder.setPower(-0.6);
+        right_feeder.setPower(-0.6);
+        opMode.sleep(runTime);
+        left_feeder.setPower(0);
+        right_feeder.setPower(0);
+
+    }
+*/
+    public void MoveFeeder()
+    {
         left_feeder.setPower(-0.6);
         right_feeder.setPower(-0.6);
         opMode.sleep(200);
-        left_feeder.setPower(0.0);
-        right_feeder.setPower(0.0);
+        left_feeder.setPower(0);
+        right_feeder.setPower(0);
     }
 }
