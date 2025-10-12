@@ -41,7 +41,7 @@ public class AprilTagTest extends LinearOpMode {
         initializeWheels();
         initializeDevices();
         initializePositions();
-        wheelieTag = new AprilTagWheelie(this);
+        wheelieTag = new AprilTagWheelie(this,"Blue");
         wheelieTag.initAprilTag();
         waitForStart();
         while (opModeIsActive()) {
