@@ -55,8 +55,8 @@ public class AprilTagTest extends LinearOpMode {
 
     private void manageDriverControls()
     {
-        if(gamepad1.triangle)
-        {
+        if(gamepad1.triangle){
+
             currentMotif = wheelieTag.telemetryAprilTag();
             telemetry.addData("Found Motif: ", currentMotif);
 
