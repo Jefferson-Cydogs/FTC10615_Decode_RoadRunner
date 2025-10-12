@@ -1,13 +1,17 @@
 package org.firstinspires.ftc.teamcode.cydogs.autonomous;
 
+import androidx.annotation.NonNull;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.cydogs.AprilTagWheelie;
 import org.firstinspires.ftc.teamcode.cydogs.ColorLight;
 import org.firstinspires.ftc.teamcode.cydogs.Feeder;
 import org.firstinspires.ftc.teamcode.cydogs.Launcher;
 import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
+import org.firstinspires.ftc.teamcode.cydogs.teleop.AprilTagTest;
 
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
@@ -18,51 +22,57 @@ public class Blue_Basket_sample extends LinearOpMode {
     /* declare variables
 
      */
+    private String currentMotif;
+
+    private AprilTagWheelie wheelieTag;
     @Override
     public void runOpMode() {
 
 
-        // Put code that should run during initialization HERE in this area
-        WheelieChassis wheels = new WheelieChassis(this);
-        wheels.ResetWheelConfig();
-        Launcher shooter= new Launcher(this);
-        shooter.initLauncher();
-        Feeder pusher = new Feeder(this);
-        ColorLight light = new ColorLight(this);
-        // Wait for the start button to be pressed on the driver station
-        waitForStart();
 
-        if (opModeIsActive()) {
-            light.SetColor(0.45, 100);
-        //    sleep(100);
-            //purple (0.91)
-            wheels.MoveStraight(1800, 0.55, 100);
-            wheels.RotateLeft(135, 0.55, 500);
-            //This is where we would scan the obelisk
-            wheels.RotateLeft(45,0.55,500);
-            wheels.MoveStraight(1150, 0.55, 150);
-            shooter.runAtPower(0.6);
-            sleep(3530);
-            pusher.MoveFeeder();
-            sleep(2300);
-            pusher.MoveFeeder();
-            sleep(2300);
-            pusher.MoveFeeder();
-            sleep(2000);
-            shooter.turnPowerOff();
-            wheels.MoveStraight(-700,0.55,100);
-            wheels.RotateRight(45, 0.55, 100);
-            wheels.MoveStraight(-1800, .55,100);
-          //  wheels.StrafeRight(1600,.55,100);
-            // Put code that should run during the active mode HERE in this area
+                // Put code that should run during initialization HERE in this area
+                WheelieChassis wheels = new WheelieChassis(this);
+                wheels.ResetWheelConfig();
+                Launcher shooter = new Launcher(this);
+                shooter.initLauncher();
+                Feeder pusher = new Feeder(this);
+                ColorLight light = new ColorLight(this);
+        wheelieTag = new AprilTagWheelie(this);
+        wheelieTag.initAprilTag();
+                // Wait for the start button to be pressed on the driver station
+                waitForStart();
 
-        }
+                if (opModeIsActive()) {
+                    light.SetColor(0.91, 100);
+                    //    sleep(100);
+                    //purple (0.91)
+                    wheels.MoveStraight(1800, 0.55, 100);
+                    wheels.RotateRight(50, 0.55, 500);
+                    //This is where we would scan the obelisk
+                    currentMotif = wheelieTag.telemetryAprilTag();
+                    telemetry.addData("Found Motif: ", currentMotif);
+                    telemetry.update();
+                    sleep(1000);
+                    wheels.RotateLeft(50, 0.55, 500);
+                    wheels.MoveStraight(-1567, 0.55, 150);
+                    shooter.runAtPower(0.6);
+                    sleep(3530);
+                    pusher.MoveFeeder();
+                    sleep(2300);
+                    pusher.MoveFeeder();
+                    sleep(2300);
+                    pusher.MoveFeeder();
+                    sleep(2000);
+                    shooter.turnPowerOff();
+                    wheels.MoveStraight(700, 0.55, 100);
+                    wheels.RotateLeft(125, 0.55, 100);
+                    wheels.MoveStraight(-1800, .55, 100);
+                    //  wheels.StrafeRight(1600,.55,100);
+
+
+                }
+
 
     }
-
-
-
-
-
 
 }
