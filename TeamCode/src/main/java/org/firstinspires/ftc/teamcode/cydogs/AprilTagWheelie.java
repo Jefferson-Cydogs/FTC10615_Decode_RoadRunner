@@ -17,12 +17,16 @@ public class AprilTagWheelie {
     private static final boolean USE_WEBCAM = true;
 
 
-    public double DistanceFromScore(){
+ //   public double DistanceFromScore(){
        //Need to get detection range and make it an if statement/tell what range is
-        if(detection.ftcPose.range){}
-    }
+     //   if(detection.ftcPose.range){}
+  //  }
 
-    private void initAprilTag() {
+    public AprilTagWheelie(LinearOpMode opModeIn)
+    {
+        opMode = opModeIn;
+    }
+    public void initAprilTag() {
 
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()

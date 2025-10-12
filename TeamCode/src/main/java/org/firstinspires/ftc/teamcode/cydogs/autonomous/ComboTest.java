@@ -12,9 +12,8 @@ import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
-
-@Autonomous
-public class BlueSideLong extends LinearOpMode {
+@Autonomous(name= "ComboTest", group= "Autonomous")
+public class ComboTest extends LinearOpMode {
 
     /* declare variables
 
@@ -24,39 +23,44 @@ public class BlueSideLong extends LinearOpMode {
 
 
         // Put code that should run during initialization HERE in this area
-        WheelieChassis Chassis = new WheelieChassis(this);
-        Feeder BothFeeders = new Feeder(this);
-        Launcher launcher = new Launcher(this);
-        Chassis.ResetWheelConfig();
+        WheelieChassis wheels = new WheelieChassis(this);
+        wheels.ResetWheelConfig();
+        Launcher shooter= new Launcher(this);
+        shooter.initLauncher();
+        Feeder pusher = new Feeder(this);
         ColorLight light = new ColorLight(this);
+
+
+
         // Wait for the start button to be pressed on the driver station
         waitForStart();
 
         if (opModeIsActive()) {
-            light.SetColor(0.8, 100);
-            // Put code thashould run during the active mode HERE in this area
-            //I'm assuming that I am starting facing the obelisk with the motif pattern on the blue side*//
-            Chassis.MoveStraight(2600,0.5,100);
-            Chassis.RotateLeft(48.0,0.5,100);
-            Chassis.MoveStraight(1250,0.5,500);
-            launcher.runAtPower(0.6);
+            light.SetColor(0.45, 100);
+            wheels.MoveStraight(2600,0.5,100);
+            wheels.RotateLeft(48.0,0.5,100);
+            wheels.MoveStraight(1250,0.5,500);
+            shooter.runAtPower(0.6);
             sleep(3530);
-            BothFeeders.MoveFeeder();
+            pusher.MoveFeeder();
             sleep(2300);
-            BothFeeders.MoveFeeder();
+            pusher.MoveFeeder();
             sleep(2300);
-            BothFeeders.MoveFeeder();
+            pusher.MoveFeeder();
             sleep(2000);
-            launcher.turnPowerOff();
-            Chassis.RotateLeft(180,0.5,100);
-            Chassis.MoveStraight(850,0.5,100);
-            Chassis.RotateRight(40,0.5,100);
-            Chassis.MoveStraight(1350,0.5,100);
+            shooter.turnPowerOff();
+            wheels.RotateLeft(180,0.5,100);
+            wheels.MoveStraight(850,0.5,100);
+            wheels.RotateRight(40,0.5,100);
+            wheels.MoveStraight(1350,0.5,100);
+
         }
+
     }
 
 
+
+
+
+
 }
-
-
-

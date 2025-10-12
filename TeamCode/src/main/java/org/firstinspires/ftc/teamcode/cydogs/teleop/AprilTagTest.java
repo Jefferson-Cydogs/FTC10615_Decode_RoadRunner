@@ -1,13 +1,15 @@
-package org.firstinspires.ftc.teamcode.cydogs.templates;
+package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
-@Disabled
+import org.firstinspires.ftc.teamcode.cydogs.AprilTagWheelie;
+
+
 @TeleOp
-public class BlankTeleop extends LinearOpMode {
+public class AprilTagTest extends LinearOpMode {
 
     // declare variables here
     private DcMotor BackLeftWheel;
@@ -26,9 +28,12 @@ public class BlankTeleop extends LinearOpMode {
     private double FastStrafe;
     private double highSpeedDrive = 0.8;
     private double lowSpeedDrive = 0.3;
-    private double rotateSpeedDrive = 0.7;
+    private double rotateSpeedDrive = 0.5;
 
 
+    private String currentMotif;
+
+    private AprilTagWheelie wheelieTag;
     @Override
     public void runOpMode() {
 
@@ -36,13 +41,15 @@ public class BlankTeleop extends LinearOpMode {
         initializeWheels();
         initializeDevices();
         initializePositions();
-
+        wheelieTag = new AprilTagWheelie(this);
+        wheelieTag.initAprilTag();
         waitForStart();
         while (opModeIsActive()) {
             // Execute OpMode actions here
             driveChassis();
             manageDriverControls();
-
+            telemetry.update();
+            sleep(100);
         }
     }
 
@@ -50,7 +57,10 @@ public class BlankTeleop extends LinearOpMode {
     {
         if(gamepad1.triangle)
         {
-            // do something if triangle is pushed
+            currentMotif = wheelieTag.telemetryAprilTag();
+            telemetry.addData("Found Motif: ", currentMotif);
+
+            sleep(500);
         }
         else if(gamepad1.square)
         {
@@ -61,10 +71,10 @@ public class BlankTeleop extends LinearOpMode {
 
     private void initializeWheels()
     {
-        BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
-        FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
-        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
-        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
+        BackLeftWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
+        FrontLeftWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
+        BackRightWheel = hardwareMap.get(DcMotor.class, "rightBackWheel");
+        FrontRightWheel = hardwareMap.get(DcMotor.class, "rightFrontWheel");
 
         // INITIALIZATION BLOCKS:
         // > Reverse motors'/servos' direction as needed. FORWARD is default.
