@@ -34,6 +34,7 @@ public class Blue_Basket_sample extends LinearOpMode {
 
         if (opModeIsActive()) {
             light.SetColor(0.45, 100);
+        //    sleep(100);
             //purple (0.91)
             wheels.MoveStraight(1800, 0.55, 100);
             wheels.RotateLeft(135, 0.55, 500);
