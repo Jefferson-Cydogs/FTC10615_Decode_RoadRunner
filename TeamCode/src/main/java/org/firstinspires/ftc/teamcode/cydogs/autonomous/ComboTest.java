@@ -28,7 +28,7 @@ public class ComboTest extends LinearOpMode {
         Launcher shooter= new Launcher(this);
         shooter.initLauncher();
         Feeder pusher = new Feeder(this);
-        ColorLight light = new ColorLight(this);
+        ColorLight light = new ColorLight(this,"");
 
 
 

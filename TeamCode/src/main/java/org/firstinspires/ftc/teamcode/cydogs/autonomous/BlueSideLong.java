@@ -30,8 +30,8 @@ public class BlueSideLong extends LinearOpMode {
         Feeder BothFeeders = new Feeder(this);
         Launcher launcher = new Launcher(this);
         Chassis.ResetWheelConfig();
-        ColorLight light = new ColorLight(this);
-        wheelieTag = new AprilTagWheelie(this);
+        ColorLight light = new ColorLight(this,"");
+     //   wheelieTag = new AprilTagWheelie(this);
         wheelieTag.initAprilTag();
         // Wait for the start button to be pressed on the driver station
         waitForStart();

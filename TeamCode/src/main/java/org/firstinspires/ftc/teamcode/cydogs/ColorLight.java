@@ -11,9 +11,9 @@ public class ColorLight {
     private LinearOpMode opMode;
     private Servo myServo;
 
-    public ColorLight(LinearOpMode opMode) {
+    public ColorLight(LinearOpMode opMode, String LEDName) {
         this.opMode = opMode;
-        myServo = opMode.hardwareMap.get(Servo.class, "artifactIndicatorLight");
+        myServo = opMode.hardwareMap.get(Servo.class, LEDName);
     }
 
     public void SetColor(double ColorNumber, long waitMs) {

@@ -36,8 +36,8 @@ public class Blue_Basket_sample extends LinearOpMode {
                 Launcher shooter = new Launcher(this);
                 shooter.initLauncher();
                 Feeder pusher = new Feeder(this);
-                ColorLight light = new ColorLight(this);
-        wheelieTag = new AprilTagWheelie(this);
+                ColorLight light = new ColorLight(this,"");
+        //wheelieTag = new AprilTagWheelie(this);
         wheelieTag.initAprilTag();
                 // Wait for the start button to be pressed on the driver station
                 waitForStart();
