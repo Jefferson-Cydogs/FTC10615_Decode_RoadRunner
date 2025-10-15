@@ -29,7 +29,7 @@ public class Launcher {
         power = Math.max(MOTOR_MIN, Math.min(MOTOR_MAX, power));
         Launcher.setPower(power);
     }
-   public void turnPowerOff(){
+    public void turnPowerOff(){
         Launcher.setPower(0);
    }
 
