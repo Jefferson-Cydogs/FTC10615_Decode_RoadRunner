@@ -17,11 +17,11 @@ public class Intake {
     }
 
     public void turnIntakeon() {
-        MyIntake.setPower(0.6);
+        MyIntake.setPower(0.8);
 
     }
     public void reverseintake() {
-        MyIntake.setPower(-0.6);
+        MyIntake.setPower(-0.8);
 
     }
 
