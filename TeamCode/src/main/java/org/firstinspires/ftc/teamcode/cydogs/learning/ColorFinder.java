@@ -90,6 +90,7 @@ public class ColorFinder {
                 }
             }
         }
+        return "Nothing";
     }
 
     private boolean isColor(float[] hsv, float lowHue, float highHue)
