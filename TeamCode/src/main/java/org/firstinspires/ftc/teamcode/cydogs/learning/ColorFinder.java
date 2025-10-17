@@ -45,7 +45,9 @@ public class ColorFinder {
 
     public String SeeColor(TargetColor targetColor) {
         int consecutiveHits = 0;
-        while (consecutiveHits < REQUIRED_CONSECUTIVE_HITS) {
+
+        while (consecutiveHits < REQUIRED_CONSECUTIVE_HITS)
+        {
 
             NormalizedRGBA colors = colorSensor.getNormalizedColors();
             float[] hsv = new float[3];
