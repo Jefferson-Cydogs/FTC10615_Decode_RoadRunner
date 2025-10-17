@@ -4,9 +4,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
-import org.firstinspires.ftc.teamcode.cydogs.components.Bumper;
+import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
-import org.firstinspires.ftc.teamcode.cydogs.components.Turret;
+import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 
 
 @TeleOp
@@ -14,8 +14,8 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     // declare variables here
 
-    private Turret RocketLauncher3000;
-    private Bumper BumperCars;
+    private Launchers RocketLauncher3000;
+    private Feeders BumperCars;
     private Intake ArtifactEater;
 
     private IndianaChassis wheels;
@@ -86,9 +86,9 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     private void initializeDevices()
     {
-        RocketLauncher3000=new Turret(this);
+        RocketLauncher3000=new Launchers(this);
         ArtifactEater= new Intake(this);
-        BumperCars= new Bumper(this);
+        BumperCars= new Feeders(this);
 
     }
 

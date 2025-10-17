@@ -1,7 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.components;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
-public class Turret {
+public class Launchers {
     public static final double MOTOR_MIN = -1.0;
     public static final double MOTOR_MAX = 1.0;
     private LinearOpMode opMode;
@@ -12,7 +12,7 @@ public class Turret {
 
          }
 
-    public Turret (LinearOpMode opMode){
+    public Launchers(LinearOpMode opMode){
         this.opMode = opMode;
         LeftLauncher = opMode.hardwareMap.get(DcMotor.class,"LeftLauncher");
         LeftLauncher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

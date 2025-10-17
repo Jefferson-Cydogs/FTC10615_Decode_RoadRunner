@@ -173,14 +173,28 @@ public class IndianaChassis {
         double rightFrontPower;
         double leftBackPower;
         double rightBackPower;
-        forward = myOpMode.-myOpMode.gamepad1.right_stick_y;
-        strafe = myOpMode.gamepad1.right_stick_x;
+        double mySpeedConstant;
+
+        if(myOpMode.gamepad1.right_stick_y < myOpMode.gamepad1.left_stick_y ||
+                myOpMode.gamepad1.right_stick_x > myOpMode.gamepad1.left_stick_x)
+        {
+            forward = -myOpMode.gamepad1.right_stick_y;
+            strafe = myOpMode.gamepad1.right_stick_x;
+            mySpeedConstant = highSpeedDrive;
+        }
+        else
+        {
+            forward = -myOpMode.gamepad1.left_stick_y;
+            strafe = myOpMode.gamepad1.left_stick_x;
+            mySpeedConstant = lowSpeedDrive;
+        }
+
         rotate = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
 
 
-        forward = abs(forward) > deadZone ? (float) (0.8 * ((0.75 * pow(forward, 3)) + (0.25 * forward))) : 0;
-        strafe = abs(strafe) > deadZone ? (float) (0.8 * ((0.75 * pow(strafe, 3)) + (0.25 * strafe))) : 0;
-        rotate = abs(rotate) > deadZone ? (float) (0.8 * ((0.75 * pow(rotate, 3)) + (0.25 * rotate))) : 0;
+        forward = abs(forward) > deadZone ? (float) (mySpeedConstant * ((0.75 * pow(forward, 3)) + (0.25 * forward))) : 0;
+        strafe = abs(strafe) > deadZone ? (float) (mySpeedConstant * ((0.75 * pow(strafe, 3)) + (0.25 * strafe))) : 0;
+        rotate = abs(rotate) > deadZone ? (float) (rotateSpeedDrive * ((0.75 * pow(rotate, 3)) + (0.25 * rotate))) : 0;
         leftFrontPower = forward + strafe + rotate;
         rightFrontPower = forward - strafe - rotate;
         leftBackPower = forward - strafe + rotate;
