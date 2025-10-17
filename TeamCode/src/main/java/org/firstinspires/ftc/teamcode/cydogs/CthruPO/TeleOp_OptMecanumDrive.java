@@ -17,10 +17,10 @@ public class TeleOp_OptMecanumDrive extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        leftFrontWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
-        rightFrontWheel = hardwareMap.get(DcMotor.class, "rightFrontWheel");
-        leftBackWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
-        rightBackWheel = hardwareMap.get(DcMotor.class, "rightBackWheel");
+        leftFrontWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
+        rightFrontWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
+        leftBackWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
+        rightBackWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
 
         // Put initialization blocks here.
         createVariables();
@@ -32,7 +32,7 @@ public class TeleOp_OptMecanumDrive extends LinearOpMode {
 
             while (opModeIsActive()) {
                 // Put loop blocks here.
-                mecanumDrive(-gamepad1.right_stick_y, gamepad1.right_stick_x, gamepad1.right_trigger - gamepad1.left_trigger);
+                mecanumDrive(-gamepad1.right_stick_y, gamepad1.right_stick_x, -gamepad1.left_stick_y, gamepad1.left_stick_x,gamepad1.right_trigger - gamepad1.left_trigger);
                 //telemetry.update();
             }
         }
@@ -61,24 +61,28 @@ public class TeleOp_OptMecanumDrive extends LinearOpMode {
      * This takes input from the joysticks, and applies power to all 4 drive motors
      * to move the robot as requested by the driver.
      */
-    private void mecanumDrive(float forward, float strafe, float rotate) {
+    private void mecanumDrive(float forward, float strafe, float slowForward, float slowStrafe, float rotate) {
         double deadZone = 0.05;
+        double highSpeed = 0.8;
+        double lowSpeed = 0.3;
         double leftFrontPower;
         double rightFrontPower;
         double leftBackPower;
         double rightBackPower;
 
-        forward = abs(forward) > deadZone ? (float) (0.8 * ((0.75 * pow(forward, 3)) + (0.25 * forward))) : 0;
-        strafe = abs(strafe) > deadZone ? (float) (0.8 * ((0.75 * pow(strafe, 3)) + (0.25 * strafe))) : 0;
-        rotate = abs(rotate) > deadZone ? (float) (0.8 * ((0.75 * pow(rotate, 3)) + (0.25 * rotate))) : 0;
-        leftFrontPower = forward + strafe + rotate;
-        rightFrontPower = forward - strafe - rotate;
-        leftBackPower = forward - strafe + rotate;
-        rightBackPower = forward + strafe - rotate;
+        forward = abs(forward) > deadZone ? (float) (highSpeed * ((0.75 * pow(forward, 3)) + (0.25 * forward))) : 0;
+        strafe = abs(strafe) > deadZone ? (float) (highSpeed * ((0.75 * pow(strafe, 3)) + (0.25 * strafe))) : 0;
+        slowForward = abs(slowForward) > deadZone ? (float) (lowSpeed * slowForward) : 0;
+        slowStrafe = abs(slowStrafe) > deadZone ? (float) (lowSpeed * slowStrafe) : 0;
+        rotate = abs(rotate) > deadZone ? (float) (highSpeed * ((0.75 * pow(rotate, 3)) + (0.25 * rotate))) : 0;
+        leftFrontPower = forward + slowForward + strafe + slowStrafe + rotate;
+        rightFrontPower = forward + slowForward - strafe - slowStrafe - rotate;
+        leftBackPower = forward + slowForward - strafe - slowStrafe + rotate;
+        rightBackPower = forward + slowForward + strafe + slowStrafe - rotate;
         // Normalize powers if any exceed 1.0
         double maxPower = max(abs(leftFrontPower),
-                max(abs(rightFrontPower),
-                        max(abs(leftBackPower), abs(rightBackPower))));
+                              max(abs(rightFrontPower),
+                                  max(abs(leftBackPower), abs(rightBackPower))));
         if (maxPower > 1.0) {
             leftFrontPower /= maxPower;
             rightFrontPower /= maxPower;
