@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import static java.lang.Math.*;
 
 public class IndianaChassis {
     public DcMotor FrontLeftWheel;
@@ -158,6 +159,47 @@ public class IndianaChassis {
             FrontLeftWheel.setPower(0);
             FrontRightWheel.setPower(0);
         }
+    }
+
+
+    private float forward;
+    private float strafe;
+    private float rotate;
+
+    public void OptimizedTeleopDrive()
+    {
+        double deadZone = 0.05;
+        double leftFrontPower;
+        double rightFrontPower;
+        double leftBackPower;
+        double rightBackPower;
+        forward = myOpMode.-myOpMode.gamepad1.right_stick_y;
+        strafe = myOpMode.gamepad1.right_stick_x;
+        rotate = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
+
+
+        forward = abs(forward) > deadZone ? (float) (0.8 * ((0.75 * pow(forward, 3)) + (0.25 * forward))) : 0;
+        strafe = abs(strafe) > deadZone ? (float) (0.8 * ((0.75 * pow(strafe, 3)) + (0.25 * strafe))) : 0;
+        rotate = abs(rotate) > deadZone ? (float) (0.8 * ((0.75 * pow(rotate, 3)) + (0.25 * rotate))) : 0;
+        leftFrontPower = forward + strafe + rotate;
+        rightFrontPower = forward - strafe - rotate;
+        leftBackPower = forward - strafe + rotate;
+        rightBackPower = forward + strafe - rotate;
+        // Normalize powers if any exceed 1.0
+        double maxPower = max(abs(leftFrontPower),
+                max(abs(rightFrontPower),
+                        max(abs(leftBackPower), abs(rightBackPower))));
+        if (maxPower > 1.0) {
+            leftFrontPower /= maxPower;
+            rightFrontPower /= maxPower;
+            leftBackPower /= maxPower;
+            rightBackPower /= maxPower;
+        }
+        FrontLeftWheel.setPower(leftFrontPower);
+        FrontRightWheel.setPower(rightFrontPower);
+        BackLeftWheel.setPower(leftBackPower);
+        BackRightWheel.setPower(rightBackPower);
+
     }
 
     // This function strafes left.
