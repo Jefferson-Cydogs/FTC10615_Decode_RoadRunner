@@ -33,7 +33,7 @@ public class BlueSideLong extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            light.SetColor(0.8, 100);
+            light.SetColor(0.8);
             // Put code that should run during the active mode HERE in this area
             //I'm assuming that I am starting facing the obelisk with the motif pattern on the blue side*//
             Chassis.MoveStraight(-2600,0.5,100);

@@ -54,7 +54,7 @@ double lightColorNumber = 0;
     {
         if(gamepad1.y)
         {
-            light.SetColor(lightColorNumber,0);
+            light.SetColor(lightColorNumber);
             lightColorNumber+= 0.01;
             sleep(150);// do something if triangle is pushed
         }
@@ -62,7 +62,7 @@ double lightColorNumber = 0;
         {
             lightColorNumber-= 0.01;
             sleep(150);
-            light.SetColor(lightColorNumber,0);
+            light.SetColor(lightColorNumber);
             // do something if square is pushed
             //0.05 red-ish orange
             // 0.1 yellow

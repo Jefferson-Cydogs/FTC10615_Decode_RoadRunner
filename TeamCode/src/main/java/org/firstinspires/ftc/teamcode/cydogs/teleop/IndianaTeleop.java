@@ -68,7 +68,7 @@ public class IndianaTeleop extends LinearOpMode {
         waitForStart();
         while (opModeIsActive()) {
             // Execute OpMode actions here
-            CL.SetColor(.7,0);
+            CL.SetColor(.7);
             // .5 is green
             // .7 is
             driveChassis();
