@@ -77,16 +77,12 @@ public class ColorFinder {
                 switch (targetColor) {
                     case RED:
                         return "Red";
-                    break;
                     case BLUE:
                         return "Blue";
-                    break;
                     case GREEN:
                         return "Green";
-                    break;
                     case PURPLE:
                         return "Purple";
-                    break;
                     default:
                         return "Nothing";
                 }
