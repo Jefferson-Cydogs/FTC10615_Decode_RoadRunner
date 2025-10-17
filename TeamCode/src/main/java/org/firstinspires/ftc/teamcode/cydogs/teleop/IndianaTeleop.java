@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.cydogs.learning.ColorLight;
+import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 
 
 @TeleOp
@@ -64,7 +64,7 @@ public class IndianaTeleop extends LinearOpMode {
         initializeDevices();
         initializePositions();
 
-        ColorLight CL = new ColorLight(this,"LauncherLED");
+        ColorLED CL = new ColorLED(this,"LauncherLED");
         waitForStart();
         while (opModeIsActive()) {
             // Execute OpMode actions here

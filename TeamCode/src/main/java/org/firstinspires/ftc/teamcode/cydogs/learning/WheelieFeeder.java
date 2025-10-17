@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode.cydogs.learning;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 
-public class Feeder {
+public class WheelieFeeder {
 public static final double Servo_Power_Min =0.0;
 public static final double Servo_Power_Max =1.0;
 
@@ -11,7 +11,7 @@ private LinearOpMode opMode;
 
 private CRServo left_feeder;
 private CRServo right_feeder;
-    public Feeder(LinearOpMode opMode){
+    public WheelieFeeder(LinearOpMode opMode){
     this.opMode= opMode;
     left_feeder=opMode.hardwareMap.get(CRServo.class,"leftFeeder");
         right_feeder=opMode.hardwareMap.get(CRServo.class,"rightFeeder");

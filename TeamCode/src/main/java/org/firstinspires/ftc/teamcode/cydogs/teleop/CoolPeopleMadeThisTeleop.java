@@ -13,9 +13,6 @@ import org.firstinspires.ftc.teamcode.cydogs.components.Turret;
 public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     // declare variables here
-    private double highSpeedDrive = 0.8;
-    private double lowSpeedDrive = 0.3;
-    private double rotateSpeedDrive = 0.7;
 
     private Turret RocketLauncher3000;
     private Bumper BumperCars;
@@ -88,9 +85,10 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
 
     private void initializeDevices()
-    { RocketLauncher3000=new Turret(this);
+    {
+        RocketLauncher3000=new Turret(this);
         ArtifactEater= new Intake(this);
-                BumperCars= new Bumper(this);
+        BumperCars= new Bumper(this);
 
     }
 

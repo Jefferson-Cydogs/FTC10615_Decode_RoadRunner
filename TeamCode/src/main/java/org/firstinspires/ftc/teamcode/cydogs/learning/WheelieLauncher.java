@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public class Launcher {
+public class WheelieLauncher {
     public static final double MOTOR_MIN = -1.0;
     public static final double MOTOR_MAX = 1.0;
 
@@ -15,7 +15,7 @@ public class Launcher {
     public LinearOpMode opMode;
     public DcMotor Launcher;
 
-    public Launcher(LinearOpMode opMode){
+    public WheelieLauncher(LinearOpMode opMode){
         this.opMode = opMode;
         Launcher = opMode.hardwareMap.get(DcMotor.class,"launcher");
         Launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);

@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
+import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
@@ -22,10 +23,10 @@ public class BlueSideLong extends LinearOpMode {
 
         // Put code that should run during initialization HERE in this area
         WheelieChassis Chassis = new WheelieChassis(this);
-        Feeder BothFeeders = new Feeder(this);
-        Launcher launcher = new Launcher(this);
+        WheelieFeeder BothFeeders = new WheelieFeeder(this);
+        WheelieLauncher launcher = new WheelieLauncher(this);
         Chassis.ResetWheelConfig();
-        ColorLight light = new ColorLight(this,"");
+        ColorLED light = new ColorLED(this,"");
      //   wheelieTag = new AprilTagWheelie(this);
         wheelieTag.initAprilTag();
         // Wait for the start button to be pressed on the driver station

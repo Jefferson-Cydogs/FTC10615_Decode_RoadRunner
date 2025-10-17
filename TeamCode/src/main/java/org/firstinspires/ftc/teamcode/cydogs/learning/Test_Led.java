@@ -4,6 +4,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
+import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
+
 
 @TeleOp
 public class Test_Led extends LinearOpMode {
@@ -27,7 +29,7 @@ public class Test_Led extends LinearOpMode {
     private double lowSpeedDrive = 0.3;
     private double rotateSpeedDrive = 0.7;
 double lightColorNumber = 0;
-    ColorLight light;
+    ColorLED light;
 
     @Override
     public void runOpMode() {
@@ -36,7 +38,7 @@ double lightColorNumber = 0;
         initializeWheels();
         initializeDevices();
         initializePositions();
-        light = new ColorLight(this,"");
+        light = new ColorLED(this,"");
 
         waitForStart();
         while (opModeIsActive()) {
