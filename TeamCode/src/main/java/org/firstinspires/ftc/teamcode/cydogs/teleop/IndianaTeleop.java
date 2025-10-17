@@ -1,13 +1,17 @@
-package org.firstinspires.ftc.teamcode.cydogs;
+package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.Servo;
+
+import org.firstinspires.ftc.teamcode.cydogs.learning.ColorLight;
 
 
 @TeleOp
-public class Test_Led extends LinearOpMode {
+public class IndianaTeleop extends LinearOpMode {
 
     // declare variables here
     private DcMotor BackLeftWheel;
@@ -24,11 +28,33 @@ public class Test_Led extends LinearOpMode {
     private double Rotate;
     private double FastStraight;
     private double FastStrafe;
-    private double highSpeedDrive = 0.8;
+    private double highSpeedDrive = 0.7;
     private double lowSpeedDrive = 0.3;
-    private double rotateSpeedDrive = 0.7;
-double lightColorNumber = 0;
-    ColorLight light;
+    private double rotateSpeedDrive = 0.5;
+
+    private CRServo LeftFeeder;
+    private CRServo RightFeeder;
+    private CRServo Intake;
+    private Servo IntakeGate;
+    private DcMotor LeftLauncher;
+    private DcMotor RightLauncher;
+    private ColorSensor BackParkingSensor ;
+    private ColorSensor LeftParkingSensor ;
+    private ColorSensor LeftIntakeSensor ;
+    private ColorSensor RightIntakeSensor ;
+
+    // LeftFeeder, RightFeeder
+    // Intake
+    // LeftIntakeSensor
+    // RightIntakeSensor
+    // LeftLauncher
+    // RightLauncher
+    // IntakeGate
+    // BackParkingSensor
+    // LeftParkingSensor
+    // LauncherLED
+
+
 
     @Override
     public void runOpMode() {
@@ -37,15 +63,18 @@ double lightColorNumber = 0;
         initializeWheels();
         initializeDevices();
         initializePositions();
-        light = new ColorLight(this,"");
 
+        ColorLight CL = new ColorLight(this,"LauncherLED");
         waitForStart();
         while (opModeIsActive()) {
             // Execute OpMode actions here
+            CL.SetColor(.7,0);
+            // .5 is green
+            // .7 is
             driveChassis();
             manageDriverControls();
-            telemetry.addData("lightColor:", lightColorNumber);
-            telemetry.update();
+            manageManipulatorControls();
+
         }
     }
 
@@ -53,43 +82,71 @@ double lightColorNumber = 0;
     {
         if(gamepad1.y)
         {
-            light.SetColor(lightColorNumber,0);
-            lightColorNumber+= 0.01;
-            sleep(150);// do something if triangle is pushed
+            // do something if triangle is pushed
         }
-        else if(gamepad1.a)
+        else if(gamepad1.square)
         {
-            lightColorNumber-= 0.01;
-            sleep(150);
-            light.SetColor(lightColorNumber,0);
             // do something if square is pushed
-            //0.05 red-ish orange
-            // 0.1 yellow
-            // 0.15 light green
-            // 0.2 green
-            // 0.25 green
-            // 0.3 light blue
-            // 0.35 dark blue
-            // 0.4 purple
-            // 0.45 pink-ish purple
-            // 0.5-1.0 white
-
         }
 
     }
 
+    private void manageManipulatorControls()
+    {
+        if(gamepad1.right_bumper)
+        {
+            Intake.setPower(.8);
+
+        }
+        else
+        {
+            Intake.setPower(0);
+        }
+
+        if(gamepad1.dpad_up)
+        {
+            RightLauncher.setPower(.6);
+            LeftLauncher.setPower(.6);
+            // need to indicate when full power
+
+        }
+        if(gamepad1.dpad_down)
+        {
+            RightLauncher.setPower(0);
+            LeftLauncher.setPower(0);
+        }
+        if(gamepad1.x)
+        {
+            LeftFeeder.setPower(.6);
+            sleep(200);
+            LeftFeeder.setPower(0);
+        }
+        if(gamepad1.b)
+        {
+            RightFeeder.setPower(.6);
+            sleep(200);
+            RightFeeder.setPower(0);
+
+        }
+    }
+        // lED on back for when launchers are at full speed
     private void initializeWheels()
     {
-        BackLeftWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
-        FrontLeftWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
-        BackRightWheel = hardwareMap.get(DcMotor.class, "rightBackWheel");
-        FrontRightWheel = hardwareMap.get(DcMotor.class, "rightFrontWheel");
+        BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
+        FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
+        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
+        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
+
+        // 0 is left back
+        // 1 is front left
+        // 2 is front right
+        // 3 is right back
 
         // INITIALIZATION BLOCKS:
         // > Reverse motors'/servos' direction as needed. FORWARD is default.
-        BackLeftWheel.setDirection(DcMotor.Direction.REVERSE);
+        BackLeftWheel.setDirection(DcMotor.Direction.FORWARD);
         FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
-        BackRightWheel.setDirection(DcMotor.Direction.FORWARD);
+        BackRightWheel.setDirection(DcMotor.Direction.REVERSE);
         FrontRightWheel.setDirection(DcMotor.Direction.FORWARD);
         // > Set motors' ZeroPower behavior
         BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -115,6 +172,26 @@ double lightColorNumber = 0;
 
     private void initializeDevices()
     {
+
+        LeftLauncher = hardwareMap.get(DcMotor.class, "LeftLauncher");
+        RightLauncher = hardwareMap.get(DcMotor.class, "RightLauncher");
+        LeftFeeder =hardwareMap.get(CRServo.class, "LeftFeeder");
+        RightFeeder =hardwareMap.get(CRServo.class, "RightFeeder");
+        Intake =hardwareMap.get(CRServo.class, "Intake");
+        Intake.setDirection(CRServo.Direction.REVERSE);
+        RightFeeder.setDirection(CRServo.Direction.REVERSE);
+
+        BackParkingSensor = hardwareMap.get(ColorSensor.class,"BackParkingSensor");
+        LeftParkingSensor = hardwareMap.get(ColorSensor.class,"LeftParkingSensor");
+        LeftIntakeSensor = hardwareMap.get(ColorSensor.class,"LeftIntakeSensor");
+        RightIntakeSensor = hardwareMap.get(ColorSensor.class,"RightIntakeSensor");
+
+        LeftLauncher.setDirection(DcMotor.Direction.REVERSE);
+        LeftLauncher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        RightLauncher.setDirection(DcMotor.Direction.REVERSE);
+        RightLauncher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+
 
     }
 

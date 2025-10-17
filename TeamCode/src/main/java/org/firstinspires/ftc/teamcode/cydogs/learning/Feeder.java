@@ -1,8 +1,7 @@
-package org.firstinspires.ftc.teamcode.cydogs;
+package org.firstinspires.ftc.teamcode.cydogs.learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Feeder {
 public static final double Servo_Power_Min =0.0;

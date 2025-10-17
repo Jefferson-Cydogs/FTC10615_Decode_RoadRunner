@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.cydogs.indiana;
+package org.firstinspires.ftc.teamcode.cydogs.components;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 public class Turret {

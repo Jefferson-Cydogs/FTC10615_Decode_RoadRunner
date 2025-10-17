@@ -1,13 +1,8 @@
-package org.firstinspires.ftc.teamcode.cydogs;
-import static com.qualcomm.robotcore.hardware.DcMotorSimple.Direction.FORWARD;
+package org.firstinspires.ftc.teamcode.cydogs.learning;
 
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Launcher {
     public static final double MOTOR_MIN = -1.0;

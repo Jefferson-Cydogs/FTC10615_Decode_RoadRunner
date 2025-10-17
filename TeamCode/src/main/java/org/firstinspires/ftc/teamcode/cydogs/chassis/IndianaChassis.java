@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.cydogs.indiana;
+package org.firstinspires.ftc.teamcode.cydogs.chassis;
 
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -11,6 +11,19 @@ public class IndianaChassis {
     public DcMotor FrontRightWheel;
     public DcMotor BackLeftWheel;
     public DcMotor BackRightWheel;
+    private float gamepad1_RightStickYValue;
+    private float gamepad1_RightStickXValue;
+    private float gamepad1_LeftStickYValue;
+    private float gamepad1_LeftStickXValue;
+    private float gamepad1_TriggersValue;
+    private double Straight;
+    private double Strafe;
+    private double Rotate;
+    private double FastStraight;
+    private double FastStrafe;
+    private double highSpeedDrive = 0.7;
+    private double lowSpeedDrive = 0.3;
+    private double rotateSpeedDrive = 0.5;
     private LinearOpMode myOpMode;
     private int WheelDiameter=104;
     private int RPM = 435;
@@ -20,8 +33,6 @@ public class IndianaChassis {
     private double mmPer90DegreeRotation=785;
 
     private double strafeCompensation = 1.081;
-    public enum Direction {LEFT, CENTER, RIGHT}
-    public enum Alliance {BLUE, RED}
 
     public static final int OneTileMM = 610;
 
@@ -44,11 +55,41 @@ public class IndianaChassis {
         FrontLeftWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
         BackLeftWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
 
-        ResetWheelConfig();
+        BackLeftWheel.setDirection(DcMotor.Direction.FORWARD);
+        FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
+        BackRightWheel.setDirection(DcMotor.Direction.REVERSE);
+        FrontRightWheel.setDirection(DcMotor.Direction.FORWARD);
 
     }
 
-    public void ResetWheelConfig()
+    public void InitializeTeleop(double highSpeed, double lowSpeed, double rotateSpeed)
+    {
+        highSpeedDrive = highSpeed;
+        lowSpeedDrive = lowSpeed;
+        rotateSpeedDrive = rotateSpeed;
+        // > Set motors' ZeroPower behavior
+        BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        FrontRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        // > Ensure motors are stopped; necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
+        FrontLeftWheel.setPower(0);
+        FrontRightWheel.setPower(0);
+        BackLeftWheel.setPower(0);
+        BackRightWheel.setPower(0);
+        // > Clear Encoders of prior data; necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
+        BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default)
+        BackLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BackRightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FrontLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        FrontRightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+    }
+
+    public void InitializeAuton()
     {
         FrontRightWheel.setPower(0);
         BackRightWheel.setPower(0);
@@ -57,10 +98,7 @@ public class IndianaChassis {
 
         // Set the direction of the wheels.  Because of how the wheels are installed, one side
         //   has to be reverse.
-        FrontRightWheel.setDirection(DcMotor.Direction.FORWARD);
-        BackRightWheel.setDirection(DcMotor.Direction.FORWARD);
-        FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
-        BackLeftWheel.setDirection(DcMotor.Direction.REVERSE);
+
 
         // > Set motors' ZeroPower behavior
         FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
@@ -84,6 +122,42 @@ public class IndianaChassis {
         BackLeftWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BackRightWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+    }
+
+    public void TraditionalTeleopDrive()
+    {
+        gamepad1_RightStickYValue = -myOpMode.gamepad1.right_stick_y;
+        gamepad1_RightStickXValue = myOpMode.gamepad1.right_stick_x;
+        gamepad1_LeftStickYValue = -myOpMode.gamepad1.left_stick_y;
+        gamepad1_LeftStickXValue = myOpMode.gamepad1.left_stick_x;
+        gamepad1_TriggersValue = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
+
+        if (gamepad1_RightStickYValue != 0 || gamepad1_RightStickXValue != 0 || gamepad1_LeftStickYValue != 0 || gamepad1_LeftStickXValue != 0 || gamepad1_TriggersValue != 0)
+        {
+            // Set robot's move forward(+) or backwards(-) power
+            Straight = lowSpeedDrive * (0.75 * Math.pow(gamepad1_LeftStickYValue, 3) + 0.25 * gamepad1_LeftStickYValue);
+            // Set robot's strafe right(+) or left(-) power
+            Strafe = lowSpeedDrive * (0.75 * Math.pow(gamepad1_LeftStickXValue, 3) + 0.25 * gamepad1_LeftStickXValue);
+            // Set robot's clockwise(+) or counter-clockwise(-) rotation power
+            Rotate = rotateSpeedDrive * (0.75 * Math.pow(gamepad1_TriggersValue, 3) + 0.25 * gamepad1_TriggersValue);
+            // Set robot's fast move forward(+) or backwards(-) power
+            FastStraight = highSpeedDrive * gamepad1_RightStickYValue;
+            // Set robot's fast strafe right(+) or left(-) power
+            FastStrafe = highSpeedDrive * gamepad1_RightStickXValue;
+            // MOve all wheels based on the above calculations, using formulas for Mecanum wheels.
+            BackLeftWheel.setPower(Straight + FastStraight - Strafe - FastStrafe + Rotate);
+            BackRightWheel.setPower(Straight + FastStraight + Strafe + FastStrafe - Rotate);
+            FrontLeftWheel.setPower(Straight + FastStraight + Strafe + FastStrafe + Rotate);
+            FrontRightWheel.setPower(Straight + FastStraight - Strafe - FastStrafe - Rotate);
+        }
+        else
+        {
+            // Stop all motors if their controls are not touched
+            BackLeftWheel.setPower(0);
+            BackRightWheel.setPower(0);
+            FrontLeftWheel.setPower(0);
+            FrontRightWheel.setPower(0);
+        }
     }
 
     // This function strafes left.

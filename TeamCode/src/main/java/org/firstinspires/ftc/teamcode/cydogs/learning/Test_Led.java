@@ -1,13 +1,12 @@
-package org.firstinspires.ftc.teamcode.cydogs.indiana;
+package org.firstinspires.ftc.teamcode.cydogs.learning;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 
 @TeleOp
-public class CoolPeopleMadeThisTeleop extends LinearOpMode {
+public class Test_Led extends LinearOpMode {
 
     // declare variables here
     private DcMotor BackLeftWheel;
@@ -27,11 +26,8 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
     private double highSpeedDrive = 0.8;
     private double lowSpeedDrive = 0.3;
     private double rotateSpeedDrive = 0.7;
-
-    private Turret RocketLauncher3000;
-    private Bumper BumperCars;
-    private Intake ArtifactEater;
-
+double lightColorNumber = 0;
+    ColorLight light;
 
     @Override
     public void runOpMode() {
@@ -40,71 +36,59 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         initializeWheels();
         initializeDevices();
         initializePositions();
+        light = new ColorLight(this,"");
 
         waitForStart();
         while (opModeIsActive()) {
             // Execute OpMode actions here
             driveChassis();
             manageDriverControls();
-            manageManipulatorControls();
+            telemetry.addData("lightColor:", lightColorNumber);
+            telemetry.update();
         }
     }
 
     private void manageDriverControls()
     {
-        if(gamepad1.triangle)
+        if(gamepad1.y)
         {
-            // do something if triangle is pushed
+            light.SetColor(lightColorNumber,0);
+            lightColorNumber+= 0.01;
+            sleep(150);// do something if triangle is pushed
         }
-        else if(gamepad1.square)
+        else if(gamepad1.a)
         {
+            lightColorNumber-= 0.01;
+            sleep(150);
+            light.SetColor(lightColorNumber,0);
             // do something if square is pushed
+            //0.05 red-ish orange
+            // 0.1 yellow
+            // 0.15 light green
+            // 0.2 green
+            // 0.25 green
+            // 0.3 light blue
+            // 0.35 dark blue
+            // 0.4 purple
+            // 0.45 pink-ish purple
+            // 0.5-1.0 white
+
         }
 
-    }
-    private void manageManipulatorControls()
-    {
-        if(gamepad2.a)
-        {
-            RocketLauncher3000.turnPowerOff();
-        }
-
-        if(gamepad2.y)
-        {
-           RocketLauncher3000.runAtPower(0.59);
-        }
-        if(gamepad2.right_bumper) {
-            BumperCars.MoveRightBumper();
-        }
-
-        if(gamepad2.left_bumper) {
-            BumperCars.MoveLeftBumper();
-        }
-
-        if(gamepad2.left_trigger>.4) {
-            ArtifactEater.reverseintake();
-        }
-        else if(gamepad2.right_trigger>.4){
-            ArtifactEater.turnIntakeon();
-        }
-
-        else {
-            ArtifactEater.turnintakeoff();
-        }
     }
 
     private void initializeWheels()
     {
-        BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
-        FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
-        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
-        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
+        BackLeftWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
+        FrontLeftWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
+        BackRightWheel = hardwareMap.get(DcMotor.class, "rightBackWheel");
+        FrontRightWheel = hardwareMap.get(DcMotor.class, "rightFrontWheel");
 
         // INITIALIZATION BLOCKS:
         // > Reverse motors'/servos' direction as needed. FORWARD is default.
-        BackLeftWheel.setDirection(DcMotor.Direction.FORWARD);
+        BackLeftWheel.setDirection(DcMotor.Direction.REVERSE);
         FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
-        BackRightWheel.setDirection(DcMotor.Direction.REVERSE);
+        BackRightWheel.setDirection(DcMotor.Direction.FORWARD);
         FrontRightWheel.setDirection(DcMotor.Direction.FORWARD);
         // > Set motors' ZeroPower behavior
         BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -129,9 +113,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
     }
 
     private void initializeDevices()
-    { RocketLauncher3000=new Turret(this);
-        ArtifactEater= new Intake(this);
-                BumperCars= new Bumper(this);
+    {
 
     }
 

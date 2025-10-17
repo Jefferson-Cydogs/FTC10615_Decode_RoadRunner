@@ -1,13 +1,8 @@
-package org.firstinspires.ftc.teamcode.cydogs.autonomous;
+package org.firstinspires.ftc.teamcode.cydogs.learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.cydogs.AprilTagWheelie;
-import org.firstinspires.ftc.teamcode.cydogs.ColorLight;
-import org.firstinspires.ftc.teamcode.cydogs.Feeder;
-import org.firstinspires.ftc.teamcode.cydogs.Launcher;
 import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
 
 

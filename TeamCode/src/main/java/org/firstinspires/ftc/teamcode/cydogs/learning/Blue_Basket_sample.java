@@ -1,17 +1,9 @@
-package org.firstinspires.ftc.teamcode.cydogs.autonomous;
-
-import androidx.annotation.NonNull;
+package org.firstinspires.ftc.teamcode.cydogs.learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-import org.firstinspires.ftc.teamcode.cydogs.AprilTagWheelie;
-import org.firstinspires.ftc.teamcode.cydogs.ColorLight;
-import org.firstinspires.ftc.teamcode.cydogs.Feeder;
-import org.firstinspires.ftc.teamcode.cydogs.Launcher;
 import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
-import org.firstinspires.ftc.teamcode.cydogs.teleop.AprilTagTest;
 
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.

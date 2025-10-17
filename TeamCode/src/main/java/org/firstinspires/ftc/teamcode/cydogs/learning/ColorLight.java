@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.cydogs;
+package org.firstinspires.ftc.teamcode.cydogs.learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;

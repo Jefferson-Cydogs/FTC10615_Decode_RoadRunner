@@ -1,9 +1,8 @@
 
-package org.firstinspires.ftc.teamcode.cydogs.indiana;
+package org.firstinspires.ftc.teamcode.cydogs.components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class Bumper {
     public static final double Servo_Power_Min =0.0;
