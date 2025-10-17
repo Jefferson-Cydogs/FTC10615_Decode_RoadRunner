@@ -20,6 +20,10 @@ public class ColorFinder {
     public String ColorFound;
     public static final float BLUE_HUE_LOW = 190f;
     public static final float BLUE_HUE_HIGH = 260f;
+    public static final float PURPLE_HUE_LOW = 190f;
+    public static final float PURPLE_HUE_HIGH = 260f;
+    public static final float GREEN_HUE_LOW = 190f;
+    public static final float GREEN_HUE_HIGH = 260f;
 
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
@@ -37,11 +41,11 @@ public class ColorFinder {
     }
 
 
-    public enum TargetColor {RED, BLUE}
+    public enum TargetColor {RED, BLUE, GREEN, PURPLE}
 
     public String SeeColor(TargetColor targetColor) {
         int consecutiveHits = 0;
-        while (consecutiveHits<REQUIRED_CONSECUTIVE_HITS) {
+        while (consecutiveHits < REQUIRED_CONSECUTIVE_HITS) {
 
             NormalizedRGBA colors = colorSensor.getNormalizedColors();
             float[] hsv = new float[3];
@@ -50,27 +54,59 @@ public class ColorFinder {
             int b = (int) (colors.blue * 255);
             Color.RGBToHSV(r, g, b, hsv);
             boolean isHit = false;
-            if (targetColor == TargetColor.RED) {
-                isHit = isRed(hsv);
-            } else if (targetColor == TargetColor.BLUE) {
-                isHit = isBlue(hsv);
+            switch (targetColor) {
+                case RED:
+                    isHit = isColor(hsv, RED_HUE_LOW_1, RED_HUE_HIGH_1, RED_HUE_LOW_2, RED_HUE_HIGH_2);
+                    break;
+                case BLUE:
+                    isHit = isColor(hsv, BLUE_HUE_LOW, BLUE_HUE_HIGH);
+                    break;
+                case GREEN:
+                    isHit = isColor(hsv, GREEN_HUE_LOW, GREEN_HUE_HIGH);
+                    break;
+                case PURPLE:
+                    isHit = isColor(hsv, PURPLE_HUE_LOW, PURPLE_HUE_HIGH);
+                    break;
             }
             if (isHit) {
                 consecutiveHits++;
             }
-            if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS && targetColor== TargetColor.RED){
-                ColorFound= "Red";
+            if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) {
+                switch (targetColor) {
+                    case RED:
+                        return "Red";
+                    break;
+                    case BLUE:
+                        return "Blue";
+                    break;
+                    case GREEN:
+                        return "Green";
+                    break;
+                    case PURPLE:
+                        return "Purple";
+                    break;
+                    default:
+                        return "Nothing";
+                }
             }
-            else if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS && targetColor== TargetColor.BLUE){
-                ColorFound= "Blue";
-            }
-            else {
-                ColorFound="Nothing";
-            }
-
         }
-        return ColorFound;
     }
+
+    private boolean isColor(float[] hsv, float lowHue, float highHue)
+    {
+        return isColor(hsv, lowHue, highHue, -1, -1);
+    }
+    private boolean isColor(float[] hsv, float lowHue1, float highHue1, float lowHue2, float highHue2)
+    {
+        float h = hsv[0], s = hsv[1], v = hsv[2];
+        boolean isColor  =
+                (h >= lowHue1 && h <= highHue1) ||
+                        (h >= lowHue2 && h <= highHue2);
+        return isColor;
+    }
+
+
+    /*
             private boolean isRed(float[] hsv){
                 float h = hsv[0], s = hsv[1], v = hsv[2];
                 boolean huelsRed =
@@ -85,4 +121,7 @@ public class ColorFinder {
                 return huelsBlue && s >= MIN_SATURATION && v >= MIN_VALUE;
 
             }
-        }
+
+*/
+
+}
