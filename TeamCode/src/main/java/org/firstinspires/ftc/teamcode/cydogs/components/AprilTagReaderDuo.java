@@ -92,6 +92,15 @@ public class AprilTagReaderDuo {
         return null; // or "Unknown", "None", etc.
     }
 
+    public List<AprilTagDetection> GetDetections()
+    {
+        if (aprilTag == null) return null; // protect against processor not being initialized
+
+        List<AprilTagDetection> detections = aprilTag.getDetections();
+        opMode.telemetry.addData("# AprilTags Detected", detections.size());
+        return detections;
+    }
+
     public void displayDetections(List<AprilTagDetection> detections)
     {
         for (AprilTagDetection detection : detections) {

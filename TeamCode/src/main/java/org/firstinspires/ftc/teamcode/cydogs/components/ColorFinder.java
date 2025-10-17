@@ -62,4 +62,25 @@ public class ColorFinder {
         return "Nothing";
     }
 
+    public void WhatDoISee()
+    {
+        NormalizedRGBA colors = colorSensor.getNormalizedColors();
+        float[] hsv = new float[3];
+        int r = (int) (colors.red * 255);
+        int g = (int) (colors.green * 255);
+        int b = (int) (colors.blue * 255);
+        Color.RGBToHSV(r, g, b, hsv);
+
+        opMode.telemetry.addData("Normalized Red", "%.3f", colors.red);
+        opMode.telemetry.addData("Normalized Green", "%.3f", colors.green);
+        opMode.telemetry.addData("Normalized Blue", "%.3f", colors.blue);
+        opMode.telemetry.addData("Normalized Alpha", "%.3f", colors.alpha);
+
+        opMode.telemetry.addData("RGB", "(%d, %d, %d)", r, g, b);
+
+        opMode.telemetry.addData("HSV", "H: %.1f  S: %.3f  V: %.3f", hsv[0], hsv[1], hsv[2]);
+
+
+    }
+
 }
