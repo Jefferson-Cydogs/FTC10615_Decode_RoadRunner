@@ -87,7 +87,7 @@ public class TeleopWithVelocity extends LinearOpMode {
 
     private void initializeDevices()
     {
-        RocketLauncher3000=new Launchers(this);
+        RocketLauncher3000=new LaunchersWithVelocity(this);
         ArtifactEater= new Intake(this);
         BumperCars= new Feeders(this);
 
