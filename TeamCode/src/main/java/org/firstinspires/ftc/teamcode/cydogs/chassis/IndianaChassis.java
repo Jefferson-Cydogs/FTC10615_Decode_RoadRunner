@@ -31,7 +31,7 @@ public class IndianaChassis {
     private double ticksPerRevolution=384.5;
 
     // mmPer90DegreeRotation needs to be configured for each robot based on it's chassis size
-    private double mmPer90DegreeRotation=785;
+    private double mmPer90DegreeRotation=837;
 
     private double strafeCompensation = 1.081;
 

@@ -1,0 +1,77 @@
+package org.firstinspires.ftc.teamcode.cydogs.autonomous;
+
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+
+import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
+import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
+import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
+import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
+import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
+import org.firstinspires.ftc.teamcode.cydogs.learning.AprilTagWheelie;
+import org.firstinspires.ftc.teamcode.cydogs.learning.WheelieFeeder;
+import org.firstinspires.ftc.teamcode.cydogs.learning.WheelieLauncher;
+
+
+// The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
+//    @Autonomous puts this code in the autonomous category on driver station
+@Autonomous(name= "Blue_Short_Basket_Indiana", group= "Autonomous")
+public class Blue_Basket_short_side_Indiana extends LinearOpMode {
+
+    /* declare variables
+
+     */
+    private String currentMotif;
+
+    private AprilTagWheelie IndianaTag;
+    @Override
+    public void runOpMode() {
+
+
+
+                // Put code that should run during initialization HERE in this area
+                IndianaChassis wheels = new IndianaChassis(this);
+                wheels.InitializeAuton();
+                Launchers shooter = new Launchers(this);
+                shooter.initLauncher();
+                Feeders pusher = new Feeders(this);
+                ColorLED light = new ColorLED(this,"LauncherLED");
+        //wheelieTag = new AprilTagWheelie(this);
+       // wheelieTag.initAprilTag();
+                // Wait for the start button to be pressed on the driver station
+                waitForStart();
+
+                if (opModeIsActive()) {
+                    light.SetColor(0.91);
+                    //    sleep(100);
+                    //purple (0.91)
+                    wheels.MoveStraight(1800, 0.55, 100);
+                    wheels.RotateLeft(50, 0.55, 500);
+                    //This is where we would scan the obelisk
+                   // currentMotif = wheelieTag.telemetryAprilTag();
+                    telemetry.addData("Found Motif: ", currentMotif);
+                    telemetry.update();
+                    sleep(1000);
+                    wheels.RotateLeft(50, 0.55, 500);
+                    wheels.MoveStraight(1567, 0.55, 150);
+                    shooter.runAtPower(0.7);
+                    sleep(3530);
+                    pusher.MoveLeftBumper();
+                    sleep(2300);
+                    pusher.MoveLeftBumper();
+                    sleep(2300);
+                    pusher.MoveRightBumper();
+                    sleep(2000);
+                    shooter.turnPowerOff();
+                    wheels.MoveStraight(-700, 0.55, 100);
+                    wheels.RotateLeft(125, 0.55, 100);
+                    wheels.MoveStraight(-1800, .55, 100);
+                    //  wheels.StrafeRight(1600,.55,100);
+
+
+                }
+
+
+    }
+
+}
