@@ -61,7 +61,7 @@ public class TeleopWithVelocity extends LinearOpMode {
 
         if(gamepad2.y)
         {
-           RocketLauncher3000.runAtPower(0.59);
+           RocketLauncher3000.runAtPower(0.3);
         }
         if(gamepad2.right_bumper) {
             BumperCars.MoveRightBumper();
