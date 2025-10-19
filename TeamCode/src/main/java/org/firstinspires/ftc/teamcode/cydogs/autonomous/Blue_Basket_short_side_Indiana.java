@@ -31,13 +31,11 @@ public class Blue_Basket_short_side_Indiana extends LinearOpMode {
 
                 // Put code that should run during initialization HERE in this area
                 IndianaChassis wheels = new IndianaChassis(this);
-                wheels.InitializeAuton();
+                wheels.InitializeAutonomous();
                 Launchers shooter = new Launchers(this);
                 shooter.initLauncher();
                 Feeders pusher = new Feeders(this);
                 ColorLED light = new ColorLED(this,"LauncherLED");
-        //wheelieTag = new AprilTagWheelie(this);
-       // wheelieTag.initAprilTag();
                 // Wait for the start button to be pressed on the driver station
                 waitForStart();
 
@@ -46,13 +44,13 @@ public class Blue_Basket_short_side_Indiana extends LinearOpMode {
                     //    sleep(100);
                     //purple (0.91)
                     wheels.MoveStraight(1800, 0.55, 100);
-                    wheels.RotateLeft(50, 0.55, 500);
+                    wheels.RotateLeft(95, 0.55, 500);
                     //This is where we would scan the obelisk
                    // currentMotif = wheelieTag.telemetryAprilTag();
                     telemetry.addData("Found Motif: ", currentMotif);
                     telemetry.update();
                     sleep(1000);
-                    wheels.RotateLeft(50, 0.55, 500);
+                    wheels.RotateLeft(95, 0.55, 500);
                     wheels.MoveStraight(1567, 0.55, 150);
                     shooter.runAtPower(0.7);
                     sleep(3530);
@@ -64,8 +62,8 @@ public class Blue_Basket_short_side_Indiana extends LinearOpMode {
                     sleep(2000);
                     shooter.turnPowerOff();
                     wheels.MoveStraight(-700, 0.55, 100);
-                    wheels.RotateLeft(125, 0.55, 100);
-                    wheels.MoveStraight(-1800, .55, 100);
+                    wheels.RotateLeft(150, 0.55, 100);
+                    wheels.MoveStraight(1800, .55, 100);
                     //  wheels.StrafeRight(1600,.55,100);
 
 

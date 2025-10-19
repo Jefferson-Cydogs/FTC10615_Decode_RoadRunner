@@ -35,7 +35,7 @@ public class ColorFinder {
 
 
 
-    public String SeeColor(TargetColor targetColor) {
+    public boolean SeeColor(TargetColor targetColor) {
         int consecutiveHits = 0;
         int escapeCounter = 0;
 
@@ -55,11 +55,11 @@ public class ColorFinder {
             }
 
             if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) {
-                return targetColor.toString();
+                return true;
             }
         }
 
-        return "Nothing";
+        return false;
     }
 
     public void WhatDoISee()
