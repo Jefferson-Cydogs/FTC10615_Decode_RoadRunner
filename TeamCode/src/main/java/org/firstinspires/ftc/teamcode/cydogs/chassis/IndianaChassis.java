@@ -12,26 +12,31 @@ public class IndianaChassis {
     public DcMotor FrontRightWheel;
     public DcMotor BackLeftWheel;
     public DcMotor BackRightWheel;
+    private double highSpeedDrive = 0.7;
+    private double lowSpeedDrive = 0.3;
+    private double rotateSpeedDrive = 0.5;
+    private final double DriveControlDeadZone = 0.05;
     private float gamepad1_RightStickYValue;
     private float gamepad1_RightStickXValue;
     private float gamepad1_LeftStickYValue;
     private float gamepad1_LeftStickXValue;
     private float gamepad1_TriggersValue;
+    private double FastStraight;
     private double Straight;
+    private double FastStrafe;
     private double Strafe;
     private double Rotate;
-    private double FastStraight;
-    private double FastStrafe;
-    private double highSpeedDrive = 0.7;
-    private double lowSpeedDrive = 0.3;
-    private double rotateSpeedDrive = 0.5;
+    private double FrontLeftPower;
+    private double FrontRightPower;
+    private double BackLeftPower;
+    private double BackRightPower;
     private LinearOpMode myOpMode;
-    private int WheelDiameter=104;
-    private int RPM = 435;
-    private double ticksPerRevolution=384.5;
+    private final int WheelsDiameter =104;
+    private final int MotorsRPM = 435;
+    private final double MotorsTicksPerRevolution =384.5;
 
     // mmPer90DegreeRotation needs to be configured for each robot based on it's chassis size
-    private double mmPer90DegreeRotation=785;
+    private double mmPer90DegreesRotation=785;
 
     private double strafeCompensation = 1.081;
 
@@ -39,8 +44,8 @@ public class IndianaChassis {
 
     // This is the constructor for the class.  It takes a parameter for currentOp, which allows
     //   it to store and use the current op mode.  The four wheels are initialized here.
-    public IndianaChassis(LinearOpMode currentOp){
-
+    public IndianaChassis(LinearOpMode currentOp)
+    {
         // The op mode is important code provided by first.  It has the hardwareMap, sleep function,
         //   and telemetry functions.
         myOpMode = currentOp;
@@ -48,19 +53,18 @@ public class IndianaChassis {
 
         // This gets the devices from the configuration on the robot.
         //    This call basically says "Get me the thing called FrontRightWheel from the
-        //    configuration, and trust me it can be mapped to the DCMotor class.  If it's
+        //    configuration, and trust me it can be mapped to the DCMotor class. If it's
         //    not a motor, then code later on will throw errors when it tries to do motor
         //    things with a non motor.
-        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
-        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
         FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
+        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
         BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
+        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
 
-        BackLeftWheel.setDirection(DcMotor.Direction.FORWARD);
         FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
+        //FrontRightWheel.setDirection(DcMotor.Direction.FORWARD); * not needed as FORWARD is default
+        //BackLeftWheel.setDirection(DcMotor.Direction.FORWARD); * not needed as FORWARD is default
         BackRightWheel.setDirection(DcMotor.Direction.REVERSE);
-        FrontRightWheel.setDirection(DcMotor.Direction.FORWARD);
-
     }
 
     public void InitializeTeleop(double highSpeed, double lowSpeed, double rotateSpeed)
@@ -68,61 +72,63 @@ public class IndianaChassis {
         highSpeedDrive = highSpeed;
         lowSpeedDrive = lowSpeed;
         rotateSpeedDrive = rotateSpeed;
-        // > Set motors' ZeroPower behavior
-        BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        // Set motors' ZeroPower behavior
         FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         FrontRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        // > Ensure motors are stopped; necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
-        FrontLeftWheel.setPower(0);
-        FrontRightWheel.setPower(0);
-        BackLeftWheel.setPower(0);
-        BackRightWheel.setPower(0);
-        // > Clear Encoders of prior data; necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
-        BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+
+        // Clear Encoders of prior data; only necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
+        /*FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default)
-        BackLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        BackRightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+
+        // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default); suggested if Auton was using RUN_TO_POSITION
         FrontLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontRightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BackLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        BackRightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
+        // Ensure motors are stopped, for predictable behavior and avoiding unintended motion
+        FrontLeftWheel.setPower(0);
+        FrontRightWheel.setPower(0);
+        BackLeftWheel.setPower(0);
+        BackRightWheel.setPower(0);
     }
 
-    public void InitializeAuton()
+    public void InitializeAutonomous()
     {
-        FrontRightWheel.setPower(0);
-        BackRightWheel.setPower(0);
-        FrontLeftWheel.setPower(0);
-        BackLeftWheel.setPower(0);
-
-        // Set the direction of the wheels.  Because of how the wheels are installed, one side
-        //   has to be reverse.
-
-
-        // > Set motors' ZeroPower behavior
+        // Set motors' ZeroPower behavior
         FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         FrontRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // > Clear Encoders of prior data
+        // Clear Encoders of prior data
         FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        // Set the current position as initial one
         FrontLeftWheel.setTargetPosition(0);
         FrontRightWheel.setTargetPosition(0);
         BackLeftWheel.setTargetPosition(0);
         BackRightWheel.setTargetPosition(0);
 
-        // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default)
+        // Set some motors' modes different from RUN_WITHOUT_ENCODER (default)
         FrontLeftWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         FrontRightWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BackLeftWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BackRightWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        // Ensure motors are stopped, for predictable behavior and avoiding unintended motion
+        FrontLeftWheel.setPower(0);
+        FrontRightWheel.setPower(0);
+        BackLeftWheel.setPower(0);
+        BackRightWheel.setPower(0);
     }
 
     public void TraditionalTeleopDrive()
@@ -135,102 +141,80 @@ public class IndianaChassis {
 
         if (gamepad1_RightStickYValue != 0 || gamepad1_RightStickXValue != 0 || gamepad1_LeftStickYValue != 0 || gamepad1_LeftStickXValue != 0 || gamepad1_TriggersValue != 0)
         {
+            // Set robot's fast move forward(+) or backwards(-) power
+            FastStraight = highSpeedDrive * (0.75 * Math.pow(gamepad1_RightStickYValue, 3) + 0.25 * gamepad1_RightStickYValue);
             // Set robot's move forward(+) or backwards(-) power
-            Straight = lowSpeedDrive * (0.75 * Math.pow(gamepad1_LeftStickYValue, 3) + 0.25 * gamepad1_LeftStickYValue);
+            Straight = lowSpeedDrive * gamepad1_LeftStickYValue;
+            // Set robot's fast strafe right(+) or left(-) power
+            FastStrafe = highSpeedDrive * (0.75 * Math.pow(gamepad1_RightStickXValue, 3) + 0.25 * gamepad1_RightStickXValue);
             // Set robot's strafe right(+) or left(-) power
-            Strafe = lowSpeedDrive * (0.75 * Math.pow(gamepad1_LeftStickXValue, 3) + 0.25 * gamepad1_LeftStickXValue);
+            Strafe = lowSpeedDrive * gamepad1_LeftStickXValue;
             // Set robot's clockwise(+) or counter-clockwise(-) rotation power
             Rotate = rotateSpeedDrive * (0.75 * Math.pow(gamepad1_TriggersValue, 3) + 0.25 * gamepad1_TriggersValue);
-            // Set robot's fast move forward(+) or backwards(-) power
-            FastStraight = highSpeedDrive * gamepad1_RightStickYValue;
-            // Set robot's fast strafe right(+) or left(-) power
-            FastStrafe = highSpeedDrive * gamepad1_RightStickXValue;
             // MOve all wheels based on the above calculations, using formulas for Mecanum wheels.
-            BackLeftWheel.setPower(Straight + FastStraight - Strafe - FastStrafe + Rotate);
-            BackRightWheel.setPower(Straight + FastStraight + Strafe + FastStrafe - Rotate);
-            FrontLeftWheel.setPower(Straight + FastStraight + Strafe + FastStrafe + Rotate);
-            FrontRightWheel.setPower(Straight + FastStraight - Strafe - FastStrafe - Rotate);
+            FrontLeftWheel.setPower(FastStraight + Straight + FastStrafe + Strafe + Rotate);
+            FrontRightWheel.setPower(FastStraight + Straight - FastStrafe - Strafe - Rotate);
+            BackLeftWheel.setPower(FastStraight + Straight - FastStrafe - Strafe + Rotate);
+            BackRightWheel.setPower(FastStraight + Straight + FastStrafe + Strafe - Rotate);
         }
         else
         {
             // Stop all motors if their controls are not touched
-            BackLeftWheel.setPower(0);
-            BackRightWheel.setPower(0);
             FrontLeftWheel.setPower(0);
             FrontRightWheel.setPower(0);
+            BackLeftWheel.setPower(0);
+            BackRightWheel.setPower(0);
         }
     }
-
-
-    private float forward;
-    private float strafe;
-    private float rotate;
 
     public void OptimizedTeleopDrive()
     {
-        double deadZone = 0.05;
-        double leftFrontPower;
-        double rightFrontPower;
-        double leftBackPower;
-        double rightBackPower;
-        double mySpeedConstant;
+        Straight = -myOpMode.gamepad1.left_stick_y;
+        FastStraight = -myOpMode.gamepad1.right_stick_y;
+        Strafe = myOpMode.gamepad1.left_stick_x;
+        FastStrafe = myOpMode.gamepad1.right_stick_x;
+        Rotate = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
 
-        if(myOpMode.gamepad1.right_stick_y < myOpMode.gamepad1.left_stick_y ||
-                myOpMode.gamepad1.right_stick_x > myOpMode.gamepad1.left_stick_x)
-        {
-            forward = -myOpMode.gamepad1.right_stick_y;
-            strafe = myOpMode.gamepad1.right_stick_x;
-            mySpeedConstant = highSpeedDrive;
-        }
-        else
-        {
-            forward = -myOpMode.gamepad1.left_stick_y;
-            strafe = myOpMode.gamepad1.left_stick_x;
-            mySpeedConstant = lowSpeedDrive;
-        }
-
-        rotate = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
-
-
-        forward = abs(forward) > deadZone ? (float) (mySpeedConstant * ((0.75 * pow(forward, 3)) + (0.25 * forward))) : 0;
-        strafe = abs(strafe) > deadZone ? (float) (mySpeedConstant * ((0.75 * pow(strafe, 3)) + (0.25 * strafe))) : 0;
-        rotate = abs(rotate) > deadZone ? (float) (rotateSpeedDrive * ((0.75 * pow(rotate, 3)) + (0.25 * rotate))) : 0;
-        leftFrontPower = forward + strafe + rotate;
-        rightFrontPower = forward - strafe - rotate;
-        leftBackPower = forward - strafe + rotate;
-        rightBackPower = forward + strafe - rotate;
+        FastStraight = abs(FastStraight) > DriveControlDeadZone ? (float) (highSpeedDrive * (0.75 * pow(FastStraight, 3) + 0.25 * FastStraight)) : 0;
+        FastStrafe = abs(FastStrafe) > DriveControlDeadZone ? (float) (highSpeedDrive * (0.75 * pow(FastStrafe, 3) + 0.25 * FastStrafe)) : 0;
+        Rotate = abs(Rotate) > DriveControlDeadZone ? (float) (rotateSpeedDrive * (0.75 * pow(Rotate, 3) + 0.25 * Rotate)): 0;
+        Straight = abs(Straight) > DriveControlDeadZone ? (float) (lowSpeedDrive * Straight) : 0;
+        Strafe = abs(Strafe) > DriveControlDeadZone ? (float) (lowSpeedDrive * Strafe) : 0;
+        FrontLeftPower = FastStraight + Straight + FastStrafe + Strafe + Rotate;
+        FrontRightPower = FastStraight + Straight - FastStrafe - Strafe - Rotate;
+        BackLeftPower = FastStraight + Straight - FastStrafe - Strafe + Rotate;
+        BackRightPower = FastStraight + Straight + FastStrafe + Strafe - Rotate;
         // Normalize powers if any exceed 1.0
-        double maxPower = max(abs(leftFrontPower),
-                max(abs(rightFrontPower),
-                        max(abs(leftBackPower), abs(rightBackPower))));
+        double maxPower = max(abs(FrontLeftPower),
+                              max(abs(FrontRightPower),
+                                  max(abs(BackLeftPower), abs(BackRightPower))));
         if (maxPower > 1.0) {
-            leftFrontPower /= maxPower;
-            rightFrontPower /= maxPower;
-            leftBackPower /= maxPower;
-            rightBackPower /= maxPower;
+            FrontLeftPower /= maxPower;
+            FrontRightPower /= maxPower;
+            BackLeftPower /= maxPower;
+            BackRightPower /= maxPower;
         }
-        FrontLeftWheel.setPower(leftFrontPower);
-        FrontRightWheel.setPower(rightFrontPower);
-        BackLeftWheel.setPower(leftBackPower);
-        BackRightWheel.setPower(rightBackPower);
-
+        FrontLeftWheel.setPower(FrontLeftPower);
+        FrontRightWheel.setPower(FrontRightPower);
+        BackLeftWheel.setPower(BackLeftPower);
+        BackRightWheel.setPower(BackRightPower);
     }
 
-    // This function strafes left.
-    public void StrafeLeft(int mmToTarget, double VelocityPercentage, int WaitTime){
-        StrafeRight(-mmToTarget, VelocityPercentage, WaitTime);
-    }
-
-    // this function strafes right
-    public void StrafeRight(int mmToTarget, double VelocityPercentage, int WaitTime) {
+    /**
+     * Move forward(+) or backwards(-) until reaching Position
+     */
+    public void MoveStraight(int mmToTarget, double VelocityPercentage, int WaitTime)
+    {
         double TicksToTarget;
         double TicksPerSecond;
 
-        TicksToTarget = (mmToTarget / (WheelDiameter * Math.PI)) * ticksPerRevolution*strafeCompensation;
-        TicksPerSecond = ((VelocityPercentage * RPM) / 60) * ticksPerRevolution;
+        TicksToTarget = (mmToTarget / (WheelsDiameter * Math.PI)) * MotorsTicksPerRevolution;
+        TicksPerSecond = VelocityPercentage * ((MotorsRPM / 60) * MotorsTicksPerRevolution);
+        //myOpMode.telemetry.addData("ticksToTarget", TicksToTarget);
+        //myOpMode.telemetry.update();
         FrontLeftWheel.setTargetPosition((int) (FrontLeftWheel.getCurrentPosition() + TicksToTarget));
-        FrontRightWheel.setTargetPosition((int) (FrontRightWheel.getCurrentPosition() - TicksToTarget));
-        BackLeftWheel.setTargetPosition((int) (BackLeftWheel.getCurrentPosition() - TicksToTarget));
+        FrontRightWheel.setTargetPosition((int) (FrontRightWheel.getCurrentPosition() + TicksToTarget));
+        BackLeftWheel.setTargetPosition((int) (BackLeftWheel.getCurrentPosition() + TicksToTarget));
         BackRightWheel.setTargetPosition((int) (BackRightWheel.getCurrentPosition() + TicksToTarget));
 
         // The (DcMotorEx) is called casting.  It says take the FrontLeftWheel, and while we know it's a DcMotor
@@ -243,68 +227,78 @@ public class IndianaChassis {
         ((DcMotorEx) BackLeftWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) BackRightWheel).setVelocity(TicksPerSecond);
 
-        while (myOpMode.opModeIsActive() && FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy()) {
+        while (myOpMode.opModeIsActive() &&
+               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy())
+        {
             // Do nothing until at least 1 wheel reaches TargetPosition
         }
         myOpMode.sleep(WaitTime);
-
     }
 
-    /**
-     * Move forward(+) or backwards(-) until reaching Position
-     */
-    public void MoveStraight(int mmToTarget, double VelocityPercentage, int WaitTime) {
+    // Strafes right until reaching Position
+    public void StrafeRight(int mmToTarget, double VelocityPercentage, int WaitTime)
+    {
         double TicksToTarget;
         double TicksPerSecond;
 
-        TicksToTarget = (mmToTarget / (WheelDiameter * Math.PI)) * (ticksPerRevolution);
-        TicksPerSecond = ((VelocityPercentage * RPM) / 60) * ticksPerRevolution;
-        // myOpMode.telemetry.addData("ticksToTarget", TicksToTarget);
-        //myOpMode.telemetry.update();
+        TicksToTarget = ((mmToTarget / (WheelsDiameter * Math.PI)) * MotorsTicksPerRevolution) * strafeCompensation;
+        TicksPerSecond = VelocityPercentage * ((MotorsRPM / 60) * MotorsTicksPerRevolution);
         FrontLeftWheel.setTargetPosition((int) (FrontLeftWheel.getCurrentPosition() + TicksToTarget));
-        FrontRightWheel.setTargetPosition((int) (FrontRightWheel.getCurrentPosition() + TicksToTarget));
-        BackLeftWheel.setTargetPosition((int) (BackLeftWheel.getCurrentPosition() + TicksToTarget));
+        FrontRightWheel.setTargetPosition((int) (FrontRightWheel.getCurrentPosition() - TicksToTarget));
+        BackLeftWheel.setTargetPosition((int) (BackLeftWheel.getCurrentPosition() - TicksToTarget));
         BackRightWheel.setTargetPosition((int) (BackRightWheel.getCurrentPosition() + TicksToTarget));
+
         ((DcMotorEx) FrontLeftWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) FrontRightWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) BackLeftWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) BackRightWheel).setVelocity(TicksPerSecond);
-        while (myOpMode.opModeIsActive() && FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy()) {
+
+        while (myOpMode.opModeIsActive() &&
+               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy())
+        {
             // Do nothing until at least 1 wheel reaches TargetPosition
         }
         myOpMode.sleep(WaitTime);
     }
 
-    public void RotateRight(double degree, double VelocityPercentage, int WaitTime){
-
-        RotateLeft(-1*degree, VelocityPercentage, WaitTime);
+    // This function strafes left.
+    public void StrafeLeft(int mmToTarget, double VelocityPercentage, int WaitTime){
+        StrafeRight(-mmToTarget, VelocityPercentage, WaitTime);
     }
 
-    public void RotateLeft(double degree, double VelocityPercentage, int WaitTime) {
+    public void RotateLeft(double degrees, double VelocityPercentage, int WaitTime) {
         double mmToTarget;
         double TicksToTarget;
         double TicksPerSecond;
 
         // converts degree to a mm distance
-        mmToTarget = degree * (mmPer90DegreeRotation / 90.0);
-        // diamter of new robot wheels =
-        // name is
+        mmToTarget = degrees * (mmPer90DegreesRotation / 90.0);
+        // diameter of new robot wheels =
         // uses the formula we've always had for rotation
-        TicksToTarget = (mmToTarget / (WheelDiameter * Math.PI)) * ticksPerRevolution;
-        TicksPerSecond = ((VelocityPercentage * RPM) / 60) * ticksPerRevolution;
+        TicksToTarget = (mmToTarget / (WheelsDiameter * PI)) * MotorsTicksPerRevolution;
+        TicksPerSecond = VelocityPercentage * ((MotorsRPM / 60) * MotorsTicksPerRevolution);
 
         FrontLeftWheel.setTargetPosition((int) (FrontLeftWheel.getCurrentPosition() - TicksToTarget));
         FrontRightWheel.setTargetPosition((int) (FrontRightWheel.getCurrentPosition() + TicksToTarget));
         BackLeftWheel.setTargetPosition((int) (BackLeftWheel.getCurrentPosition() - TicksToTarget));
         BackRightWheel.setTargetPosition((int) (BackRightWheel.getCurrentPosition() + TicksToTarget));
+
         ((DcMotorEx) FrontLeftWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) FrontRightWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) BackLeftWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) BackRightWheel).setVelocity(TicksPerSecond);
 
-        while (myOpMode.opModeIsActive() && FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy()) {
+        while (myOpMode.opModeIsActive() &&
+               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy())
+        {
             // Do nothing until at least 1 wheel reaches TargetPosition
         }
         myOpMode.sleep(WaitTime);
     }
+
+    public void RotateRight(double degree, double VelocityPercentage, int WaitTime)
+    {
+        RotateLeft(-1*degree, VelocityPercentage, WaitTime);
+    }
+
 }

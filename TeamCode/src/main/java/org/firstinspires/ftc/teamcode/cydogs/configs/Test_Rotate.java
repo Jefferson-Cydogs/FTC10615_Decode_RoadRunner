@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.cydogs.configs;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
+import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
 
 
@@ -17,8 +18,8 @@ public class Test_Rotate extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-        WheelieChassis wheels = new WheelieChassis(this);
-
+        IndianaChassis wheels = new IndianaChassis(this);
+        wheels.InitializeAuton();
         // Wait for the start button to be pressed on the driver station
         waitForStart();
 
