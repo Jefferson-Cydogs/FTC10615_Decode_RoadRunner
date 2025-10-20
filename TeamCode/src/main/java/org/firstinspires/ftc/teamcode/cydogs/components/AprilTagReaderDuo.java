@@ -20,6 +20,7 @@ public class AprilTagReaderDuo {
     private int leftMost=0;
     private int rightMost=0;
     private static final boolean USE_WEBCAM = true;
+    public int AprilTagId;
 
 
 
@@ -82,6 +83,7 @@ public class AprilTagReaderDuo {
             }
         }
 
+
         if (selectedTag != null) {
             switch (selectedTag.id) {
                 case 21: return "GPP";
@@ -91,6 +93,35 @@ public class AprilTagReaderDuo {
         }
 
         return null; // or "Unknown", "None", etc.
+    }
+
+    public  AprilTagDetection AprilTagTeam(String team){
+        // need a variable to store target apriltag ID in
+
+        if (team=="Red"){
+            // set target ID to be correct number
+        AprilTagId=24;
+        } else if (team=="Blue") {
+            AprilTagId=25;
+        }
+        // else set it to the other number
+        List<AprilTagDetection> AprilTagList = aprilTag.getDetections();
+        displayDetections(AprilTagList);
+        // create a variable to store a list of detections
+        // call GetDetections to return a list of april tags found
+        // call display detections to write them to the telemtry
+
+        for (AprilTagDetection detection : AprilTagList) {
+            if (detection.metadata == null) continue;
+
+            if (detection.id==AprilTagId){
+                return detection;
+            }
+            // check to see if current detection is the correct ID
+            // if so, return it
+
+        }
+       return null; // if my code makes it here, I didn't find the right one.  return null;
     }
 
     public List<AprilTagDetection> GetDetections()
