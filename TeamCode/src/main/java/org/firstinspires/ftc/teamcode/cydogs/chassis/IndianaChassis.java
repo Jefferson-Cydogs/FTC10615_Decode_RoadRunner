@@ -80,10 +80,10 @@ public class IndianaChassis {
         BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         // Clear Encoders of prior data; only necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
-        /*FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);*/
+        BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default); suggested if Auton was using RUN_TO_POSITION
         FrontLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -300,5 +300,9 @@ public class IndianaChassis {
     {
         RotateLeft(-1*degree, VelocityPercentage, WaitTime);
     }
+
+
+
+
 
 }
