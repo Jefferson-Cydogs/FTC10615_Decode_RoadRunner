@@ -19,7 +19,7 @@ public class Test_Rotate extends LinearOpMode {
     public void runOpMode() {
 
         IndianaChassis wheels = new IndianaChassis(this);
-        wheels.InitializeAuton();
+        wheels.InitializeAutonomous();
         // Wait for the start button to be pressed on the driver station
         waitForStart();
 

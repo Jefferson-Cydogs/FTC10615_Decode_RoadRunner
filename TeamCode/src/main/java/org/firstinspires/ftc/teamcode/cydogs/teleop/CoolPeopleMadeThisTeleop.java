@@ -4,11 +4,13 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
+import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
 @TeleOp
@@ -23,6 +25,9 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
     private IndianaChassis wheels;
     private ColorLED LauncherLED;
 
+    private AprilTagReaderDuo tagReader;
+
+    private AprilTagDetection currentDetection;
 
     @Override
     public void runOpMode() {
@@ -54,7 +59,9 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
     {
         if(gamepad1.triangle)
         {
-            // do something if triangle is pushed
+            currentDetection = tagReader.GetScoringTag("Red");
+
+
         }
         else if(gamepad1.square)
         {
@@ -84,22 +91,17 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         if(gamepad2.left_trigger>.4) {
             ArtifactEater.turnLeftIntakeon();
         }
-        else {
-            ArtifactEater.turnleftintakeoff();
-        }
-        if(gamepad2.dpad_left){
+        else if(gamepad2.dpad_left){
             ArtifactEater.reverseleftintake();
         }
         else {
             ArtifactEater.turnleftintakeoff();
         }
+
         if(gamepad2.dpad_right){
             ArtifactEater.reverserightintake();
         }
-        else {
-            ArtifactEater.turnrightintakeoff();
-        }
-        if(gamepad2.right_trigger>.4){
+        else if(gamepad2.right_trigger>.4){
             ArtifactEater.turnRightIntakeon();
         }
         else {
@@ -116,6 +118,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         ArtifactEater= new Intake(this);
         BumperCars= new Feeders(this);
         LauncherLED= new ColorLED(this,"LauncherLED");
+        tagReader = new AprilTagReaderDuo(this, "Red");
 
     }
 

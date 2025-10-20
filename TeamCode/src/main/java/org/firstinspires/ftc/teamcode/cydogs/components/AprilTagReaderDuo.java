@@ -95,7 +95,7 @@ public class AprilTagReaderDuo {
         return null; // or "Unknown", "None", etc.
     }
 
-    public  AprilTagDetection AprilTagTeam(String team){
+    public AprilTagDetection GetScoringTag(String team){
         // need a variable to store target apriltag ID in
 
         if (team=="Red"){
@@ -149,32 +149,33 @@ public class AprilTagReaderDuo {
     }
 
 
-    public void turnToFaceAprilTag(AprilTagDetection tag, double turnPower, double angleThresholdDeg) {
+    public void turnToFaceAprilTag(double turnPower, double angleThresholdDeg, IndianaChassis myChassis, String team) {
         // Get the yaw angle to the tag in degrees.
+        AprilTagDetection tag = GetScoringTag(team);
         double yaw = Math.toDegrees(tag.ftcPose.yaw); // `ftcPose.yaw` is in radians
 
         // Debug print
-        myOpMode.telemetry.addData("Yaw to tag", yaw);
+        opMode.telemetry.addData("Yaw to tag", yaw);
         //myOpMode.telemetry.update();
 
         // Turn until facing the tag (yaw ≈ 0)
-        while (myOpMode.opModeIsActive() && Math.abs(yaw) > angleThresholdDeg) {
+        while (opMode.opModeIsActive() && Math.abs(yaw) > angleThresholdDeg) {
             if (yaw > 0) {
                 // Tag is to the right → turn right
-                setTurnPower(turnPower);
+                setTurnPower(turnPower,myChassis);
             } else {
                 // Tag is to the left → turn left
-                setTurnPower(-turnPower);
+                setTurnPower(-turnPower,myChassis);
             }
 
             // Update detection
             // (this depends on how you're using the vision pipeline; might involve re-detecting or using an updated tag pose)
-            updateAprilTag(); // Placeholder - write this based on your vision code
+            tag = GetScoringTag(team); // Placeholder - write this based on your vision code
             yaw = Math.toDegrees(tag.ftcPose.yaw);
         }
 
         // Stop the robot
-        stopMotors();
+        stopMotors(myChassis);
     }
 
     private void setTurnPower(double power, IndianaChassis myChassis) {
