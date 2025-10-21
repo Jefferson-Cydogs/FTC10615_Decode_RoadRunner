@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
@@ -24,20 +25,29 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     private IndianaChassis wheels;
     private ColorLED LauncherLED;
+    private ColorLED RightLED;
+    private ColorLED LeftLED;
 
     private AprilTagReaderDuo tagReader;
 
     private AprilTagDetection currentDetection;
 
+    private double currentLauncherPower = 0.5;
+
+    //75% launcher velocity from long distance
+    //65% launcher from top of short distance
+
+
     @Override
     public void runOpMode() {
-
+        double voltage;
         // Execute initialization actions here
         wheels = new IndianaChassis(this);
         wheels.InitializeTeleop(.7,.3,.5);
 
         initializeDevices();
         initializePositions();
+        VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         waitForStart();
         while (opModeIsActive()) {
@@ -46,26 +56,37 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             manageDriverControls();
             manageManipulatorControls();
 
-            if(RocketLauncher3000.CheckMotor(0.59)){
-                LauncherLED.SetColor(0.5);
+             voltage = voltageSensor.getVoltage();
+
+            telemetry.addData("Battery Voltage", voltage);
+
+            if(RocketLauncher3000.CheckMotor(currentLauncherPower)){
+                LauncherLED.SetColor(0.1);
             }
             else {
                 LauncherLED.SetColor(0);
             }
+            telemetry.update();
         }
     }
 
     private void manageDriverControls()
     {
-        if(gamepad1.triangle)
+        if(gamepad1.y)
         {
-            currentDetection = tagReader.GetScoringTag("Red");
-
+            //currentDetection = tagReader.GetScoringTag("Red");
+            currentLauncherPower += 0.05;
+            RocketLauncher3000.runAtPower(currentLauncherPower);
+            telemetry.addData("newPower:",currentLauncherPower);
+            sleep(300);
 
         }
-        else if(gamepad1.square)
+        else if(gamepad1.a)
         {
-            // do something if square is pushed
+            currentLauncherPower -= 0.05;
+            RocketLauncher3000.runAtPower(currentLauncherPower);
+            telemetry.addData("newPower:",currentLauncherPower);
+            sleep(300);
         }
 
     }
@@ -78,7 +99,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
         if(gamepad2.y)
         {
-           RocketLauncher3000.runAtPower(0.59);
+           RocketLauncher3000.runAtPower(currentLauncherPower);
         }
         if(gamepad2.right_bumper) {
             BumperCars.MoveRightBumper();
@@ -118,13 +139,17 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         ArtifactEater= new Intake(this);
         BumperCars= new Feeders(this);
         LauncherLED= new ColorLED(this,"LauncherLED");
-        tagReader = new AprilTagReaderDuo(this, "Red");
+        RightLED = new ColorLED(this,"RightLED");
+        LeftLED = new ColorLED(this,"LeftLED");
+       // tagReader = new AprilTagRenew aderDuo(this, "Red");
 
     }
 
     private void initializePositions()
     {
         LauncherLED.SetColor(0);
+        RightLED.SetColor(.4);
+        LeftLED.SetColor(.7);
     }
 
 }

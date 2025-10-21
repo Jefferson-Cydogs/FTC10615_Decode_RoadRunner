@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 
 
+@Disabled
 @TeleOp
 public class CoolPeopleMadeThisTeleopNoLaunchers extends LinearOpMode {
 

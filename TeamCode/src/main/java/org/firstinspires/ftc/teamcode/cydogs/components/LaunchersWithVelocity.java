@@ -5,7 +5,9 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class LaunchersWithVelocity {
     public static final double Max_Ticks=312.0/60.0*384.5;
-    public double velocityIn= 0.6;
+    //public static final double Max_Ticks=5990.4/60.0*537.7;
+    //public static final double Max_Ticks = 1125;
+    //public double velocityIn= 0.6;
     private LinearOpMode opMode;
     private DcMotorEx LeftLauncher;
     private DcMotorEx RightLauncher;
@@ -16,28 +18,29 @@ public class LaunchersWithVelocity {
 
     public LaunchersWithVelocity(LinearOpMode opMode){
         this.opMode = opMode;
-        LeftLauncher = opMode.hardwareMap.get(DcMotorEx.class,"LeftLauncher");
-        LeftLauncher.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+      //  LeftLauncher = opMode.hardwareMap.get(DcMotorEx.class,"LeftLauncher");
+      //  LeftLauncher.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         RightLauncher = opMode.hardwareMap.get(DcMotorEx.class,"RightLauncher");
         RightLauncher.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        RightLauncher.setDirection(DcMotorEx.Direction.REVERSE);
-        LeftLauncher.setDirection(DcMotorEx.Direction.REVERSE);
+        //RightLauncher.setDirection(DcMotorEx.Direction.REVERSE);
+      //  LeftLauncher.setDirection(DcMotorEx.Direction.REVERSE);
         RightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        LeftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+      //  LeftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         }
 
 
 
     public void runAtPower(double velocityIn){
         double goalVelocity=velocityIn*Max_Ticks;
-        LeftLauncher.setVelocity(goalVelocity);
+     //   LeftLauncher.setVelocity(goalVelocity);
         RightLauncher.setVelocity(goalVelocity);
     }
     public boolean CheckMotor(double TargetVelocity){
-        double CurrentLeftTicks= LeftLauncher.getVelocity();
+    //    double CurrentLeftTicks= LeftLauncher.getVelocity();
         double CurrentRightTicks= RightLauncher.getVelocity();
         double TargetTicks =TargetVelocity*Max_Ticks;
-            if (CurrentLeftTicks>=TargetTicks&&CurrentRightTicks>=TargetTicks){
+            //if (CurrentLeftTicks>=TargetTicks&&CurrentRightTicks>=TargetTicks){
+        if (CurrentRightTicks>=TargetTicks){
                 return true;
             }
             else {
@@ -45,7 +48,7 @@ public class LaunchersWithVelocity {
             }
     }
     public void turnPowerOff(){
-        LeftLauncher.setVelocity(0);
+       // LeftLauncher.setVelocity(0);
         RightLauncher.setVelocity(0);
     }
 
