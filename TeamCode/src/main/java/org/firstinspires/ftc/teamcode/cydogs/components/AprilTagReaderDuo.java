@@ -92,7 +92,7 @@ public class AprilTagReaderDuo {
             }
         }
 
-        return null; // or "Unknown", "None", etc.
+        return "GPP"; // may as well guess
     }
 
     public AprilTagDetection GetScoringTag(String team){
@@ -100,8 +100,8 @@ public class AprilTagReaderDuo {
 
         if (team=="Red"){
             // set target ID to be correct number
-        AprilTagId=24;
-        } else if (team=="Blue") {
+            AprilTagId=24;
+        } else {
             AprilTagId=25;
         }
         // else set it to the other number
