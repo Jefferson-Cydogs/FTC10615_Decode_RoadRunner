@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
+import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReader;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
@@ -62,7 +63,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             telemetry.addData("newPower:",currentLauncherPower);
 
             if(RocketLauncher3000.CheckMotor(currentLauncherPower)){
-                LauncherLED.SetColor(0.1);
+                LauncherLED.SetColor(1);
             }
             else {
                 LauncherLED.SetColor(0);
@@ -87,25 +88,37 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             RocketLauncher3000.runAtPower(currentLauncherPower);
             sleep(300);
         }
-
-    }
-    private void manageManipulatorControls()
-    {
-        if(gamepad2.a)
+        if(gamepad1.b)
         {
+
+
+        }
+    }
+    private void manageManipulatorControls() {
+        if (gamepad2.a) {
             RocketLauncher3000.turnPowerOff();
         }
 
-        if(gamepad2.y)
-        {
-           RocketLauncher3000.runAtPower(currentLauncherPower);
+        if (gamepad2.y) {
+            RocketLauncher3000.runAtPower(currentLauncherPower);
         }
-        if(gamepad2.right_bumper) {
-            BumperCars.MoveRightBumper();
+        if (gamepad2.right_bumper) {
+            BumperCars.ActivateRightBumper();
+            ArtifactEater.turnRightIntakeon();
+        } else {
+            BumperCars.DeactivateRightBumper();
+            ArtifactEater.turnrightintakeoff();
+
         }
 
+
         if(gamepad2.left_bumper) {
-            BumperCars.MoveLeftBumper();
+            BumperCars.ActivateLeftBumper();
+            ArtifactEater.turnLeftIntakeon();
+        }
+        else {
+             BumperCars.DeactivateLeftBumper();
+             ArtifactEater.turnleftintakeoff();
         }
 
         if(gamepad2.left_trigger>.4) {
@@ -140,7 +153,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         LauncherLED= new ColorLED(this,"LauncherLED");
         RightLED = new ColorLED(this,"RightLED");
         LeftLED = new ColorLED(this,"LeftLED");
-       // tagReader = new AprilTagRenew aderDuo(this, "Red");
+        tagReader = new AprilTagReaderDuo(this, "Red");
 
     }
 
