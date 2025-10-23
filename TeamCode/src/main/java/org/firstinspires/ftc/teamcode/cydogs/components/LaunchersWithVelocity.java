@@ -47,6 +47,20 @@ public class LaunchersWithVelocity {
                 return false;
             }
     }
+
+
+    public boolean CheckIfMotorIsTooStrong(double TargetVelocity){
+        //    double CurrentLeftTicks= LeftLauncher.getVelocity();
+        double CurrentRightTicks= RightLauncher.getVelocity();
+        double TargetTicks =TargetVelocity*Max_Ticks;
+        //if (CurrentLeftTicks>=TargetTicks&&CurrentRightTicks>=TargetTicks){
+        if (CurrentRightTicks>=TargetTicks*1.01){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
     public void turnPowerOff(){
        // LeftLauncher.setVelocity(0);
         RightLauncher.setVelocity(0);

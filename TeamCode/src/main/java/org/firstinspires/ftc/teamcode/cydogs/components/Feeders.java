@@ -62,5 +62,13 @@ public class Feeders {
         right_bumper.setPower(0.0);
 
     }
+    public void ReverseRightBumper()
+    {
+        right_bumper.setPower(-0.6);
+    }
+    public void ReverseLeftBumper()
+    {
+        left_bumper.setPower(-0.6);
+    }
 
 }

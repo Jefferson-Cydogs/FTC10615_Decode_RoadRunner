@@ -33,7 +33,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     private AprilTagDetection currentDetection;
 
-    private double currentLauncherPower = 0.5;
+    private double currentLauncherPower = 0.63;
 
     //75% launcher velocity from long distance
     //65% launcher from top of short distance
@@ -65,6 +65,9 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             if(RocketLauncher3000.CheckMotor(currentLauncherPower)){
                 LauncherLED.SetColor(1);
             }
+            else if(RocketLauncher3000.CheckIfMotorIsTooStrong(currentLauncherPower)){
+                LauncherLED.SetColor(.29);
+            }
             else {
                 LauncherLED.SetColor(0);
             }
@@ -90,7 +93,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         }
         if(gamepad1.b)
         {
-
+            tagReader.turnToFaceAprilTag(.4,5,wheels,"blue");
 
         }
     }
@@ -110,7 +113,9 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             ArtifactEater.turnrightintakeoff();
 
         }
-
+        if (gamepad2.x) {
+            RocketLauncher3000.runAtPower(-0.2);
+        }
 
         if(gamepad2.left_bumper) {
             BumperCars.ActivateLeftBumper();
