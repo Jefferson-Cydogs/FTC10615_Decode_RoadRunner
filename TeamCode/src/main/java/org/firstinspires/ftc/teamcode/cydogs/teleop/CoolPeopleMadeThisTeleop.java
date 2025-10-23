@@ -62,11 +62,11 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             telemetry.addData("Battery Voltage", voltage);
             telemetry.addData("newPower:",currentLauncherPower);
 
-            if(RocketLauncher3000.CheckMotor(currentLauncherPower)){
-                LauncherLED.SetColor(1);
-            }
-            else if(RocketLauncher3000.CheckIfMotorIsTooStrong(currentLauncherPower)){
+            if(RocketLauncher3000.CheckIfMotorIsTooStrong(currentLauncherPower)){
                 LauncherLED.SetColor(.29);
+            }
+            else if(RocketLauncher3000.CheckMotor(currentLauncherPower)){
+                LauncherLED.SetColor(1);
             }
             else {
                 LauncherLED.SetColor(0);
