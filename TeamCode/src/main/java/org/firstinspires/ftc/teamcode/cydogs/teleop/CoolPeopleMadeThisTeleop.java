@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
+import org.firstinspires.ftc.teamcode.cydogs.components.ColorFinderGP;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
@@ -19,8 +20,9 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
     private LaunchersWithVelocity RocketLauncher3000;
     private Feeders BumperCars;
     private Intake ArtifactEater;
-
+    private String FindingColorLeft;
     private IndianaChassis wheels;
+    private String FindingColorRight;
     private ColorLED LauncherLED;
 
 
@@ -46,6 +48,10 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             }
             else {
                 LauncherLED.SetColor(0);
+
+            }
+            if (FindingColorLeft=="Green"){
+
             }
         }
     }
@@ -116,7 +122,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         ArtifactEater= new Intake(this);
         BumperCars= new Feeders(this);
         LauncherLED= new ColorLED(this,"LauncherLED");
-
+        ColorFinderGP myColorFinder = new ColorFinderGP(this,"");
     }
 
     private void initializePositions()
