@@ -47,11 +47,11 @@ public class RedSideLongIndiana extends LinearOpMode {
             Chassis.MoveStraight(1800,0.5,500);
             launcher.runAtPower(0.6);
             sleep(3530);
-            BothFeeders.MoveBumper();
+            BothFeeders.MoveBumpers();
             sleep(2300);
-            BothFeeders.MoveBumper();
+            BothFeeders.MoveBumpers();
             sleep(2300);
-            BothFeeders.MoveBumper();
+            BothFeeders.MoveBumpers();
             sleep(2000);
             launcher.turnPowerOff();
             Chassis.MoveStraight(-850,0.5,100);
