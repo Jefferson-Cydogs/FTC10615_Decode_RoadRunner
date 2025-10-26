@@ -1,11 +1,11 @@
 package org.firstinspires.ftc.teamcode.cydogs.chassis;
 
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import static java.lang.Math.*;
+
 
 public class IndianaChassis {
     public DcMotor FrontLeftWheel;
@@ -34,16 +34,13 @@ public class IndianaChassis {
     private final int WheelsDiameter =104;
     private final int MotorsRPM = 435;
     private final double MotorsTicksPerRevolution =384.5;
-
     // mmPer90DegreeRotation needs to be configured for each robot based on it's chassis size
     private double mmPer90DegreesRotation=785;
-
     private double strafeCompensation = 1.081;
+    //public static final int OneTileMM = 610;
 
-    public static final int OneTileMM = 610;
-
-    // This is the constructor for the class.  It takes a parameter for currentOp, which allows
-    //   it to store and use the current op mode.  The four wheels are initialized here.
+    /** This is the constructor for the class.  It takes a parameter for currentOp, which allows
+        it to store and use the current op mode.  The four wheels' direction is initialized here. */
     public IndianaChassis(LinearOpMode currentOp)
     {
         // The op mode is important code provided by first.  It has the hardwareMap, sleep function,
@@ -80,10 +77,10 @@ public class IndianaChassis {
         BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         // Clear Encoders of prior data; only necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
-        FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        //BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default); suggested if Auton was using RUN_TO_POSITION
         FrontLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -169,22 +166,26 @@ public class IndianaChassis {
 
     public void OptimizedTeleopDrive()
     {
-        Straight = -myOpMode.gamepad1.left_stick_y;
         FastStraight = -myOpMode.gamepad1.right_stick_y;
-        Strafe = myOpMode.gamepad1.left_stick_x;
+        Straight = -myOpMode.gamepad1.left_stick_y;
         FastStrafe = myOpMode.gamepad1.right_stick_x;
+        Strafe = myOpMode.gamepad1.left_stick_x;
         Rotate = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
 
-        FastStraight = abs(FastStraight) > DriveControlDeadZone ? (float) (highSpeedDrive * (0.75 * pow(FastStraight, 3) + 0.25 * FastStraight)) : 0;
-        FastStrafe = abs(FastStrafe) > DriveControlDeadZone ? (float) (highSpeedDrive * (0.75 * pow(FastStrafe, 3) + 0.25 * FastStrafe)) : 0;
-        Rotate = abs(Rotate) > DriveControlDeadZone ? (float) (rotateSpeedDrive * (0.75 * pow(Rotate, 3) + 0.25 * Rotate)): 0;
-        Straight = abs(Straight) > DriveControlDeadZone ? (float) (lowSpeedDrive * Straight) : 0;
-        Strafe = abs(Strafe) > DriveControlDeadZone ? (float) (lowSpeedDrive * Strafe) : 0;
+        // Use a third-degree polynomial function on fast movements for better control, less important on slow movements
+        // Calculate each variable only when the joystick value is higher than the DeadZone number, otherwise make it 0
+        FastStraight = abs(FastStraight) > DriveControlDeadZone ? (float)(highSpeedDrive * (0.75 * pow(FastStraight, 3) + 0.25 * FastStraight)) : 0;
+        FastStrafe = abs(FastStrafe) > DriveControlDeadZone ? (float)(highSpeedDrive * (0.75 * pow(FastStrafe, 3) + 0.25 * FastStrafe)) : 0;
+        Rotate = abs(Rotate) > DriveControlDeadZone ? (float)(rotateSpeedDrive * (0.75 * pow(Rotate, 3) + 0.25 * Rotate)): 0;
+        Straight = abs(Straight) > DriveControlDeadZone ? (float)(lowSpeedDrive * Straight) : 0;
+        Strafe = abs(Strafe) > DriveControlDeadZone ? (float)(lowSpeedDrive * Strafe) : 0;
+
         FrontLeftPower = FastStraight + Straight + FastStrafe + Strafe + Rotate;
         FrontRightPower = FastStraight + Straight - FastStrafe - Strafe - Rotate;
         BackLeftPower = FastStraight + Straight - FastStrafe - Strafe + Rotate;
         BackRightPower = FastStraight + Straight + FastStrafe + Strafe - Rotate;
-        // Normalize powers if any exceed 1.0
+
+        // If any power exceeds 1.0, determine the maximum between them then normalize all using that maximum
         double maxPower = max(abs(FrontLeftPower),
                               max(abs(FrontRightPower),
                                   max(abs(BackLeftPower), abs(BackRightPower))));
@@ -194,28 +195,25 @@ public class IndianaChassis {
             BackLeftPower /= maxPower;
             BackRightPower /= maxPower;
         }
+
         FrontLeftWheel.setPower(FrontLeftPower);
         FrontRightWheel.setPower(FrontRightPower);
         BackLeftWheel.setPower(BackLeftPower);
         BackRightWheel.setPower(BackRightPower);
     }
 
-    /**
-     * Move forward(+) or backwards(-) until reaching Position
-     */
+    /** Move forward(+) or backwards(-) until reaching Position */
     public void MoveStraight(int mmToTarget, double VelocityPercentage, int WaitTime)
     {
-        double TicksToTarget;
-        double TicksPerSecond;
+        // Ticks to move = (distance to move / wheels circumference) * ticks for 1 full turn of wheel
+        double TicksToTarget = (mmToTarget / (WheelsDiameter * Math.PI)) * MotorsTicksPerRevolution;
+        // Ticks per second = Motor's revolutions per second * ticks for 1 full turn of wheel, then use a fraction/percentage of that
+        double TicksPerSecond = VelocityPercentage * ((double)(MotorsRPM / 60) * MotorsTicksPerRevolution);
 
-        TicksToTarget = (mmToTarget / (WheelsDiameter * Math.PI)) * MotorsTicksPerRevolution;
-        TicksPerSecond = VelocityPercentage * ((MotorsRPM / 60) * MotorsTicksPerRevolution);
-        //myOpMode.telemetry.addData("ticksToTarget", TicksToTarget);
-        //myOpMode.telemetry.update();
-        FrontLeftWheel.setTargetPosition((int) (FrontLeftWheel.getCurrentPosition() + TicksToTarget));
-        FrontRightWheel.setTargetPosition((int) (FrontRightWheel.getCurrentPosition() + TicksToTarget));
-        BackLeftWheel.setTargetPosition((int) (BackLeftWheel.getCurrentPosition() + TicksToTarget));
-        BackRightWheel.setTargetPosition((int) (BackRightWheel.getCurrentPosition() + TicksToTarget));
+        FrontLeftWheel.setTargetPosition((int)(FrontLeftWheel.getCurrentPosition() + TicksToTarget));
+        FrontRightWheel.setTargetPosition((int)(FrontRightWheel.getCurrentPosition() + TicksToTarget));
+        BackLeftWheel.setTargetPosition((int)(BackLeftWheel.getCurrentPosition() + TicksToTarget));
+        BackRightWheel.setTargetPosition((int)(BackRightWheel.getCurrentPosition() + TicksToTarget));
 
         // The (DcMotorEx) is called casting.  It says take the FrontLeftWheel, and while we know it's a DcMotor
         //   treat it like a DcMotorEx.  DcMotorEx has more functionality than DcMotor (such as setVelocity).  Not all hardware
@@ -235,18 +233,18 @@ public class IndianaChassis {
         myOpMode.sleep(WaitTime);
     }
 
-    // Strafes right until reaching Position
+    /** Strafes right until reaching Position */
     public void StrafeRight(int mmToTarget, double VelocityPercentage, int WaitTime)
     {
-        double TicksToTarget;
-        double TicksPerSecond;
+        // Ticks to move = (distance to move / wheels circumference) * ticks for 1 full turn of wheel. Apply a compensation for friction impact to strafing
+        double TicksToTarget = ((mmToTarget / (WheelsDiameter * Math.PI)) * MotorsTicksPerRevolution) * strafeCompensation;
+        // Ticks per second = Motor's revolutions per second * ticks for 1 full turn of wheel, then use a fraction/percentage of that
+        double TicksPerSecond = VelocityPercentage * ((double)(MotorsRPM / 60) * MotorsTicksPerRevolution);
 
-        TicksToTarget = ((mmToTarget / (WheelsDiameter * Math.PI)) * MotorsTicksPerRevolution) * strafeCompensation;
-        TicksPerSecond = VelocityPercentage * ((MotorsRPM / 60) * MotorsTicksPerRevolution);
-        FrontLeftWheel.setTargetPosition((int) (FrontLeftWheel.getCurrentPosition() + TicksToTarget));
-        FrontRightWheel.setTargetPosition((int) (FrontRightWheel.getCurrentPosition() - TicksToTarget));
-        BackLeftWheel.setTargetPosition((int) (BackLeftWheel.getCurrentPosition() - TicksToTarget));
-        BackRightWheel.setTargetPosition((int) (BackRightWheel.getCurrentPosition() + TicksToTarget));
+        FrontLeftWheel.setTargetPosition((int)(FrontLeftWheel.getCurrentPosition() + TicksToTarget));
+        FrontRightWheel.setTargetPosition((int)(FrontRightWheel.getCurrentPosition() - TicksToTarget));
+        BackLeftWheel.setTargetPosition((int)(BackLeftWheel.getCurrentPosition() - TicksToTarget));
+        BackRightWheel.setTargetPosition((int)(BackRightWheel.getCurrentPosition() + TicksToTarget));
 
         ((DcMotorEx) FrontLeftWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) FrontRightWheel).setVelocity(TicksPerSecond);
@@ -261,22 +259,21 @@ public class IndianaChassis {
         myOpMode.sleep(WaitTime);
     }
 
-    // This function strafes left.
-    public void StrafeLeft(int mmToTarget, double VelocityPercentage, int WaitTime){
+    /** Strafes left until reaching Position */
+    public void StrafeLeft(int mmToTarget, double VelocityPercentage, int WaitTime)
+    {
         StrafeRight(-mmToTarget, VelocityPercentage, WaitTime);
     }
 
+    /** Rotates left until reaching Position */
     public void RotateLeft(double degrees, double VelocityPercentage, int WaitTime) {
-        double mmToTarget;
-        double TicksToTarget;
-        double TicksPerSecond;
-
-        // converts degree to a mm distance
-        mmToTarget = degrees * (mmPer90DegreesRotation / 90.0);
-        // diameter of new robot wheels =
-        // uses the formula we've always had for rotation
-        TicksToTarget = (mmToTarget / (WheelsDiameter * PI)) * MotorsTicksPerRevolution;
-        TicksPerSecond = VelocityPercentage * ((MotorsRPM / 60) * MotorsTicksPerRevolution);
+        // Convert degrees to a distance in mm
+        double mmToTarget = degrees * (mmPer90DegreesRotation / 90.0);
+        // Uses the formula we've always had for rotation
+        // Ticks to move = (distance to move / wheels circumference) * ticks for 1 full turn of wheel
+        double TicksToTarget = (mmToTarget / (WheelsDiameter * Math.PI)) * MotorsTicksPerRevolution;
+        // Ticks per second = Motor's revolutions per second * ticks for 1 full turn of wheel, then use a fraction/percentage of that
+        double TicksPerSecond = VelocityPercentage * ((double)(MotorsRPM / 60) * MotorsTicksPerRevolution);
 
         FrontLeftWheel.setTargetPosition((int) (FrontLeftWheel.getCurrentPosition() - TicksToTarget));
         FrontRightWheel.setTargetPosition((int) (FrontRightWheel.getCurrentPosition() + TicksToTarget));
@@ -296,13 +293,10 @@ public class IndianaChassis {
         myOpMode.sleep(WaitTime);
     }
 
+    /** Rotates right until reaching Position */
     public void RotateRight(double degree, double VelocityPercentage, int WaitTime)
     {
         RotateLeft(-1*degree, VelocityPercentage, WaitTime);
     }
-
-
-
-
 
 }

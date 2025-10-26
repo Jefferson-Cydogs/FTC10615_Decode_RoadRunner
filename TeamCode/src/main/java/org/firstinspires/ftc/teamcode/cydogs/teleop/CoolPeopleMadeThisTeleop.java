@@ -62,10 +62,10 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             telemetry.addData("Battery Voltage", voltage);
             telemetry.addData("newPower:",currentLauncherPower);
 
-            if(RocketLauncher3000.CheckIfMotorIsTooStrong(currentLauncherPower)){
+            if(RocketLauncher3000.IsMotorTooStrong(currentLauncherPower)){
                 LauncherLED.SetColor(.29);
             }
-            else if(RocketLauncher3000.CheckMotor(currentLauncherPower)){
+            else if(RocketLauncher3000.IsMotorAtSpeed(currentLauncherPower)){
                 LauncherLED.SetColor(1);
             }
             else {
@@ -81,14 +81,14 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         {
             //currentDetection = tagReader.GetScoringTag("Red");
             currentLauncherPower += 0.05;
-            RocketLauncher3000.runAtPower(currentLauncherPower);
+            RocketLauncher3000.RunAtVelocity(currentLauncherPower);
             sleep(300);
 
         }
         else if(gamepad1.a)
         {
             currentLauncherPower -= 0.05;
-            RocketLauncher3000.runAtPower(currentLauncherPower);
+            RocketLauncher3000.RunAtVelocity(currentLauncherPower);
             sleep(300);
         }
         if(gamepad1.b)
@@ -99,11 +99,11 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
     }
     private void manageManipulatorControls() {
         if (gamepad2.a) {
-            RocketLauncher3000.turnPowerOff();
+            RocketLauncher3000.TurnPowerOff();
         }
 
         if (gamepad2.y) {
-            RocketLauncher3000.runAtPower(currentLauncherPower);
+            RocketLauncher3000.RunAtVelocity(currentLauncherPower);
         }
         if (gamepad2.right_bumper) {
             BumperCars.ActivateRightBumper();
@@ -114,7 +114,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
         }
         if (gamepad2.x) {
-            RocketLauncher3000.runAtPower(-0.2);
+            RocketLauncher3000.RunAtVelocity(-0.2);
         }
 
         if(gamepad2.left_bumper) {
