@@ -37,13 +37,13 @@ public class ColorLED {
                 myServo.setPosition(0.277);
                 break;
             case "white":
-                myServo.setPosition(1.000);
+                myServo.setPosition(1);
                 break;
             case "off":
-                myServo.setPosition(0.000);
+                myServo.setPosition(0);
                 break;
             default:
-                myServo.setPosition(0.000);
+                myServo.setPosition(0);
         }
     }
 

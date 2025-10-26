@@ -78,22 +78,18 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     private void manageDriverControls()
     {
-        ButtonSinglePressDetect aButton = new ButtonSinglePressDetect();
-        ButtonSinglePressDetect bButton = new ButtonSinglePressDetect();
-        ButtonSinglePressDetect yButton = new ButtonSinglePressDetect();
-
-        if (yButton.isPressed(gamepad1.y)) {
+        if (gamepad1.y) {
             //currentDetection = tagReader.GetScoringTag("Red");
             currentLauncherPower += 0.05;
             RocketLauncher3000.RunAtVelocity(currentLauncherPower);
-            //sleep(300);
+            sleep(300);
         }
-        else if (aButton.isPressed(gamepad1.a)) {
+        else if (gamepad1.a) {
             currentLauncherPower -= 0.05;
             RocketLauncher3000.RunAtVelocity(currentLauncherPower);
-            //sleep(300);
+            sleep(300);
         }
-        else if (bButton.isPressed(gamepad1.b)) {
+        else if (gamepad1.b) {
             tagReader.turnToFaceAprilTag(.4,5, Wheels,"blue");
         }
     }
@@ -164,19 +160,8 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         //LauncherLED.SetColor(0);
         LauncherLED.SetColorByName("off");
         //Testing RightLED and LeftLED
-        RightLED.SetColorByName("green");
-        LeftLED.SetColorByName("purple");
+        //RightLED.SetColorByName("green");
+        //LeftLED.SetColorByName("purple");
     }
 
-    public class ButtonSinglePressDetect
-    {
-        private boolean lastState = false;
-
-        public boolean isPressed(boolean currentState)
-        {
-            boolean result = currentState && !lastState;
-            lastState = currentState;
-            return result;
-        }
-    }
 }
