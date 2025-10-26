@@ -11,7 +11,6 @@ import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 
-
 @TeleOp
 public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
