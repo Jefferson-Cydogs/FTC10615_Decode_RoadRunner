@@ -17,6 +17,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     // declare variables here
     private IndianaChassis Wheels;
+
     private Intake ArtifactEater;
     private Feeders BumperCars;
     private LaunchersWithVelocity RocketLauncher3000;
@@ -92,7 +93,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         }
         else if (gamepad1.b) {
             //currentDetection = tagReader.GetScoringTag("Red");
-            tagReader.turnToFaceAprilTag(.4,5, Wheels,"blue");
+            //tagReader.turnToFaceAprilTag(.4,5, Wheels,"blue");
         }
     }
 
