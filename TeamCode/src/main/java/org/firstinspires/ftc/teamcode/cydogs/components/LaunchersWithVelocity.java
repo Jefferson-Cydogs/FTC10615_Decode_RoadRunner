@@ -70,7 +70,7 @@ public class LaunchersWithVelocity
 
         double TargetTicks = TargetVelocity * MaxTicksPerSecond;
 
-        return (CurrentRightTicks >= (TargetTicks * 1.05));
+        return (CurrentRightTicks >= (TargetTicks * 1.02));
         /*if (CurrentRightTicks >= (TargetTicks * 1.05)) {
             return true;
         }
