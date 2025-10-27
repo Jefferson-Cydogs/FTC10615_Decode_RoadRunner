@@ -1,15 +1,10 @@
 package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
-import com.qualcomm.hardware.rev.RevColorSensorV3;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
-import org.firstinspires.ftc.teamcode.cydogs.components.ColorFinderGP;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
@@ -22,6 +17,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     // declare variables here
     private IndianaChassis Wheels;
+
     private Intake ArtifactEater;
     private Feeders BumperCars;
     private LaunchersWithVelocity RocketLauncher3000;
@@ -32,95 +28,73 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     private AprilTagReaderDuo tagReader;
     private AprilTagDetection currentDetection;
-    private LinearOpMode opMode;
-    private double currentLauncherPower = 0.63;
-    private String FindingColor="";
-    private RevColorSensorV3 RightPushSensor;
-    private RevColorSensorV3 LeftPushSensor;
-    //75% launcher velocity from long distance
-    //65% launcher from top of short distance
 
+    //46% launcher from top of short distance
+    //53% launcher velocity from long distance
+    private double TargetLauncherVelocity = 0.46;
 
     @Override
     public void runOpMode()
     {
-        double voltage;
+        //double voltage;
 
         // Execute initialization actions here
         Wheels = new IndianaChassis(this);
         Wheels.InitializeTeleop(.7,.3,.5);
-
         initializeDevices();
         initializePositions();
         //VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
-        ColorFinderGP myColorFinder = new ColorFinderGP(this,"artifactColorSensor");
+
         waitForStart();
         while (opModeIsActive())
         {
             // Execute OpMode actions here
-            Wheels.TraditionalTeleopDrive();
+            Wheels.OptimizedTeleopDrive();
             manageDriverControls();
             manageManipulatorControls();
 
-            if (RocketLauncher3000.IsMotorTooStrong(currentLauncherPower)) {
+            if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocity)) {
                 LauncherLED.SetColorByName("red");
-                //LauncherLED.SetColor(.29);
             }
-            else if (RocketLauncher3000.IsMotorAtSpeed(currentLauncherPower)) {
+            else if (RocketLauncher3000.IsMotorAtSpeed(TargetLauncherVelocity)) {
                 LauncherLED.SetColorByName("white");
-                //LauncherLED.SetColor(1);
             }
             else {
-                LauncherLED.SetColorByName("off");
-                //LauncherLED.SetColor(0);
+                if (!LauncherLED.IsAlreadyOff()) {
+                    LauncherLED.SetColorByName("off");
+                }
             }
 
             //voltage = voltageSensor.getVoltage();
             //telemetry.addData("Battery Voltage", voltage);
 
-            telemetry.addData("LauncherPower:",currentLauncherPower);
+            telemetry.addData("Target Launcher Power:", TargetLauncherVelocity);
+            telemetry.addData("Current Launcher Power:", RocketLauncher3000.GetCurrentVelocity());
             telemetry.update();
-
-       if (RightPushSensor.getDistance(DistanceUnit.CM)<= DistanceUnit.CM.fromCm(0.4)){
-           FindingColor = myColorFinder.SeeColorGP(ColorFinderGP.TargetColor.GREEN);
-            if (FindingColor=="Green"){
-            RightLED.SetColorByName("green");
-             }
-           FindingColor = myColorFinder.SeeColorGP(ColorFinderGP.TargetColor.PURPLE);
-        if (FindingColor=="Purple"){
-            RightLED.SetColorByName("purple");
-        }
-        else {RightLED.SetColorByName("off");}
-       }
-
-            if (LeftPushSensor.getDistance(DistanceUnit.CM)<= DistanceUnit.CM.fromCm(0.4)){
-                FindingColor = myColorFinder.SeeColorGP(ColorFinderGP.TargetColor.GREEN);
-                if (FindingColor=="Green"){
-                    LeftLED.SetColorByName("green");
-                }
-                FindingColor = myColorFinder.SeeColorGP(ColorFinderGP.TargetColor.PURPLE);
-                if (FindingColor=="Purple"){
-                    LeftLED.SetColorByName("purple");
-                }
-                else {LeftLED.SetColorByName("off");}
-            }
         }
     }
 
     private void manageDriverControls()
     {
         if (gamepad1.y) {
-            //currentDetection = tagReader.GetScoringTag("Red");
-            currentLauncherPower += 0.05;
-            RocketLauncher3000.RunAtVelocity(currentLauncherPower);
+            TargetLauncherVelocity += 0.01;
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             sleep(300);
         }
         else if (gamepad1.a) {
-            currentLauncherPower -= 0.05;
-            RocketLauncher3000.RunAtVelocity(currentLauncherPower);
+            TargetLauncherVelocity -= 0.01;
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             sleep(300);
         }
-
+        else if (gamepad1.x) {
+            TargetLauncherVelocity = 0.53;
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+            sleep(300);
+        }
+        else if (gamepad1.b) {
+            //currentDetection = tagReader.GetScoringTag("Red");
+            tagReader.turnToFaceAprilTag(.4,5, Wheels,"blue");
+        }
     }
 
     private void manageManipulatorControls()
@@ -129,10 +103,12 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
             RocketLauncher3000.TurnPowerOff();
         }
         else if (gamepad2.x) {
-            RocketLauncher3000.RunAtVelocity(-0.2);
+            if (RocketLauncher3000.GetCurrentVelocity() <= 0) {
+                RocketLauncher3000.RunAtVelocity(-0.2);
+            }
         }
         else if (gamepad2.y) {
-            RocketLauncher3000.RunAtVelocity(currentLauncherPower);
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         }
         else if (gamepad2.dpad_left) {
             ArtifactEater.reverseleftintake();
@@ -140,35 +116,24 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         else if (gamepad2.dpad_right) {
             ArtifactEater.reverserightintake();
         }
-
-        if (gamepad2.right_bumper) {
-            BumperCars.ActivateRightBumper();
-            ArtifactEater.turnRightIntakeon();
-        } else {
-            BumperCars.DeactivateRightBumper();
-            ArtifactEater.turnrightintakeoff();
-        }
-
-        if (gamepad2.left_bumper) {
-            BumperCars.ActivateLeftBumper();
+        else if (gamepad2.left_bumper) {
             ArtifactEater.turnLeftIntakeon();
+            BumperCars.ActivateLeftBumper();
+        }
+        else if (gamepad2.right_bumper) {
+            ArtifactEater.turnRightIntakeon();
+            BumperCars.ActivateRightBumper();
+        }
+        else if (gamepad2.left_trigger > 0.4) {
+            ArtifactEater.turnLeftIntakeon();
+        }
+        else if (gamepad2.right_trigger > 0.4) {
+            ArtifactEater.turnRightIntakeon();
         }
         else {
             BumperCars.DeactivateLeftBumper();
+            BumperCars.DeactivateRightBumper();
             ArtifactEater.turnleftintakeoff();
-        }
-
-        if (gamepad2.left_trigger > 0.4) {
-            ArtifactEater.turnLeftIntakeon();
-        }
-        else {
-            ArtifactEater.turnleftintakeoff();
-        }
-
-        if (gamepad2.right_trigger > 0.4) {
-            ArtifactEater.turnRightIntakeon();
-        }
-        else {
             ArtifactEater.turnrightintakeoff();
         }
     }
@@ -182,16 +147,12 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         RightLED = new ColorLED(this,"RightLED");
         LeftLED = new ColorLED(this,"LeftLED");
         tagReader = new AprilTagReaderDuo(this, "Red");
-        LeftPushSensor = opMode.hardwareMap.get(RevColorSensorV3.class,"LeftPushSensor");
-        RightPushSensor = opMode.hardwareMap.get(RevColorSensorV3.class,"RightPushSensor");
-
     }
 
     private void initializePositions()
     {
-        //LauncherLED.SetColor(0);
         LauncherLED.SetColorByName("off");
-        //Testing RightLED and LeftLED
+        // Testing RightLED and LeftLED
         //RightLED.SetColorByName("green");
         //LeftLED.SetColorByName("purple");
     }
