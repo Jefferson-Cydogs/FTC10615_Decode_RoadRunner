@@ -13,9 +13,10 @@ public class Intake {
     {
         this.opMode = opMode;
 
-        RightIntake = opMode.hardwareMap.get(CRServo.class, "RightIntake");
         LeftIntake = opMode.hardwareMap.get(CRServo.class, "LeftIntake");
+        RightIntake = opMode.hardwareMap.get(CRServo.class, "RightIntake");
 
+        LeftIntake.setDirection(CRServo.Direction.REVERSE);
         RightIntake.setDirection(CRServo.Direction.REVERSE);
     }
 

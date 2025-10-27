@@ -32,8 +32,12 @@ public class IndianaChassis {
     private double BackRightPower;
     private LinearOpMode myOpMode;
     private final int WheelsDiameter =104;
-    private final int MotorsRPM = 435;
-    private final double MotorsTicksPerRevolution =384.5;
+    // Specs for typical motors we use:
+    //    GoBilda 5203 Series Yellow Jacket 223 RPM, 751.8 PPR
+    //    GoBilda 5203 Series Yellow Jacket 312 RPM, 537.7 PPR
+    //    GoBilda 5203 Series Yellow Jacket 435 RPM, 384.5 PPR
+    private final int MotorsRPM = 312;
+    private final double MotorsTicksPerRevolution = 537.7;
     // mmPer90DegreeRotation needs to be configured for each robot based on it's chassis size
     private double mmPer90DegreesRotation=785;
     private double strafeCompensation = 1.081;

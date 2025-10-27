@@ -6,12 +6,12 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 public class LaunchersWithVelocity
 {
-    // GoBilda 5203 Series Yellow Jacket 223 RPM -> 751.8 PPR
-    // GoBilda 5203 Series Yellow Jacket 312 RPM -> 537.7 PPR
-    // GoBilda 5203 Series Yellow Jacket 435 RPM -> 384.5 PPR
-    // Max TPS = (Motor's RPM / 60) * Motor's Ticks per rotation
-    public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7;
-    //public double velocityIn= 0.6;
+    // Specs for typical motors we use:
+    //    GoBilda 5203 Series Yellow Jacket 223 RPM, 751.8 PPR
+    //    GoBilda 5203 Series Yellow Jacket 312 RPM, 537.7 PPR
+    //    GoBilda 5203 Series Yellow Jacket 435 RPM, 384.5 PPR
+    // Max TPS = (Motor's RPM / 60) * Motor's TicksPerRotation
+    public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04
 
     private LinearOpMode opMode;
     private DcMotorEx LeftLauncher;
@@ -33,7 +33,7 @@ public class LaunchersWithVelocity
         RightLauncher.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
         //LeftLauncher.setDirection(DcMotorEx.Direction.REVERSE);
-        //RightLauncher.setDirection(DcMotorEx.Direction.REVERSE);
+        RightLauncher.setDirection(DcMotorEx.Direction.REVERSE);
 
         //LeftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         RightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -54,14 +54,13 @@ public class LaunchersWithVelocity
 
         double TargetTicks = TargetVelocity * MaxTicksPerSecond;
 
-        if (CurrentRightTicks < TargetTicks)
-        {
-            return false;
-        }
-        else
-        {
+        return (Math.abs(CurrentRightTicks - TargetTicks) <= (TargetTicks * 0.05));
+        /*if (((TargetTicks * 0.98) < CurrentRightTicks) && (CurrentRightTicks < (TargetTicks * 1.02))) {
             return true;
         }
+        else {
+            return false;
+        }*/
     }
 
     public boolean IsMotorTooStrong(double TargetVelocity)
@@ -71,20 +70,24 @@ public class LaunchersWithVelocity
 
         double TargetTicks = TargetVelocity * MaxTicksPerSecond;
 
-        if (CurrentRightTicks >= (TargetTicks * 1.01))
-        {
+        return (CurrentRightTicks >= (TargetTicks * 1.05));
+        /*if (CurrentRightTicks >= (TargetTicks * 1.05)) {
             return true;
         }
-        else
-        {
+        else {
             return false;
-        }
+        }*/
     }
 
     public void TurnPowerOff()
     {
        // LeftLauncher.setVelocity(0);
         RightLauncher.setVelocity(0);
+    }
+
+    public double GetCurrentVelocity()
+    {
+        return RightLauncher.getVelocity();
     }
 
 }

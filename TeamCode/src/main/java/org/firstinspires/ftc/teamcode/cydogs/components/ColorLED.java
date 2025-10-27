@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.cydogs.components;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Servo;
 
+
 public class ColorLED {
     public static final double SERVO_MIN = 0.0;
     public static final double SERVO_MAX = 1.0;
@@ -31,20 +32,23 @@ public class ColorLED {
                 myServo.setPosition(0.500);
                 break;
             case "purple":
-                myServo.setPosition(0.700);
+                myServo.setPosition(0.720);
                 break;
             case "red":
-                myServo.setPosition(0.277);
+                myServo.setPosition(0.280);
                 break;
             case "white":
                 myServo.setPosition(1);
                 break;
             case "off":
-                myServo.setPosition(0);
-                break;
             default:
                 myServo.setPosition(0);
         }
+    }
+
+    public boolean IsAlreadyOff()
+    {
+        return (myServo.getPosition() == 0);
     }
 
 }
