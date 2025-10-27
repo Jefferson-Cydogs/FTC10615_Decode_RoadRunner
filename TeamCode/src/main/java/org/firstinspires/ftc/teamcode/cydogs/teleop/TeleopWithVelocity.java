@@ -1,30 +1,25 @@
 package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
-import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 
 
-@Disabled
 @TeleOp
-public class CoolPeopleMadeThisTeleopNoLaunchers extends LinearOpMode {
+public class TeleopWithVelocity extends LinearOpMode {
 
     // declare variables here
 
-    private Launchers RocketLauncher3000;
+    private LaunchersWithVelocity RocketLauncher3000;
     private Feeders BumperCars;
     private Intake ArtifactEater;
 
     private IndianaChassis wheels;
-    private ColorLED LauncherLED;
-
 
     @Override
     public void runOpMode() {
@@ -42,8 +37,6 @@ public class CoolPeopleMadeThisTeleopNoLaunchers extends LinearOpMode {
             wheels.TraditionalTeleopDrive();
             manageDriverControls();
             manageManipulatorControls();
-
-
         }
     }
 
@@ -68,7 +61,7 @@ public class CoolPeopleMadeThisTeleopNoLaunchers extends LinearOpMode {
 
         if(gamepad2.y)
         {
-           RocketLauncher3000.runAtPower(0.59);
+           RocketLauncher3000.runAtPower(0.3);
         }
         if(gamepad2.right_bumper) {
             BumperCars.MoveRightBumper();
@@ -79,46 +72,30 @@ public class CoolPeopleMadeThisTeleopNoLaunchers extends LinearOpMode {
         }
 
         if(gamepad2.left_trigger>.4) {
-            ArtifactEater.turnLeftIntakeon();
+            ArtifactEater.reverseintake();
         }
-        else {
-            ArtifactEater.turnleftintakeoff();
-        }
-        if(gamepad2.dpad_left){
-            ArtifactEater.reverseleftintake();
-        }
-        else {
-            ArtifactEater.turnleftintakeoff();
-        }
-        if(gamepad2.dpad_right){
-            ArtifactEater.reverserightintake();
-        }
-        else {
-            ArtifactEater.turnrightintakeoff();
-        }
-        if(gamepad2.right_trigger>.4){
-            ArtifactEater.turnRightIntakeon();
-        }
-        else {
-            ArtifactEater.turnrightintakeoff();
+        else if(gamepad2.right_trigger>.4){
+            ArtifactEater.turnIntakeon();
         }
 
+        else {
+            ArtifactEater.turnintakeoff();
+        }
     }
 
 
 
     private void initializeDevices()
     {
-        RocketLauncher3000=new Launchers(this);
+        RocketLauncher3000=new LaunchersWithVelocity(this);
         ArtifactEater= new Intake(this);
         BumperCars= new Feeders(this);
-        LauncherLED= new ColorLED(this,"LauncherLED");
 
     }
 
     private void initializePositions()
     {
-        LauncherLED.SetColor(0);
+
     }
 
 }

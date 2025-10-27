@@ -4,7 +4,6 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
@@ -92,16 +91,16 @@ public class AprilTagReaderDuo {
             }
         }
 
-        return "GPP"; // may as well guess
+        return null; // or "Unknown", "None", etc.
     }
 
-    public AprilTagDetection GetScoringTag(String team){
+    public  AprilTagDetection AprilTagTeam(String team){
         // need a variable to store target apriltag ID in
 
         if (team=="Red"){
             // set target ID to be correct number
-            AprilTagId=24;
-        } else {
+        AprilTagId=24;
+        } else if (team=="Blue") {
             AprilTagId=25;
         }
         // else set it to the other number
@@ -146,51 +145,6 @@ public class AprilTagReaderDuo {
                 opMode.telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
         }   // end for() loop
-    }
-
-
-    public void turnToFaceAprilTag(double turnPower, double angleThresholdDeg, IndianaChassis myChassis, String team) {
-        // Get the yaw angle to the tag in degrees.
-        AprilTagDetection tag = GetScoringTag(team);
-        double yaw = Math.toDegrees(tag.ftcPose.yaw); // `ftcPose.yaw` is in radians
-
-        // Debug print
-        opMode.telemetry.addData("Yaw to tag", yaw);
-        //myOpMode.telemetry.update();
-
-        // Turn until facing the tag (yaw ≈ 0)
-        while (opMode.opModeIsActive() && Math.abs(yaw) > angleThresholdDeg) {
-            if (yaw > 0) {
-                // Tag is to the right → turn right
-                setTurnPower(turnPower,myChassis);
-            } else {
-                // Tag is to the left → turn left
-                setTurnPower(-turnPower,myChassis);
-            }
-
-            // Update detection
-            // (this depends on how you're using the vision pipeline; might involve re-detecting or using an updated tag pose)
-            tag = GetScoringTag(team); // Placeholder - write this based on your vision code
-            yaw = Math.toDegrees(tag.ftcPose.yaw);
-        }
-
-        // Stop the robot
-        stopMotors(myChassis);
-    }
-
-    private void setTurnPower(double power, IndianaChassis myChassis) {
-        myChassis.FrontLeftWheel.setPower(-power);
-        myChassis.BackLeftWheel.setPower(-power);
-        myChassis.FrontRightWheel.setPower(power);
-        myChassis.BackRightWheel.setPower(power);
-    }
-
-    // Stop all motors
-    private void stopMotors(IndianaChassis myChassis) {
-        myChassis.FrontLeftWheel.setPower(0);
-        myChassis.FrontRightWheel.setPower(0);
-        myChassis.BackLeftWheel.setPower(0);
-        myChassis.BackRightWheel.setPower(0);
     }
 
 }
