@@ -40,7 +40,7 @@ public class AprilTagReaderDuo {
 
         // Set the camera (webcam vs. built-in RC phone camera).
         if (USE_WEBCAM) {
-            builder.setCamera(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"));
+            builder.setCamera(opMode.hardwareMap.get(WebcamName.class, "Webcam1"));
         } else {
             builder.setCamera(BuiltinCameraDirection.BACK);
         }

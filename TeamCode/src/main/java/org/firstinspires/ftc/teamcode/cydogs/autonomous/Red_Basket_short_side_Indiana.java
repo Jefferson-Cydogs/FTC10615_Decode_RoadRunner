@@ -9,15 +9,10 @@ import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 import org.firstinspires.ftc.teamcode.cydogs.learning.AprilTagWheelie;
 
-public class Red_Basket_short_side_Indiana {// The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
+@Autonomous
+public class Red_Basket_short_side_Indiana extends LinearOpMode {
 
-    //    @Autonomous puts this code in the autonomous category on driver station
-    @Autonomous(name = "Red_Basket_short_side_Indiana", group = "Autonomous")
-    public class Red_side_short_Basket_Indiana extends LinearOpMode {
 
-        /* declare variables
-
-         */
         private String currentMotif;
 
         private AprilTagWheelie IndianaTag;
@@ -68,4 +63,3 @@ public class Red_Basket_short_side_Indiana {// The 'extends LinearOpMode' is nee
 
     }
 
-}
