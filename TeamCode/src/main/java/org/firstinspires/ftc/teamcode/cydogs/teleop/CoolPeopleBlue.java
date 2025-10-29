@@ -2,13 +2,16 @@ package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
+import org.firstinspires.ftc.teamcode.cydogs.components.ArtifactSensors;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
+import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
@@ -23,8 +26,7 @@ public class CoolPeopleBlue extends LinearOpMode {
     private LaunchersWithVelocity RocketLauncher3000;
 
     private ColorLED LauncherLED;
-    private ColorLED RightLED;
-    private ColorLED LeftLED;
+    private ArtifactSensors artifactSensors;
 
     private AprilTagReaderDuo tagReader;
     private AprilTagDetection currentDetection;
@@ -35,6 +37,8 @@ public class CoolPeopleBlue extends LinearOpMode {
     //53% launcher velocity from long distance
     private double TargetLauncherVelocity = 0.46;
 
+    private ElapsedTime currentTimer;
+    private EventTracker eventTracker;
     @Override
     public void runOpMode()
     {
@@ -45,34 +49,36 @@ public class CoolPeopleBlue extends LinearOpMode {
         Wheels.InitializeTeleop(.7,.3,.5);
         initializeDevices();
         initializePositions();
+        currentTimer = new ElapsedTime();
+        eventTracker = new EventTracker();
         //VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         waitForStart();
+        tagReader.initAprilTag();
+
         while (opModeIsActive())
         {
+            //tagReader.displayDetections(tagReader.GetDetections());
             // Execute OpMode actions here
             Wheels.OptimizedTeleopDrive();
+            //Wheels.TraditionalTeleopDrive();
             manageDriverControls();
             manageManipulatorControls();
+            checkRocketLauncherVelocity();
 
-            if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocity)) {
-                LauncherLED.SetColorByName("red");
-            }
-            else if (RocketLauncher3000.IsMotorAtSpeed(TargetLauncherVelocity)) {
-                LauncherLED.SetColorByName("white");
-            }
-            else {
-                if (!LauncherLED.IsAlreadyOff()) {
-                    LauncherLED.SetColorByName("off");
-                }
+            if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
+                artifactSensors.CheckSensors();
+                telemetry.addLine("Checking Artifact Sensors");
             }
 
             //voltage = voltageSensor.getVoltage();
             //telemetry.addData("Battery Voltage", voltage);
 
-            telemetry.addData("Target Launcher Power:", TargetLauncherVelocity);
-            telemetry.addData("Current Launcher Power:", RocketLauncher3000.GetCurrentVelocity());
-            telemetry.update();
+            if(eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
+                telemetry.addData("Target Launcher Power:", TargetLauncherVelocity);
+                telemetry.addData("Current Launcher Power:", RocketLauncher3000.GetCurrentVelocity());
+                telemetry.update();
+            }
         }
     }
 
@@ -95,7 +101,14 @@ public class CoolPeopleBlue extends LinearOpMode {
         }
         else if (gamepad1.b) {
             //currentDetection = tagReader.GetScoringTag("Red");
-           // tagReader.turnToFaceAprilTag(.4,5, Wheels,"blue");
+
+            if(eventTracker.doEvent("TurnToTag",currentTimer.seconds(),0.5)) {
+
+                tagReader.displayDetections(tagReader.GetDetections());
+                //Wheels.InitializeAutonomous();
+                tagReader.turnToFaceAprilTag(Wheels, Team, .15, 3, currentTimer, eventTracker);
+                //Wheels.InitializeTeleop(.7, .3, .5);
+            }
         }
     }
 
@@ -146,9 +159,9 @@ public class CoolPeopleBlue extends LinearOpMode {
         ArtifactEater = new Intake(this);
         BumperCars = new Feeders(this);
         LauncherLED = new ColorLED(this,"LauncherLED");
-        RightLED = new ColorLED(this,"RightLED");
-        LeftLED = new ColorLED(this,"LeftLED");
         tagReader = new AprilTagReaderDuo(this, "Red");
+
+        artifactSensors = new ArtifactSensors(this);
     }
 
     private void initializePositions()
@@ -157,6 +170,21 @@ public class CoolPeopleBlue extends LinearOpMode {
         // Testing RightLED and LeftLED
         //RightLED.SetColorByName("green");
         //LeftLED.SetColorByName("purple");
+    }
+
+    private void checkRocketLauncherVelocity()
+    {
+        if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocity)) {
+            LauncherLED.SetColorByName("red");
+        }
+        else if (RocketLauncher3000.IsMotorAtSpeed(TargetLauncherVelocity)) {
+            LauncherLED.SetColorByName("white");
+        }
+        else {
+            if (!LauncherLED.IsAlreadyOff()) {
+                LauncherLED.SetColorByName("off");
+            }
+        }
     }
 
 }

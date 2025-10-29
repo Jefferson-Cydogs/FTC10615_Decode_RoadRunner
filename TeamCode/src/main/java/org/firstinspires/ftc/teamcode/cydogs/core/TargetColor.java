@@ -5,8 +5,9 @@ import androidx.annotation.NonNull;
 public enum TargetColor {
     RED(0, 20, 340, 360), // RED wraps around the hue circle
     BLUE(190, 260),
-    GREEN(100, 140),
-    PURPLE(260, 290);
+ //   GREEN(100, 140),
+    GREEN(110, 190),
+    PURPLE(200, 270);
 
     private final float low1, high1;
     private final float low2, high2;
@@ -30,7 +31,7 @@ public enum TargetColor {
         float v = hsv[2];
 
         // Optional filters: ignore dark or grayish colors
-        if (s < 0.2 || v < 0.2) return false;
+        //if (s < 0.2 || v < 0.2) return false;
 
         boolean inPrimaryRange = h >= low1 && h <= high1;
         boolean inSecondaryRange = (low2 >= 0 && h >= low2 && h <= high2); // Only check if second range exists

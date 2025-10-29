@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -15,6 +16,7 @@ After selection you can control servos position using gamepad.
 
 
 @TeleOp
+@Disabled
 public class Config_Servo2 extends LinearOpMode {
 
 

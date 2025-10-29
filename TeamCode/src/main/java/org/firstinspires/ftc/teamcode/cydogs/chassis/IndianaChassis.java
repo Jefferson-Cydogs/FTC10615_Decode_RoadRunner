@@ -303,4 +303,20 @@ public class IndianaChassis {
         RotateLeft(-1*degree, VelocityPercentage, WaitTime);
     }
 
+
+    public void setTurnPower(double power) {
+        FrontLeftWheel.setPower(-power);
+        BackLeftWheel.setPower(-power);
+        FrontRightWheel.setPower(power);
+        BackRightWheel.setPower(power);
+    }
+
+    // Stop all motors
+    public void stopMotors() {
+        FrontLeftWheel.setPower(0);
+        FrontRightWheel.setPower(0);
+        BackLeftWheel.setPower(0);
+        BackRightWheel.setPower(0);
+    }
+
 }

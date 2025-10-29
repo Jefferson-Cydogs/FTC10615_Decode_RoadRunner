@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -9,6 +10,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @TeleOp
+@Disabled
 public class Config_Motor extends LinearOpMode {
 
     //Declare the motors

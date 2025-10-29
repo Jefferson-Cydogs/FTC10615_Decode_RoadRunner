@@ -1,14 +1,18 @@
 package org.firstinspires.ftc.teamcode.cydogs.components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.BuiltinCameraDirection;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
+import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
+import java.util.Objects;
 
 public class AprilTagReaderDuo {
     private String Obelisk;
@@ -94,17 +98,25 @@ public class AprilTagReaderDuo {
         return null; // or "Unknown", "None", etc.
     }
 
-    public  AprilTagDetection AprilTagTeam(String team){
+    public AprilTagDetection GetScoringTag(String team){
         // need a variable to store target apriltag ID in
 
-        if (team=="Red"){
+        if (Objects.equals(team, "Red")){
             // set target ID to be correct number
-        AprilTagId=24;
-        } else if (team=="Blue") {
-            AprilTagId=25;
+            AprilTagId=24;
+        } else if (Objects.equals(team, "Blue")) {
+            AprilTagId=20;
         }
         // else set it to the other number
+
+        if (aprilTag == null) return null; // protect against processor not being initialized
+
         List<AprilTagDetection> AprilTagList = aprilTag.getDetections();
+        if(AprilTagList==null )
+        {
+            opMode.telemetry.addLine("No april tags found");
+            return null;
+        }
         displayDetections(AprilTagList);
         // create a variable to store a list of detections
         // call GetDetections to return a list of april tags found
@@ -128,12 +140,22 @@ public class AprilTagReaderDuo {
         if (aprilTag == null) return null; // protect against processor not being initialized
 
         List<AprilTagDetection> detections = aprilTag.getDetections();
+        if(detections==null )
+        {
+            opMode.telemetry.addLine("No april tags found");
+            return null;
+        }
         opMode.telemetry.addData("# AprilTags Detected", detections.size());
         return detections;
     }
 
     public void displayDetections(List<AprilTagDetection> detections)
     {
+        if(detections==null )
+        {
+            opMode.telemetry.addLine("No april tags found");
+            return;
+        }
         for (AprilTagDetection detection : detections) {
             if (detection.metadata != null) {
                 opMode.telemetry.addLine(String.format("\n==== (ID %d) %s", detection.id, detection.metadata.name));
@@ -145,6 +167,51 @@ public class AprilTagReaderDuo {
                 opMode.telemetry.addLine(String.format("Center %6.0f %6.0f   (pixels)", detection.center.x, detection.center.y));
             }
         }   // end for() loop
+    }
+
+    public void turnToFaceAprilTag(IndianaChassis indiana, String team, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker) {
+        // Get the yaw angle to the tag in degrees.
+        AprilTagDetection scoringTag = GetScoringTag(team);
+        if(scoringTag == null) return;
+
+        //double yaw = scoringTag.ftcPose.yaw-20;
+        double yaw = scoringTag.ftcPose.bearing;
+        opMode.telemetry.addData("Yaw:", yaw);
+        //opMode.telemetry.addData("RawYaw:", scoringTag.ftcPose.yaw);
+
+        //indiana.RotateRight(yaw,turnPower,0);
+
+
+
+
+
+        // Turn until facing the tag (yaw ≈ 0)
+        while (Math.abs(yaw) > angleThresholdDeg) {
+            opMode.telemetry.addData("Yaw to tag", yaw);
+            opMode.telemetry.update();
+            if (yaw > 0) {
+                // Tag is to the right → turn right
+                indiana.setTurnPower(turnPower);
+            } else {
+                // Tag is to the left → turn left
+                indiana.setTurnPower(-turnPower);
+            }
+
+
+            scoringTag = GetScoringTag(team);
+            if(scoringTag == null)
+            {
+                indiana.stopMotors();
+                return;
+            }
+            yaw = scoringTag.ftcPose.bearing;
+        }
+
+        // Stop the robot
+        indiana.stopMotors();
+
+
+
     }
 
 }
