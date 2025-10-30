@@ -54,7 +54,7 @@ public class LaunchersWithVelocity
 
         double TargetTicks = TargetVelocity * MaxTicksPerSecond;
 
-        return (Math.abs(CurrentRightTicks - TargetTicks) <= (TargetTicks * 0.05));
+        return (Math.abs(CurrentRightTicks - TargetTicks) <= (TargetTicks * 0.02));
         /*if (((TargetTicks * 0.98) < CurrentRightTicks) && (CurrentRightTicks < (TargetTicks * 1.02))) {
             return true;
         }

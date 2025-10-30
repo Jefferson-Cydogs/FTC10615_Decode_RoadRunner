@@ -4,28 +4,23 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
-import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
-import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
-import org.firstinspires.ftc.teamcode.cydogs.learning.AprilTagWheelie;
-import org.firstinspires.ftc.teamcode.cydogs.learning.WheelieFeeder;
-import org.firstinspires.ftc.teamcode.cydogs.learning.WheelieLauncher;
 
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
-@Autonomous(name= "Blue Near", group= "Autonomous")
-public class Blue_Basket_short_side_Indiana extends LinearOpMode {
+@Autonomous(name= "Blue Near 2", group= "Autonomous")
+public class BlueNear2 extends LinearOpMode {
 
     /* declare variables
 
      */
     private String currentMotif;
-
+    private double velocityPercentage = 0.39;
     private AprilTagReaderDuo tagReader;
     private Intake intake;
     private Feeders pusher;
@@ -33,7 +28,6 @@ public class Blue_Basket_short_side_Indiana extends LinearOpMode {
     public int allienceTurnModifier = 1;
     @Override
     public void runOpMode() {
-
                 // load 2 purple on left side
                 // load 1 green on right side by launcher
 
@@ -56,46 +50,59 @@ public class Blue_Basket_short_side_Indiana extends LinearOpMode {
                     //    sleep(100);
                     //purple (0.91)
                     pusher.MoveBumpers();
-                    wheels.MoveStraight(1000, 0.55, 100);
-                    wheels.RotateLeft(85*allienceTurnModifier, 0.55, 500);
-                    shooter.RunAtVelocity(0.41);
+                    wheels.MoveStraight(800, 0.55, 100);
+                    wheels.RotateLeft(80*allienceTurnModifier, 0.55, 1000);
+
                     //This is where we would scan the obelisk
                     currentMotif = tagReader.getObelisk();
                     telemetry.addData("Found Motif: ", currentMotif);
                     telemetry.update();
-                    sleep(1000);
-                    wheels.RotateLeft(45*allienceTurnModifier, 0.55, 500);
+                    sleep(2000);
+                    shooter.RunAtVelocity(velocityPercentage);
+                    wheels.RotateLeft(50*allienceTurnModifier, 0.55, 500);
                     //wheels.MoveStraight(1567, 0.55, 150);
-                    sleep(2530);
+                    //sleep(1530);
                     if (currentMotif == "PPG")
                     {
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunLeftIntakeAndBumper(300);
-                        sleep(Waitbetweenshots);
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunLeftIntakeAndBumper(2000);
-                        sleep(Waitbetweenshots);
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunRightIntakeAndBumper(500);
-                        sleep(Waitbetweenshots);
+
                     } else if(currentMotif=="GPP") {
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunRightIntakeAndBumper(500);
-                        sleep(Waitbetweenshots);
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunLeftIntakeAndBumper(300);
-                        sleep(Waitbetweenshots);
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunLeftIntakeAndBumper(2000);
-                        sleep(Waitbetweenshots);
+
                     }
                     else  // PGP
                     {
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunLeftIntakeAndBumper(300);
-                        sleep(Waitbetweenshots);
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunRightIntakeAndBumper(500);
-                        sleep(Waitbetweenshots);
+                        sleep(300);
+                        while(!shooter.IsMotorAtSpeed(velocityPercentage)){}
                         RunLeftIntakeAndBumper(2000);
-                        sleep(Waitbetweenshots);
+
                     }
 
                     shooter.TurnPowerOff();
                     wheels.MoveStraight(700,.5,100);
-                    wheels.StrafeRight(600*allienceTurnModifier,.5,100);
+                    wheels.StrafeRight(400*allienceTurnModifier,.5,100);
 
 
 

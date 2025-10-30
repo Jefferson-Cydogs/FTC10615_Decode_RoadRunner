@@ -30,15 +30,23 @@ public class Feeders {
 
     public void MoveLeftBumper()
     {
-        left_bumper.setPower(.6);
-        opMode.sleep(200);
+        MoveLeftBumper(500);
+    }
+    public void MoveLeftBumper(int RunForMilliseconds)
+    {
+        left_bumper.setPower(.7);
+        opMode.sleep(RunForMilliseconds);
         left_bumper.setPower(0);
     }
 
     public void MoveRightBumper()
     {
-        right_bumper.setPower(0.6);
-        opMode.sleep(200);
+        MoveRightBumper(500);
+    }
+    public void MoveRightBumper(int RunForMilliseconds)
+    {
+        right_bumper.setPower(0.7);
+        opMode.sleep(RunForMilliseconds);
         right_bumper.setPower(0);
     }
 
