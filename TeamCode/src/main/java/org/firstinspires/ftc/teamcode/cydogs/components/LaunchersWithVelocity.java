@@ -14,80 +14,55 @@ public class LaunchersWithVelocity
     public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04
 
     private LinearOpMode opMode;
-    private DcMotorEx LeftLauncher;
-    private DcMotorEx RightLauncher;
+    private DcMotorEx Launchers;
 
     public void initLauncher()
     {
-
     }
 
     public LaunchersWithVelocity(LinearOpMode opMode)
     {
         this.opMode = opMode;
 
-        //LeftLauncher = opMode.hardwareMap.get(DcMotorEx.class,"LeftLauncher");
-        RightLauncher = opMode.hardwareMap.get(DcMotorEx.class,"RightLauncher");
-
-        //LeftLauncher.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        RightLauncher.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-
-        //LeftLauncher.setDirection(DcMotorEx.Direction.REVERSE);
-        RightLauncher.setDirection(DcMotorEx.Direction.REVERSE);
-
-        //LeftLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        RightLauncher.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-    }
-
-    public void RunAtVelocity(double VelocityPercentage)
-    {
-        double TargetVelocity = VelocityPercentage * MaxTicksPerSecond;
-
-        //LeftLauncher.setVelocity(targetVelocity);
-        RightLauncher.setVelocity(TargetVelocity);
-    }
-
-    public boolean IsMotorAtSpeed(double TargetVelocity)
-    {
-        //double CurrentLeftTicks= LeftLauncher.getVelocity();
-        double CurrentRightTicks= RightLauncher.getVelocity();
-
-        double TargetTicks = TargetVelocity * MaxTicksPerSecond;
-
-        return (Math.abs(CurrentRightTicks - TargetTicks) <= (TargetTicks * 0.02));
-        /*if (((TargetTicks * 0.98) < CurrentRightTicks) && (CurrentRightTicks < (TargetTicks * 1.02))) {
-            return true;
-        }
-        else {
-            return false;
-        }*/
-    }
-
-    public boolean IsMotorTooStrong(double TargetVelocity)
-    {
-        //double CurrentLeftTicks= LeftLauncher.getVelocity();
-        double CurrentRightTicks= RightLauncher.getVelocity();
-
-        double TargetTicks = TargetVelocity * MaxTicksPerSecond;
-
-        return (CurrentRightTicks >= (TargetTicks * 1.02));
-        /*if (CurrentRightTicks >= (TargetTicks * 1.05)) {
-            return true;
-        }
-        else {
-            return false;
-        }*/
-    }
-
-    public void TurnPowerOff()
-    {
-       // LeftLauncher.setVelocity(0);
-        RightLauncher.setVelocity(0);
+        Launchers = opMode.hardwareMap.get(DcMotorEx.class,"RightLauncher");
+        Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        Launchers.setDirection(DcMotorEx.Direction.REVERSE);
+        Launchers.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
     }
 
     public double GetCurrentVelocity()
     {
-        return RightLauncher.getVelocity();
+        return Launchers.getVelocity();
+    }
+
+    public void RunAtVelocity(double TargetVelocityPercentage) {
+        double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
+
+        Launchers.setVelocity(TargetVelocity);
+        /*while (Launchers.getVelocity() < TargetVelocity) {
+            //Do nothing
+        }*/
+    }
+
+    public boolean IsMotorAtSpeed(double TargetVelocityPercentage)
+    {
+        double CurrentVelocity = Launchers.getVelocity();
+        double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
+
+        return (Math.abs(CurrentVelocity - TargetVelocity) <= (TargetVelocity * 0.02));
+    }
+
+    public boolean IsMotorTooStrong(double TargetVelocityPercentage)
+    {
+        double CurrentVelocity= Launchers.getVelocity();
+        double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
+
+        return (CurrentVelocity > (TargetVelocity * 1.02));
+    }
+
+    public void TurnPowerOff()
+    {
+        Launchers.setVelocity(0);
     }
 
 }
