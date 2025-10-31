@@ -28,27 +28,64 @@ public class ColorLED {
     {
         switch (ColorName)
         {
-            case "green":
-                myServo.setPosition(0.500);
+            case "white":
+                if (myServo.getPosition() != 1.0) {
+                    myServo.setPosition(1.0);
+                }
                 break;
             case "purple":
-                myServo.setPosition(0.720);
+                if (myServo.getPosition() != 0.720) {
+                    myServo.setPosition(0.720);
+                }
+                break;
+            case "green":
+                if (myServo.getPosition() != 0.500) {
+                    myServo.setPosition(0.500);
+                }
                 break;
             case "red":
-                myServo.setPosition(0.280);
-                break;
-            case "white":
-                myServo.setPosition(1);
+                if (myServo.getPosition() != 0.280) {
+                    myServo.setPosition(0.280);
+                }
                 break;
             case "off":
             default:
-                myServo.setPosition(0);
+                if (myServo.getPosition() != 0.0) {
+                    myServo.setPosition(0.0);
+                }
         }
     }
 
     public boolean IsAlreadyOff()
     {
         return (myServo.getPosition() == 0);
+    }
+
+    public enum ColorOption {
+        WHITE(1.000),
+        PURPLE(0.720),
+        GREEN(0.500),
+        RED(0.280),
+        OFF(0.000);
+
+        private final double Position;
+
+        ColorOption(double Position) {
+            this.Position = Position;
+        }
+
+        public double getPosition() {
+            return Position;
+        }
+    }
+
+    public void SetColorName(ColorOption Color) {
+        double CurrentPosition = myServo.getPosition();
+        double TargetPosition = Color.getPosition();
+
+        if (Math.abs(CurrentPosition - TargetPosition) > 0.001) {
+            myServo.setPosition(TargetPosition);
+        }
     }
 
 }
