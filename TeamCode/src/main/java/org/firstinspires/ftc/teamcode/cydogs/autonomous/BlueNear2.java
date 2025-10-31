@@ -19,7 +19,7 @@ public class BlueNear2 extends LinearOpMode {
     /* declare variables
 
      */
-    private String currentMotif;
+    private String currentMotif = null;
     private double velocityPercentage = 0.39;
     private AprilTagReaderDuo tagReader;
     private Intake intake;
@@ -47,17 +47,16 @@ public class BlueNear2 extends LinearOpMode {
 
                 if (opModeIsActive()) {
                     launcherLED.SetColor(1);
-                    //    sleep(100);
-                    //purple (0.91)
+
+                    //ClearBugAndFixPlayerSetup();
                     pusher.MoveBumpers();
-                    wheels.MoveStraight(800, 0.55, 100);
+
+                    wheels.MoveStraight(900, 0.55, 100);
                     wheels.RotateLeft(80*allienceTurnModifier, 0.55, 1000);
 
-                    //This is where we would scan the obelisk
-                    currentMotif = tagReader.getObelisk();
-                    telemetry.addData("Found Motif: ", currentMotif);
-                    telemetry.update();
-                    sleep(2000);
+                    GetMotif();
+
+                    //sleep(2000);
                     shooter.RunAtVelocity(velocityPercentage);
                     wheels.RotateLeft(50*allienceTurnModifier, 0.55, 500);
                     //wheels.MoveStraight(1567, 0.55, 150);
@@ -123,6 +122,29 @@ public class BlueNear2 extends LinearOpMode {
         intake.turnRightIntakeon();
         pusher.MoveRightBumper(ForHowLong);
         intake.turnrightintakeoff();
+    }
+
+    private void GetMotif()
+    {
+        int counter = 0;
+        while(currentMotif == null && counter<20) {
+            currentMotif = tagReader.getObelisk();
+            counter++;
+            telemetry.addData("Found Motif: ", currentMotif);
+            telemetry.update();
+        }
+
+    }
+
+    public void ClearBugAndFixPlayerSetup()
+    {
+        pusher.MoveBumpers();
+        intake.turnBothIntakesOn();
+        pusher.MoveBumpers();
+        sleep(200);
+        pusher.DeactivateLeftBumper();
+        pusher.DeactivateRightBumper();
+        intake.turnBothIntakesOff();
     }
 
 }
