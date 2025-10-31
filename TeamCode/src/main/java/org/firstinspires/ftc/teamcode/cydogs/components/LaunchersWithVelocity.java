@@ -28,6 +28,7 @@ public class LaunchersWithVelocity
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         Launchers.setDirection(DcMotorEx.Direction.REVERSE);
         Launchers.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        //Launchers.setVelocityPIDFCoefficients(300, 0, 0, 10);
     }
 
     public double GetCurrentVelocity()
