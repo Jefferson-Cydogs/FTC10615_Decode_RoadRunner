@@ -29,7 +29,7 @@ public class IndianaAuton extends IndianaChassis {
         Feeders = new Feeders(currentOp);
         Intakes = new Intake(currentOp);
         LauncherLED = new ColorLED(currentOp,"LauncherLED");
-        Launchers = new LaunchersWithVelocity(this);
+        Launchers = new LaunchersWithVelocity(currentOp);
 
     }
 
