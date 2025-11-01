@@ -45,13 +45,16 @@ public class LaunchersWithVelocity
         }*/
     }
 
-    public void StopLaunchersSafely ()
+    public void StopLaunchersSafely()
     {
-        while (Launchers.getVelocity() > (MaxTicksPerSecond * 0.1))
-        {
-        }
+        while(Launchers.getVelocity() > (MaxTicksPerSecond*0.1)) {}
+
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         Launchers.setVelocity(0);
+    }
+
+    public void ResetLaunchersToFloat()
+    {
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
     }
 

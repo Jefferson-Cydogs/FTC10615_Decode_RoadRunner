@@ -28,6 +28,15 @@ public class Feeders {
         right_bumper.setPower(0);
     }
 
+    public void MoveBumpersToFixBug()
+    {
+        left_bumper.setPower(0.6);
+        right_bumper.setPower(0.6);
+        opMode.sleep(50);
+        left_bumper.setPower(0);
+        right_bumper.setPower(0);
+    }
+
     public void MoveLeftBumper()
     {
         MoveLeftBumper(500);
