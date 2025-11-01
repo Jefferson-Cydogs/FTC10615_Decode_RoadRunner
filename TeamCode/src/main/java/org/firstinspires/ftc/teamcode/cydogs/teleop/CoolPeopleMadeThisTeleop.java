@@ -42,7 +42,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
         // Execute initialization actions here
         Wheels = new IndianaChassis(this);
-        Wheels.InitializeTeleop(.7,.3,.5);
+        Wheels.InitializeChassisTeleop(.7,.3,.5);
         initializeDevices();
         initializePositions();
         //VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
@@ -95,7 +95,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
         }
         else if (gamepad1.b) {
             //currentDetection = tagReader.GetScoringTag("Red");
-            //tagReader.turnToFaceAprilTag(.4,5, Wheels,"blue");
+            //tagReader.turnToFaceAprilTagTeleop(.4,5, Wheels,"blue");
         }
     }
 

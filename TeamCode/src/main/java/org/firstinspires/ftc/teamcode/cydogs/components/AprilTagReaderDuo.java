@@ -25,6 +25,8 @@ public class AprilTagReaderDuo {
     private static final boolean USE_WEBCAM = true;
     public int AprilTagId;
 
+    public AprilTagDetection CurrentScoringTag;
+
 
 
     public AprilTagReaderDuo(LinearOpMode opModeIn, String TeamIn)
@@ -101,10 +103,10 @@ public class AprilTagReaderDuo {
     public AprilTagDetection GetScoringTag(String team){
         // need a variable to store target apriltag ID in
 
-        if (Objects.equals(team, "Red")){
+        if (Objects.equals(team, "red")){
             // set target ID to be correct number
             AprilTagId=24;
-        } else if (Objects.equals(team, "Blue")) {
+        } else if (Objects.equals(team, "blue")) {
             AprilTagId=20;
         }
         // else set it to the other number
@@ -169,27 +171,22 @@ public class AprilTagReaderDuo {
         }   // end for() loop
     }
 
-    public void turnToFaceAprilTag(IndianaChassis indiana, String team, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker) {
+    public void turnToFaceAprilTagTeleop(IndianaChassis indiana, String team, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker) {
         // Get the yaw angle to the tag in degrees.
         AprilTagDetection scoringTag = GetScoringTag(team);
         if(scoringTag == null) return;
 
-        //double yaw = scoringTag.ftcPose.yaw-20;
-        double yaw = scoringTag.ftcPose.bearing;
-        opMode.telemetry.addData("Yaw:", yaw);
-        //opMode.telemetry.addData("RawYaw:", scoringTag.ftcPose.yaw);
+        CurrentScoringTag = scoringTag;
 
-        //indiana.RotateRight(yaw,turnPower,0);
-
-
-
+        double bearing = scoringTag.ftcPose.bearing;
+        opMode.telemetry.addData("Bearing:", bearing);
 
 
         // Turn until facing the tag (yaw ≈ 0)
-        while (Math.abs(yaw) > angleThresholdDeg) {
-            opMode.telemetry.addData("Yaw to tag", yaw);
+        while (Math.abs(bearing) > angleThresholdDeg) {
+            opMode.telemetry.addData("Bearing to tag", bearing);
             opMode.telemetry.update();
-            if (yaw > 0) {
+            if (bearing > 0) {
                 // Tag is to the right → turn right
                 indiana.setTurnPower(turnPower);
             } else {
@@ -204,14 +201,27 @@ public class AprilTagReaderDuo {
                 indiana.stopMotors();
                 return;
             }
-            yaw = scoringTag.ftcPose.bearing;
+            bearing = scoringTag.ftcPose.bearing;
         }
 
         // Stop the robot
         indiana.stopMotors();
 
+    }
+    public void turnToFaceAprilTagAuton(IndianaChassis indiana, String team, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker) {
+        // Get the yaw angle to the tag in degrees.
+        AprilTagDetection scoringTag = GetScoringTag(team);
+        if(scoringTag == null) return;
 
+        CurrentScoringTag = scoringTag;
+
+        double bearing = scoringTag.ftcPose.bearing;
+        opMode.telemetry.addData("Bearing:", bearing);
+
+
+        indiana.RotateRight(bearing,.3,100);
 
     }
+
 
 }
