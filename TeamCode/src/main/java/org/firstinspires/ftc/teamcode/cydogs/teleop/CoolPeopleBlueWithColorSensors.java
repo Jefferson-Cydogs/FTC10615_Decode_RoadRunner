@@ -41,7 +41,7 @@ public class CoolPeopleBlueWithColorSensors extends LinearOpMode {
     private ColorFinder LeftLaunchSensor;
     private ColorFinder RightLaunchSensor;
     private TargetColor Green = TargetColor.GREEN;
-    private TargetColor Purple = TargetColor.PURPLE;
+    private TargetColor Purple = TargetColor.ARTIFACTPURPLE;
 
     public String Team = "Blue";
 

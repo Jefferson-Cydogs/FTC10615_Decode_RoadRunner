@@ -5,9 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorFinder;
-import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
-import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
-import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 
 
 @TeleOp

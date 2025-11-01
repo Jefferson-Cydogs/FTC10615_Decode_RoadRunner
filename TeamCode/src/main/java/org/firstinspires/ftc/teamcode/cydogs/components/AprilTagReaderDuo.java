@@ -55,7 +55,7 @@ public class AprilTagReaderDuo {
     }
 
     public String getObelisk() {
-        if (aprilTag == null) return null; // protect against processor not being initialized
+        if (aprilTag == null) return "None"; // protect against processor not being initialized
 
         List<AprilTagDetection> detections = aprilTag.getDetections();
         opMode.telemetry.addData("# AprilTags Detected", detections.size());
@@ -95,7 +95,7 @@ public class AprilTagReaderDuo {
             }
         }
 
-        return null; // or "Unknown", "None", etc.
+        return "None";
     }
 
     public AprilTagDetection GetScoringTag(String team){

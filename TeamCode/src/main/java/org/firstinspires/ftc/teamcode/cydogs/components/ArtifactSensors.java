@@ -13,8 +13,8 @@ public class ArtifactSensors {
     private ColorFinder RightIntakeSensor;
     private ColorFinder LeftLaunchSensor;
     private ColorFinder RightLaunchSensor;
-    private TargetColor Green = TargetColor.GREEN;
-    private TargetColor Purple = TargetColor.PURPLE;
+    private TargetColor Green = TargetColor.ARTIFACTGREEN;
+    private TargetColor Purple = TargetColor.ARTIFACTPURPLE;
     private ColorLED RightLED;
     private ColorLED LeftLED;
     private LinearOpMode myOpMode;
