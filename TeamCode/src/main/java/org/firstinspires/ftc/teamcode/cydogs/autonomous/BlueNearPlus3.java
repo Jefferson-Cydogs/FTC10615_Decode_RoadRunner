@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.cydogs.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
@@ -43,42 +44,46 @@ public class BlueNearPlus3 extends LinearOpMode {
 
 
             // this clears bumper servo bug
-            indiana.Feeders.MoveBumpers();
+            indiana.Feeders.MoveBumpersToFixBug();
 
             indiana.BlueNearOpeningFlourish();
 
             indiana.Launchers.RunAtVelocity(velocityPercentage);
-            indiana.RotateLeft(47, 0.55, 900);
+            indiana.RotateLeft(47, 0.55, 400);//900
 
 
             indiana.ShootThreeShots(velocityPercentage);
 
-            indiana.Launchers.TurnPowerOff();
+            //indiana.Launchers.TurnPowerOff();
+            indiana.Launchers.RunAtVelocity(0.09);
 
-            indiana.RotateLeft(32,.3,200);
+            indiana.RotateLeft(32,.5,200);
             indiana.StrafeLeft(165, .3, 200);
             indiana.Intakes.turnLeftIntakeon();
             indiana.Feeders.ActivateLeftBumper();
-            indiana.MoveStraight(425, .25, 300);
+            indiana.MoveStraight(425, .4, 300);
             indiana.MoveStraight(339, .08, 300);
             indiana.Feeders.DeactivateLeftBumper();
             indiana.Intakes.turnleftintakeoff();
 
+            indiana.Launchers.StopLaunchersSafely();
             indiana.Intakes.turnRightIntakeon();
             indiana.Feeders.ActivateRightBumper();
-            indiana.StrafeLeft(127,.3, 200);
-            indiana.MoveStraight(280, .15, 1000);
+            indiana.StrafeLeft(127,.4, 200);
+            indiana.MoveStraight(280, .15, 200);
             indiana.Feeders.DeactivateRightBumper();
             indiana.Intakes.turnrightintakeoff();
+            indiana.Launchers.ResetLaunchersToFloat();
 
-            indiana.MoveStraight(-500, .4, 500);
+            indiana.MoveStraight(-500, .5, 300);
             indiana.Launchers.RunAtVelocity(.4);
             indiana.RotateRight(32, .3, 200);
             indiana.StrafeRight(420, .4, 200);
             indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, .3, 3, currentTimer, eventTracker);
             indiana.ShootThreeShots(velocityPercentage);
             indiana.Launchers.TurnPowerOff();
-            indiana.StrafeRight(400, .6, 200);
+            indiana.MoveStraight(300, .7, 100);
+            indiana.StrafeRight(400, .7, 200);
             sleep(2000);
 
 

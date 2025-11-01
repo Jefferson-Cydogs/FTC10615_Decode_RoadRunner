@@ -169,7 +169,7 @@ public class IndianaAuton extends IndianaChassis {
     public void BlueNearOpeningFlourish()
     {
         MoveStraight(1100, 0.55, 100);
-        RotateLeft(83, 0.55, 500);
+        RotateLeft(83, 0.55, 200);
 
         GetMotif();
         ColorLEDForMotif();
