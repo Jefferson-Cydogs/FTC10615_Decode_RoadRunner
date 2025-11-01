@@ -219,7 +219,7 @@ public class AprilTagReaderDuo {
         opMode.telemetry.addData("Bearing:", bearing);
 
 
-        indiana.RotateRight(bearing,.3,100);
+        indiana.RotateLeft(bearing-10,.3,100);
 
     }
 

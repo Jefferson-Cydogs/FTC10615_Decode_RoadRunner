@@ -2,8 +2,10 @@ package org.firstinspires.ftc.teamcode.cydogs.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
+import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
@@ -12,10 +14,11 @@ import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
 public class BlueNearSimple extends LinearOpMode {
 
 
-    private double velocityPercentage = 0.39;
+    private double velocityPercentage = .41;
 
     private IndianaAuton indiana;
-
+    private ElapsedTime currentTimer;
+    private EventTracker eventTracker;
     @Override
     public void runOpMode() {
                 // load 2 purple on left side
@@ -24,24 +27,25 @@ public class BlueNearSimple extends LinearOpMode {
 
                  indiana = new IndianaAuton(this, "blue");
                  indiana.InitializeAuton();
+                currentTimer = new ElapsedTime();
+                eventTracker = new EventTracker();
+                int startWaitTime = indiana.AskStartWaitTime();
 
                 // Wait for the start button to be pressed on the driver station
                 waitForStart();
 
                 if (opModeIsActive()) {
+                    sleep(startWaitTime*1000);
 
-                    indiana.LauncherLED.SetColor(1);
 
                     // this clears bumper servo bug
                     indiana.Feeders.MoveBumpers();
 
-                    indiana.MoveStraight(900, 0.55, 100);
-                    indiana.RotateLeft(80, 0.55, 1000);
-
-                    indiana.GetMotif();
+                    indiana.BlueNearOpeningFlourish();
 
                     indiana.Launchers.RunAtVelocity(velocityPercentage);
-                    indiana.RotateLeft(50, 0.55, 500);
+                    indiana.RotateLeft(47, 0.55, 100);
+                   // indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, .3, 3, currentTimer, eventTracker);
 
 
                     indiana.ShootThreeShots(velocityPercentage);
