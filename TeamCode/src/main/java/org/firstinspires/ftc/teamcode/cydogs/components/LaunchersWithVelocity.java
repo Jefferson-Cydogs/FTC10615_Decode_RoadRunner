@@ -47,12 +47,12 @@ public class LaunchersWithVelocity
 
     public void StopLaunchersSafely ()
     {
-        if (Launchers.getVelocity() < (MaxTicksPerSecond * 0.1))
+        while (Launchers.getVelocity() > (MaxTicksPerSecond * 0.1))
         {
-            Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-            Launchers.setVelocity(0);
-            Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         }
+        Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
+        Launchers.setVelocity(0);
+        Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
     }
 
     public boolean IsMotorAtSpeed(double TargetVelocityPercentage)
