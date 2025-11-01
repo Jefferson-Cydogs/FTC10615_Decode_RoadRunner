@@ -18,11 +18,13 @@ public class FlywheelVelocityGraph extends LinearOpMode {
     public static double D = 0.0;
     public static double F = 13.0;
 
-    public static double targetVelocity = 1384; // ticks per second
+    public static double targetVelocity = 1380; // ticks per second
 
     @Override
     public void runOpMode() {
         DcMotorEx flywheel = hardwareMap.get(DcMotorEx.class, "RightLauncher");
+        flywheel.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        flywheel.setDirection(DcMotorEx.Direction.REVERSE);
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         FtcDashboard dashboard = FtcDashboard.getInstance();
