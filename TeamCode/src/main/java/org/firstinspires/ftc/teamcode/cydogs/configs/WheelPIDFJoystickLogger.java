@@ -18,7 +18,7 @@ public class WheelPIDFJoystickLogger extends LinearOpMode {
     public static double D = 0.0;
     public static double F = 11.754;
 
-    public static double maxVelocity = ((312.0 / 60.0) * 537.7);// ticks/sec for 312 RPM motor
+    public static double maxVelocity = ((double)312 / 60) * 537.7;// ticks/sec for 312 RPM motor
     public static double deadband = 0.05;     // joystick dead zone
     public static double recoveryThreshold = 50; // ticks/sec margin for recovery
 
