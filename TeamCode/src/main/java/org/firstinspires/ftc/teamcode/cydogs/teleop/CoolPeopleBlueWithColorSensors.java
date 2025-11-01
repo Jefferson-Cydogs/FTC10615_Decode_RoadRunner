@@ -40,8 +40,8 @@ public class CoolPeopleBlueWithColorSensors extends LinearOpMode {
     private ColorFinder RightIntakeSensor;
     private ColorFinder LeftLaunchSensor;
     private ColorFinder RightLaunchSensor;
-    private TargetColor Green = TargetColor.GREEN;
-    private TargetColor Purple = TargetColor.PURPLE;
+    private TargetColor Green = TargetColor.ARTIFACTGREEN;
+    private TargetColor Purple = TargetColor.ARTIFACTPURPLE;
 
     public String Team = "Blue";
 
@@ -56,7 +56,7 @@ public class CoolPeopleBlueWithColorSensors extends LinearOpMode {
 
         // Execute initialization actions here
         Wheels = new IndianaChassis(this);
-        Wheels.InitializeTeleop(.7,.3,.5);
+        Wheels.InitializeChassisTeleop(.7,.3,.5);
         initializeDevices();
         initializePositions();
         //VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();

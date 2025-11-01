@@ -5,9 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorFinder;
-import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
-import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
-import org.firstinspires.ftc.teamcode.cydogs.components.Launchers;
 
 
 @TeleOp
@@ -25,7 +22,7 @@ public class TelopTestColorSensor extends LinearOpMode {
 
         // Execute initialization actions here
         wheels = new IndianaChassis(this);
-        wheels.InitializeTeleop(.7,.3,.5);
+        wheels.InitializeChassisTeleop(.7,.3,.5);
 
         initializeDevices();
         initializePositions();

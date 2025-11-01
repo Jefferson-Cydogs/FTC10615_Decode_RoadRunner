@@ -6,8 +6,8 @@ public enum TargetColor {
     RED(0, 20, 340, 360), // RED wraps around the hue circle
     BLUE(190, 260),
  //   GREEN(100, 140),
-    GREEN(110, 190),
-    PURPLE(200, 270);
+    ARTIFACTGREEN(110, 190),
+    ARTIFACTPURPLE(200, 270);
 
     private final float low1, high1;
     private final float low2, high2;

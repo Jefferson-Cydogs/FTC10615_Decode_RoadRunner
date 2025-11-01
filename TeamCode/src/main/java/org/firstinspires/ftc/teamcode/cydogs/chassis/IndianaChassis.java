@@ -30,7 +30,7 @@ public class IndianaChassis {
     private double FrontRightPower;
     private double BackLeftPower;
     private double BackRightPower;
-    private LinearOpMode myOpMode;
+    public LinearOpMode myOpMode;
     private final int WheelsDiameter =104;
     // Specs for typical motors we use:
     //    GoBilda 5203 Series Yellow Jacket 223 RPM, 751.8 PPR
@@ -68,7 +68,7 @@ public class IndianaChassis {
         BackRightWheel.setDirection(DcMotor.Direction.REVERSE);
     }
 
-    public void InitializeTeleop(double highSpeed, double lowSpeed, double rotateSpeed)
+    public void InitializeChassisTeleop(double highSpeed, double lowSpeed, double rotateSpeed)
     {
         highSpeedDrive = highSpeed;
         lowSpeedDrive = lowSpeed;
@@ -99,7 +99,7 @@ public class IndianaChassis {
         BackRightWheel.setPower(0);
     }
 
-    public void InitializeAutonomous()
+    public void InitializeChassisAutonomous()
     {
         // Set motors' ZeroPower behavior
         FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
