@@ -49,41 +49,58 @@ public class BlueNearPlus3 extends LinearOpMode {
             indiana.BlueNearOpeningFlourish();
 
             indiana.Launchers.RunAtVelocity(velocityPercentage);
-            indiana.RotateLeft(47, 0.55, 400);//900
+            indiana.RotateLeft(48, 0.55, 900);
 
 
             indiana.ShootThreeShots(velocityPercentage);
 
             //indiana.Launchers.TurnPowerOff();
+            indiana.Launchers.RunAtVelocity(0.2);
+            sleep(150);
+            //indiana.Launchers.RunAtVelocity(0.2);
+            //sleep(100);
             indiana.Launchers.RunAtVelocity(0.09);
+            indiana.Launchers.StopLaunchersSafely();
+            //sleep(50);
 
-            indiana.RotateLeft(32,.5,200);
-            indiana.StrafeLeft(165, .3, 200);
+
+            indiana.RotateLeft(29,.5,100);
+            indiana.StrafeLeft(200, .45, 100);
+
+            // Get purple
             indiana.Intakes.turnLeftIntakeon();
             indiana.Feeders.ActivateLeftBumper();
-            indiana.MoveStraight(425, .4, 300);
-            indiana.MoveStraight(339, .08, 300);
+            indiana.MoveStraight(425, .4, 100);
+            indiana.MoveStraight(340, .08, 300);
             indiana.Feeders.DeactivateLeftBumper();
-            indiana.Intakes.turnleftintakeoff();
 
-            indiana.Launchers.StopLaunchersSafely();
+
+            // Get Green
             indiana.Intakes.turnRightIntakeon();
             indiana.Feeders.ActivateRightBumper();
-            indiana.StrafeLeft(127,.4, 200);
-            indiana.MoveStraight(280, .15, 200);
+            indiana.StrafeLeft(127,.4, 100);
+            indiana.Intakes.turnleftintakeoff();
+            indiana.MoveStraight(275, .15, 200);
+            indiana.Feeders.DeactivateRightBumper();
+
+
+            // Got green, back up
+            indiana.Launchers.ResetLaunchersToFloat();
+            indiana.Launchers.RunAtVelocity(-.1);
+            indiana.Feeders.ReverseRightBumper();
+            indiana.MoveStraight(-500, .5, 100);
             indiana.Feeders.DeactivateRightBumper();
             indiana.Intakes.turnrightintakeoff();
-            indiana.Launchers.ResetLaunchersToFloat();
-
-            indiana.MoveStraight(-500, .5, 300);
+            indiana.Launchers.TurnPowerOff();
+            sleep(50);
             indiana.Launchers.RunAtVelocity(.4);
-            indiana.RotateRight(32, .3, 200);
+            indiana.RotateRight(32, .3, 100);
             indiana.StrafeRight(420, .4, 200);
             indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, .3, 3, currentTimer, eventTracker);
             indiana.ShootThreeShots(velocityPercentage);
             indiana.Launchers.TurnPowerOff();
-            indiana.MoveStraight(300, .7, 100);
-            indiana.StrafeRight(400, .7, 200);
+            indiana.MoveStraight(350, .8, 0);
+            indiana.StrafeRight(400, .8, 200);
             sleep(2000);
 
 
