@@ -60,7 +60,7 @@ public class LaunchersWithVelocity
         double CurrentVelocity = Launchers.getVelocity();
         double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
 
-        return (Math.abs(CurrentVelocity - TargetVelocity) <= (TargetVelocity * 0.02));
+        return (Math.abs(CurrentVelocity - TargetVelocity) <= (TargetVelocity * 0.01));
     }
 
     public boolean IsMotorTooStrong(double TargetVelocityPercentage)
@@ -75,5 +75,7 @@ public class LaunchersWithVelocity
     {
         Launchers.setVelocity(0);
     }
+
+
 
 }

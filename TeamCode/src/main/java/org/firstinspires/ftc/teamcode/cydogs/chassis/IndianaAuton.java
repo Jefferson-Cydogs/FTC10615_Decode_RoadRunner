@@ -15,12 +15,14 @@ public class IndianaAuton extends IndianaChassis {
     public Feeders Feeders;
     public LaunchersWithVelocity Launchers;
     public ColorLED LauncherLED;
+    private ColorLED LeftLED;
+    private ColorLED RightLED;
 
     // declare public properties
     public String CurrentMotif = "None";
     public String Alliance;
 
-
+    // add code to light LED for motif
     public IndianaAuton(LinearOpMode currentOp, String alliance)
     {
         super(currentOp);
@@ -30,6 +32,8 @@ public class IndianaAuton extends IndianaChassis {
         Intakes = new Intake(currentOp);
         LauncherLED = new ColorLED(currentOp,"LauncherLED");
         Launchers = new LaunchersWithVelocity(currentOp);
+        LeftLED = new ColorLED(currentOp,"LeftLED");
+        RightLED = new ColorLED(currentOp,"RightLED");
 
     }
 
@@ -39,6 +43,9 @@ public class IndianaAuton extends IndianaChassis {
         InitializeChassisAutonomous();
         TagReader.initAprilTag();
         Launchers.initLauncher();
+        LauncherLED.SetColorByName(Alliance);
+        LeftLED.SetColorByName(Alliance);
+        RightLED.SetColorByName(Alliance);
     }
 
     public void GetMotif()
@@ -52,6 +59,28 @@ public class IndianaAuton extends IndianaChassis {
             myOpMode.telemetry.update();
         }
 
+    }
+
+    public void ColorLEDForMotif()
+    {
+        if (CurrentMotif == "PPG")
+        {
+            LeftLED.SetColorByName("purple");
+            LauncherLED.SetColorByName("purple");
+            RightLED.SetColorByName("green");
+
+        } else if(CurrentMotif=="GPP") {
+            LeftLED.SetColorByName("green");
+            LauncherLED.SetColorByName("purple");
+            RightLED.SetColorByName("purple");
+        }
+        else  // PGP
+        {
+            LeftLED.SetColorByName("purple");
+            LauncherLED.SetColorByName("green");
+            RightLED.SetColorByName("purple");
+
+        }
     }
 
     public void ShootThreeShots(double velocityPercentage)
@@ -108,13 +137,13 @@ public class IndianaAuton extends IndianaChassis {
         int delaySeconds = 0;
 
         if (myOpMode.opModeInInit()) {
-            myOpMode.telemetry.addLine("Driver,");
-            myOpMode.telemetry.addLine("To INCREASE starting wait time, press DPAD UP");
-            myOpMode.telemetry.addLine("To DECREASE starting wait time, press DPAD DOWN");
-            myOpMode.telemetry.addLine("To complete selection, press B");
 
 
             while (myOpMode.opModeInInit()) {
+                myOpMode.telemetry.addLine("Driver,");
+                myOpMode.telemetry.addLine("To INCREASE starting wait time, press DPAD UP");
+                myOpMode.telemetry.addLine("To DECREASE starting wait time, press DPAD DOWN");
+                myOpMode.telemetry.addLine("To complete selection, press B");
                 myOpMode.telemetry.addData("Current Delay Time:", delaySeconds);
                 myOpMode.sleep(50);
                 myOpMode.telemetry.update();
@@ -136,6 +165,16 @@ public class IndianaAuton extends IndianaChassis {
         }
         return delaySeconds;
     }
+
+    public void BlueNearOpeningFlourish()
+    {
+        MoveStraight(1100, 0.55, 100);
+        RotateLeft(83, 0.55, 500);
+
+        GetMotif();
+        ColorLEDForMotif();
+    }
+
 
 
 }

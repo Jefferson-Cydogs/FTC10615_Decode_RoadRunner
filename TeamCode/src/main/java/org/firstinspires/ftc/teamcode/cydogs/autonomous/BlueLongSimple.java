@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
 public class BlueLongSimple extends LinearOpMode {
 
     // declare variables
-    private double velocityPercentage = 0.39;
+    private double velocityPercentage = 0.41;
 
     private IndianaAuton indiana;
 
