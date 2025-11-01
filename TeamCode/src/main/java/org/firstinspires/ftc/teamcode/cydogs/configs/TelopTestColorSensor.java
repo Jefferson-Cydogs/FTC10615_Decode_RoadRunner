@@ -22,7 +22,7 @@ public class TelopTestColorSensor extends LinearOpMode {
 
         // Execute initialization actions here
         wheels = new IndianaChassis(this);
-        wheels.InitializeTeleop(.7,.3,.5);
+        wheels.InitializeChassisTeleop(.7,.3,.5);
 
         initializeDevices();
         initializePositions();
