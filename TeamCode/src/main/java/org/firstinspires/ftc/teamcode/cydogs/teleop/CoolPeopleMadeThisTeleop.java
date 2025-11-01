@@ -42,7 +42,7 @@ public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
         // Execute initialization actions here
         Wheels = new IndianaChassis(this);
-        Wheels.InitializeTeleop(.7,.3,.5);
+        Wheels.InitializeChassisTeleop(.7,.3,.5);
         initializeDevices();
         initializePositions();
         //VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
