@@ -39,7 +39,7 @@ public class CoolPeopleBlue extends LinearOpMode {
     private ElapsedTime currentTimer;
     private EventTracker eventTracker;
 
-    public String Team = "Blue";
+    public String Team = "blue";
 
     @Override
     public void runOpMode()
@@ -106,7 +106,7 @@ public class CoolPeopleBlue extends LinearOpMode {
             if(eventTracker.doEvent("TurnToTag",currentTimer.seconds(),0.5)) {
                 tagReader.displayDetections(tagReader.GetDetections());
                 //Wheels.InitializeAutonomous();
-                tagReader.turnToFaceAprilTag(Wheels, Team, .15, 3, currentTimer, eventTracker);
+                tagReader.turnToFaceAprilTagTeleop(Wheels, Team, .15, 3, currentTimer, eventTracker);
                 //Wheels.InitializeTeleop(.7, .3, .5);
             }
         }
