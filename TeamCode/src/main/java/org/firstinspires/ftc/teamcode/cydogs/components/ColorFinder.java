@@ -47,7 +47,6 @@ public class ColorFinder {
         int escapeCounter = 0;
 
         while (consecutiveHits < REQUIRED_CONSECUTIVE_HITS && escapeCounter < 10) {
-            if (distanceSensor.getDistance(DistanceUnit.MM) < 30) {
                 NormalizedRGBA colors = colorSensor.getNormalizedColors();
                 float[] hsv = new float[3];
                 int r = (int) (colors.red * 255);
@@ -55,7 +54,7 @@ public class ColorFinder {
                 int b = (int) (colors.blue * 255);
                 Color.RGBToHSV(r, g, b, hsv);
 
-                if (targetColor.matches(hsv)) {
+                if (targetColor.matches(hsv) && distanceSensor.getDistance(DistanceUnit.MM) < 30) {
                     consecutiveHits++;
                     escapeCounter = 0;
                 }
@@ -63,9 +62,8 @@ public class ColorFinder {
                     escapeCounter++;
                 }
 
-                if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) {
-                    return true;
-                }
+            if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) {
+                return true;
             }
         }
         return false;
@@ -120,7 +118,7 @@ public class ColorFinder {
         opMode.telemetry.addData("Normalized Green", "%.3f", colors.green);
         opMode.telemetry.addData("Normalized Blue", "%.3f", colors.blue);
         opMode.telemetry.addData("Normalized Alpha", "%.3f", colors.alpha);
-
+        opMode.telemetry.addData("Distance:",distanceSensor.getDistance(DistanceUnit.MM));
         opMode.telemetry.addData("RGB", "(%d, %d, %d)", r, g, b);
 
         opMode.telemetry.addData("HSV", "H: %.1f  S: %.3f  V: %.3f", hsv[0], hsv[1], hsv[2]);

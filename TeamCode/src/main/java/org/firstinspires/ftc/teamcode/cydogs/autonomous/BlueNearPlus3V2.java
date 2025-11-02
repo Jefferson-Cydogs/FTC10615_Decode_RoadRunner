@@ -93,7 +93,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
 
 
             indiana.MoveStraight(-1000, .5, 100);
-            //indiana.Feeders.DeactivateRightBumper();
+            indiana.Feeders.DeactivateRightBumper();
             indiana.Intakes.turnrightintakeoff();
             indiana.Launchers.TurnPowerOff();
             sleep(50);

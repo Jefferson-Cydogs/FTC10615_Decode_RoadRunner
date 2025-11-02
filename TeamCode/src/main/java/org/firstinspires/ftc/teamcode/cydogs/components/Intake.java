@@ -22,7 +22,7 @@ public class Intake {
 
     public void turnLeftIntakeon()
     {
-       LeftIntake.setPower(0.9);
+       LeftIntake.setPower(1.0);
     }
 
     public void reverseleftintake()
@@ -37,7 +37,7 @@ public class Intake {
 
     public void turnRightIntakeon()
     {
-        RightIntake.setPower(0.9);
+        RightIntake.setPower(1.0);
     }
 
     public void reverserightintake()
@@ -52,8 +52,8 @@ public class Intake {
 
     public void turnBothIntakesOn()
     {
-        RightIntake.setPower(0.9);
-        LeftIntake.setPower(0.9);
+        RightIntake.setPower(1.0);
+        LeftIntake.setPower(1.0);
     }
 
     public void turnBothIntakesOff()

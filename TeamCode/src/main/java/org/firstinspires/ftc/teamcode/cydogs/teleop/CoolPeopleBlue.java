@@ -27,8 +27,8 @@ public class CoolPeopleBlue extends LinearOpMode {
     private LaunchersWithVelocity RocketLauncher3000;
     //46% launcher from top of short distance
     //53% launcher velocity from long distance
-    private final double NearLauncherVelocity = 0.46;
-    private final double FarLauncherVelocity = 0.53;
+    private final double NearLauncherVelocity = 0.42;
+    private final double FarLauncherVelocity = 0.52;
     private double TargetLauncherVelocity = NearLauncherVelocity;
 
     private ColorLED LauncherLED;
@@ -69,10 +69,13 @@ public class CoolPeopleBlue extends LinearOpMode {
             //Wheels.TraditionalTeleopDrive();
             manageDriverControls();
             manageManipulatorControls();
-            checkRocketLauncherVelocity();
+
+            if(eventTracker.doEvent("CheckLauncher",currentTimer.seconds(), 0.5)) {
+                checkRocketLauncherVelocity();
+            }
 
             if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
-                artifactSensors.CheckSensors();
+               // artifactSensors.CheckSensors();
                 telemetry.addLine("Checking Artifact Sensors");
             }
 
@@ -129,19 +132,22 @@ public class CoolPeopleBlue extends LinearOpMode {
         else if (gamepad2.y) {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         }
+        else {
+            BumperCars.DeactivateLeftBumper();
+            BumperCars.DeactivateRightBumper();
+            ArtifactEater.turnleftintakeoff();
+            ArtifactEater.turnrightintakeoff();
+        }
+
+        if (gamepad2.left_bumper) {
+            ArtifactEater.turnLeftIntakeon();
+            BumperCars.ActivateLeftBumper();
+        }
         else if (gamepad2.dpad_left) {
             ArtifactEater.reverseleftintake();
         }
         else if (gamepad2.dpad_right) {
             ArtifactEater.reverserightintake();
-        }
-        else if (gamepad2.left_bumper) {
-            ArtifactEater.turnLeftIntakeon();
-            BumperCars.ActivateLeftBumper();
-        }
-        else if (gamepad2.right_bumper) {
-            ArtifactEater.turnRightIntakeon();
-            BumperCars.ActivateRightBumper();
         }
         else if (gamepad2.left_trigger > 0.4) {
             ArtifactEater.turnLeftIntakeon();
@@ -151,10 +157,22 @@ public class CoolPeopleBlue extends LinearOpMode {
         }
         else {
             BumperCars.DeactivateLeftBumper();
-            BumperCars.DeactivateRightBumper();
             ArtifactEater.turnleftintakeoff();
+        }
+        if (gamepad2.right_bumper) {
+            ArtifactEater.turnRightIntakeon();
+            BumperCars.ActivateRightBumper();
+        }
+        else {
+            BumperCars.DeactivateRightBumper();
             ArtifactEater.turnrightintakeoff();
         }
+
+
+
+
+
+
     }
 
     private void initializeDevices()
