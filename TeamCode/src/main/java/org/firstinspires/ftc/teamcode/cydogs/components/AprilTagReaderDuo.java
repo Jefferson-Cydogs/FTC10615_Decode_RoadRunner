@@ -208,7 +208,7 @@ public class AprilTagReaderDuo {
         indiana.stopMotors();
 
     }
-    public void turnToFaceAprilTagAuton(IndianaChassis indiana, String team, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker) {
+    public void turnToFaceAprilTagAuton(IndianaChassis indiana, String team, double angleAdjustment, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker) {
         // Get the yaw angle to the tag in degrees.
         AprilTagDetection scoringTag = GetScoringTag(team);
         if(scoringTag == null) return;
@@ -219,7 +219,7 @@ public class AprilTagReaderDuo {
         opMode.telemetry.addData("Bearing:", bearing);
 
 
-        indiana.RotateLeft(bearing-8,.3,100);
+        indiana.RotateLeft(bearing+angleAdjustment,.3,100);
 
     }
 

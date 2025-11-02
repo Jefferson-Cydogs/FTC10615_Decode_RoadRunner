@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.cydogs.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
@@ -11,8 +10,8 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
-@Autonomous(name= "Blue Near Plus 3", group= "Autonomous", preselectTeleOp = "Cool People Blue")
-public class BlueNearPlus3 extends LinearOpMode {
+@Autonomous(name= "Blue Near Plus 3 V2", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+public class BlueNearPlus3V2 extends LinearOpMode {
 
 
     private double velocityPercentage = 0.41;
@@ -49,7 +48,7 @@ public class BlueNearPlus3 extends LinearOpMode {
             indiana.BlueNearOpeningFlourish();
 
             indiana.Launchers.RunAtVelocity(velocityPercentage);
-            indiana.RotateLeft(48, 0.55, 900);
+            indiana.RotateLeft(48, 0.55, 200);
 
 
             indiana.ShootThreeShots(velocityPercentage);
@@ -91,7 +90,9 @@ public class BlueNearPlus3 extends LinearOpMode {
             indiana.Launchers.RunAtVelocity(-.15);
             //indiana.Feeders.ReverseRightBumper();
 
-            indiana.MoveStraight(-500, .5, 100);
+
+
+            indiana.MoveStraight(-700, .5, 100);
             //indiana.Feeders.DeactivateRightBumper();
             indiana.Intakes.turnrightintakeoff();
             indiana.Launchers.TurnPowerOff();
@@ -99,13 +100,17 @@ public class BlueNearPlus3 extends LinearOpMode {
 
             // Go shoot
             indiana.Launchers.RunAtVelocity(.4);
-            indiana.RotateRight(32, .5, 100);
-            indiana.StrafeRight(420, .6, 200);
-            indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, .3, 3, currentTimer, eventTracker);
+            //indiana.RotateRight(32, .5, 100);
+            indiana.StrafeRight(820, .6, 100);
+
+            //indiana.MoveStraight(350, .8, 0);
+            //indiana.StrafeRight(400, .8, 200);
+
+            indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, -8,.3, 3, currentTimer, eventTracker);
             indiana.ShootThreeShotsSecondTime(velocityPercentage);
             indiana.Launchers.TurnPowerOff();
-            indiana.MoveStraight(350, .8, 0);
-            indiana.StrafeRight(400, .8, 200);
+
+            indiana.ColorLEDForAlliance();
             sleep(2000);
 
 

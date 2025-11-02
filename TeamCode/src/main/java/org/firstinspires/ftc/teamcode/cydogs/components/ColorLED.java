@@ -26,7 +26,7 @@ public class ColorLED {
 
     public void SetColorByName(String ColorName)
     {
-        switch (ColorName)
+        switch (ColorName.toLowerCase())
         {
             case "white":
                 if (myServo.getPosition() != 1.0) {
