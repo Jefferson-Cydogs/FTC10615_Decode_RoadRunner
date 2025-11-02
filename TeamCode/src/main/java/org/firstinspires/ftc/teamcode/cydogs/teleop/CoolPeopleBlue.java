@@ -27,7 +27,9 @@ public class CoolPeopleBlue extends LinearOpMode {
     private LaunchersWithVelocity RocketLauncher3000;
     //46% launcher from top of short distance
     //53% launcher velocity from long distance
-    private double TargetLauncherVelocity = 0.46;
+    private final double NearLauncherVelocity = 0.46;
+    private final double FarLauncherVelocity = 0.53;
+    private double TargetLauncherVelocity = NearLauncherVelocity;
 
     private ColorLED LauncherLED;
     private ColorLED LeftChannelLED;
@@ -95,13 +97,14 @@ public class CoolPeopleBlue extends LinearOpMode {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             sleep(200);
         } else if (gamepad1.x) {
-            TargetLauncherVelocity = 0.53;
+            TargetLauncherVelocity = FarLauncherVelocity;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             //
         } else if (gamepad1.b) {
-            TargetLauncherVelocity = 0.46;
+            TargetLauncherVelocity = NearLauncherVelocity;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
-        } else if (gamepad1.dpad_down){
+        }
+        else if (gamepad1.dpad_down) {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             //currentDetection = tagReader.GetScoringTag("Red");
             if (eventTracker.doEvent("TurnToTag", currentTimer.seconds(), 0.5)) {
@@ -110,9 +113,7 @@ public class CoolPeopleBlue extends LinearOpMode {
                 tagReader.turnToFaceAprilTagTeleop(Wheels, Team, .15, 3, currentTimer, eventTracker);
                 //Wheels.InitializeTeleop(.7, .3, .5);
             }
-
         }
-
     }
 
     private void manageManipulatorControls()
