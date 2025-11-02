@@ -101,7 +101,7 @@ public class BlueNearPlus3 extends LinearOpMode {
             indiana.Launchers.RunAtVelocity(.4);
             indiana.RotateRight(32, .5, 100);
             indiana.StrafeRight(420, .6, 200);
-            indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, .3, 3, currentTimer, eventTracker);
+            indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, -8,.3, 3, currentTimer, eventTracker);
             indiana.ShootThreeShotsSecondTime(velocityPercentage);
             indiana.Launchers.TurnPowerOff();
             indiana.MoveStraight(350, .8, 0);

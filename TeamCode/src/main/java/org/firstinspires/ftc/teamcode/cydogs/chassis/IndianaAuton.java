@@ -87,7 +87,7 @@ public class IndianaAuton extends IndianaChassis {
     {
         LeftLED.SetColorByName(Alliance);
         LauncherLED.SetColorByName(Alliance);
-        RightLED.SetColorByName(Alliance;
+        RightLED.SetColorByName(Alliance);
     }
 
     public void ShootThreeShots(double velocityPercentage)
