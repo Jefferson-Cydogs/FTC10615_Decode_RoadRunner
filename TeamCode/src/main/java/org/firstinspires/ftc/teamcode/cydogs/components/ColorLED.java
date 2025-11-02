@@ -39,6 +39,11 @@ public class ColorLED {
                     myServo.setPosition(0.500);
                 }
                 break;
+            case "blue":
+                if (myServo.getPosition() != 0.611) {
+                    myServo.setPosition(0.611);
+                }
+                break;
             case "red":
                 if (myServo.getPosition() != 0.280) {
                     myServo.setPosition(0.280);

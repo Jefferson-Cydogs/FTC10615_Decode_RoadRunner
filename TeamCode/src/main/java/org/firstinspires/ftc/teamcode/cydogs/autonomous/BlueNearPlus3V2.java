@@ -92,7 +92,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
 
 
 
-            indiana.MoveStraight(-700, .5, 100);
+            indiana.MoveStraight(-1000, .5, 100);
             //indiana.Feeders.DeactivateRightBumper();
             indiana.Intakes.turnrightintakeoff();
             indiana.Launchers.TurnPowerOff();
@@ -101,12 +101,12 @@ public class BlueNearPlus3V2 extends LinearOpMode {
             // Go shoot
             indiana.Launchers.RunAtVelocity(.4);
             //indiana.RotateRight(32, .5, 100);
-            indiana.StrafeRight(820, .6, 100);
-
+            indiana.StrafeRight(1100, .6, 100);
+            indiana.RotateRight(15,.5,100);
             //indiana.MoveStraight(350, .8, 0);
             //indiana.StrafeRight(400, .8, 200);
 
-            indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, -8,.3, 3, currentTimer, eventTracker);
+            //indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, -8,.3, 3, currentTimer, eventTracker);
             indiana.ShootThreeShotsSecondTime(velocityPercentage);
             indiana.Launchers.TurnPowerOff();
 
