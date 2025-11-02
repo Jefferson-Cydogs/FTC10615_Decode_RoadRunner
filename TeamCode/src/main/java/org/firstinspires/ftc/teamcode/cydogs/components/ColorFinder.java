@@ -47,22 +47,25 @@ public class ColorFinder {
         int escapeCounter = 0;
 
         while (consecutiveHits < REQUIRED_CONSECUTIVE_HITS && escapeCounter < 10) {
-            NormalizedRGBA colors = colorSensor.getNormalizedColors();
-            float[] hsv = new float[3];
-            int r = (int) (colors.red * 255);
-            int g = (int) (colors.green * 255);
-            int b = (int) (colors.blue * 255);
-            Color.RGBToHSV(r, g, b, hsv);
+            if (distanceSensor.getDistance(DistanceUnit.MM) < 30) {
+                NormalizedRGBA colors = colorSensor.getNormalizedColors();
+                float[] hsv = new float[3];
+                int r = (int) (colors.red * 255);
+                int g = (int) (colors.green * 255);
+                int b = (int) (colors.blue * 255);
+                Color.RGBToHSV(r, g, b, hsv);
 
-            if (targetColor.matches(hsv)) {
-                consecutiveHits++;
-                escapeCounter = 0;
-            } else {
-                escapeCounter++;
-            }
+                if (targetColor.matches(hsv)) {
+                    consecutiveHits++;
+                    escapeCounter = 0;
+                }
+                else {
+                    escapeCounter++;
+                }
 
-            if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) {
-                return true;
+                if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) {
+                    return true;
+                }
             }
         }
         return false;
