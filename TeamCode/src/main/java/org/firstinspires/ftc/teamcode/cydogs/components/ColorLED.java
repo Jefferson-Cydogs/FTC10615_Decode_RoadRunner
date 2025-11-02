@@ -80,10 +80,9 @@ public class ColorLED {
     }
 
     public void SetColorName(ColorOption Color) {
-        double CurrentPosition = myServo.getPosition();
         double TargetPosition = Color.getPosition();
 
-        if (Math.abs(CurrentPosition - TargetPosition) > 0.001) {
+        if (Math.abs(myServo.getPosition() - TargetPosition) > 0.001) {
             myServo.setPosition(TargetPosition);
         }
     }
