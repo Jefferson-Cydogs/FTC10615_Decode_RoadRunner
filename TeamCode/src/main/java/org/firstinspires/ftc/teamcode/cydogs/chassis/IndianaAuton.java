@@ -83,23 +83,52 @@ public class IndianaAuton extends IndianaChassis {
         }
     }
 
+    public void ColorLEDForAlliance()
+    {
+        LeftLED.SetColorByName(Alliance);
+        LauncherLED.SetColorByName(Alliance);
+        RightLED.SetColorByName(Alliance);
+    }
+
     public void ShootThreeShots(double velocityPercentage)
     {
         if (CurrentMotif == "PPG")
         {
-            ShootPurple(300,velocityPercentage,300);
+            ShootPurple(900,velocityPercentage,300);
             ShootPurple(300, velocityPercentage, 1500);//2000
             ShootGreen(300, velocityPercentage, 500);
 
         } else if(CurrentMotif=="GPP") {
-            ShootGreen(300, velocityPercentage, 500);
+            ShootGreen(900, velocityPercentage, 500);
             ShootPurple(300,velocityPercentage,300);
             ShootPurple(300, velocityPercentage, 1500);
         }
         else  // PGP
         {
-            ShootPurple(300,velocityPercentage,300);
+            ShootPurple(900,velocityPercentage,300);
             ShootGreen(300, velocityPercentage, 500);
+            ShootPurple(300, velocityPercentage, 1500);
+
+        }
+    }
+
+    public void ShootThreeShotsSecondTime(double velocityPercentage)
+    {
+        if (CurrentMotif == "PPG")
+        {
+            ShootPurple(900,velocityPercentage,300);
+            ShootPurple(300, velocityPercentage, 1500);//2000
+            ShootGreen(300, velocityPercentage, 1500);
+
+        } else if(CurrentMotif=="GPP") {
+            ShootGreen(900, velocityPercentage, 1500);
+            ShootPurple(300,velocityPercentage,300);
+            ShootPurple(300, velocityPercentage, 1500);
+        }
+        else  // PGP
+        {
+            ShootPurple(900,velocityPercentage,300);
+            ShootGreen(300, velocityPercentage, 1500);
             ShootPurple(300, velocityPercentage, 1500);
 
         }
@@ -169,7 +198,7 @@ public class IndianaAuton extends IndianaChassis {
     public void BlueNearOpeningFlourish()
     {
         MoveStraight(1100, 0.55, 100);
-        RotateLeft(83, 0.55, 200);
+        RotateLeft(83, 0.55, 100);
 
         GetMotif();
         ColorLEDForMotif();

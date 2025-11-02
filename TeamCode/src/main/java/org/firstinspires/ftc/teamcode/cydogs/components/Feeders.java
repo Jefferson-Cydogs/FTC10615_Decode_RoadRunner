@@ -88,5 +88,9 @@ public class Feeders {
     {
         left_bumper.setPower(-0.6);
     }
+    public void ReverseLeftBumperSlowly()
+    {
+        left_bumper.setPower(-0.2);
+    }
 
 }
