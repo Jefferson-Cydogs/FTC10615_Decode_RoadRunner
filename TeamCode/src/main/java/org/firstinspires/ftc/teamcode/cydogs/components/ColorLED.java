@@ -11,23 +11,19 @@ public class ColorLED {
     private LinearOpMode opMode;
     private Servo myServo;
 
-    public ColorLED(LinearOpMode opMode, String LEDName)
-    {
+    public ColorLED(LinearOpMode opMode, String LEDName) {
         this.opMode = opMode;
         myServo = opMode.hardwareMap.get(Servo.class, LEDName);
     }
 
-    public void SetColor(double ColorNumber)
-    {
+    public void SetColor(double ColorNumber) {
         ColorNumber = Math.max(SERVO_MIN,
                                Math.min(SERVO_MAX, ColorNumber));
         myServo.setPosition(ColorNumber);
     }
 
-    public void SetColorByName(String ColorName)
-    {
-        switch (ColorName)
-        {
+    public void SetColorByName(String ColorName) {
+        switch (ColorName) {
             case "white":
                 if (myServo.getPosition() != 1.0) {
                     myServo.setPosition(1.0);
@@ -56,8 +52,7 @@ public class ColorLED {
         }
     }
 
-    public boolean IsAlreadyOff()
-    {
+    public boolean IsAlreadyOff() {
         return (myServo.getPosition() == 0);
     }
 
