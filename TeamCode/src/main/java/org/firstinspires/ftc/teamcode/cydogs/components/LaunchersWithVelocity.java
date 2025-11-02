@@ -59,7 +59,7 @@ public class LaunchersWithVelocity
     public boolean IsMotorAtSpeed(double TargetVelocityPercentage) {
         double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
 
-        return (Math.abs(Launchers.getVelocity() - TargetVelocity) <= (TargetVelocity * 0.01));
+        return (Math.abs(Launchers.getVelocity() - TargetVelocity) <= (TargetVelocity * 0.02));
     }
 
     public boolean IsMotorTooStrong(double TargetVelocityPercentage) {
