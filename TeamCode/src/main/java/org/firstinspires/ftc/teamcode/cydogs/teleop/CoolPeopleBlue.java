@@ -132,47 +132,36 @@ public class CoolPeopleBlue extends LinearOpMode {
         else if (gamepad2.y) {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         }
-        else {
-            BumperCars.DeactivateLeftBumper();
-            BumperCars.DeactivateRightBumper();
-            ArtifactEater.turnleftintakeoff();
-            ArtifactEater.turnrightintakeoff();
-        }
 
-        if (gamepad2.left_bumper) {
+        if (gamepad2.left_trigger > 0.4) {
+            ArtifactEater.turnLeftIntakeon();
+        }
+        else if (gamepad2.left_bumper) {
             ArtifactEater.turnLeftIntakeon();
             BumperCars.ActivateLeftBumper();
         }
         else if (gamepad2.dpad_left) {
             ArtifactEater.reverseleftintake();
         }
-        else if (gamepad2.dpad_right) {
-            ArtifactEater.reverserightintake();
+        else {
+            ArtifactEater.turnleftintakeoff();
+            BumperCars.DeactivateLeftBumper();
         }
-        else if (gamepad2.left_trigger > 0.4) {
-            ArtifactEater.turnLeftIntakeon();
-        }
-        else if (gamepad2.right_trigger > 0.4) {
+
+        if (gamepad2.right_trigger > 0.4) {
             ArtifactEater.turnRightIntakeon();
         }
-        else {
-            BumperCars.DeactivateLeftBumper();
-            ArtifactEater.turnleftintakeoff();
-        }
-        if (gamepad2.right_bumper) {
+        else if (gamepad2.right_bumper) {
             ArtifactEater.turnRightIntakeon();
             BumperCars.ActivateRightBumper();
         }
-        else {
-            BumperCars.DeactivateRightBumper();
-            ArtifactEater.turnrightintakeoff();
+        else if (gamepad2.dpad_right) {
+            ArtifactEater.reverserightintake();
         }
-
-
-
-
-
-
+        else {
+            ArtifactEater.turnrightintakeoff();
+            BumperCars.DeactivateRightBumper();
+        }
     }
 
     private void initializeDevices()
