@@ -82,26 +82,26 @@ public class ColorFinder {
             //saturation = JavaUtil.colorToSaturation(color);
 
             if (hue >= 90 && hue < 150) {
-                return "Green";
+                return "GREEN";
             }
             else if (hue >= 150 && hue < 225) {
-                return "Blue";
+                return "BLUE";
             }
             else if (hue >= 225 && hue < 350) {
-                return "Purple";
+                return "PURPLE";
             }
             else if ((hue >= 350) || (hue < 30)) {
-                return "Red";
+                return "RED";
             }
            /*else if (saturation < 0.2) {
                return "White";
            }*/
             else {
-                return "Other";
+                return "OTHER";
             }
         }
         else {
-            return "Nothing";
+            return "NOTHING";
         }
     }
 
