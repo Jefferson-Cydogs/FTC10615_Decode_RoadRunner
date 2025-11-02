@@ -37,7 +37,7 @@ public class ArtifactSensors {
     {
         //myOpMode.telemetry.addLine("Left Intake:");
         //LeftIntakeSensor.WhatDoISee();
-        /*if (LeftIntakeSensor.SeeColor(Green)) {
+        if (LeftIntakeSensor.SeeColor(Green)) {
            // myOpMode.telemetry.addLine("A");
             LeftIntakeColor = "Green";
         }
@@ -48,8 +48,8 @@ public class ArtifactSensors {
         else {
             //myOpMode.telemetry.addLine("C");
             LeftIntakeColor = "Nothing";
-        }*/
-        if (LeftIntakeSensor.DetectColor() == "GREEN") {
+        }
+        /*if (LeftIntakeSensor.DetectColor() == "GREEN") {
             LeftIntakeColor = "Green";
         }
         else if (LeftIntakeSensor.DetectColor() == "PURPLE") {
@@ -58,11 +58,11 @@ public class ArtifactSensors {
         else {
             //myOpMode.telemetry.addLine("C");
             LeftIntakeColor = "Nothing";
-        }
+        }*/
 
         //myOpMode.telemetry.addLine("Right Intake:");
         //RightIntakeSensor.WhatDoISee();
-        /*if (RightIntakeSensor.SeeColor(Green)) {
+        if (RightIntakeSensor.SeeColor(Green)) {
             //myOpMode.telemetry.addLine("D");
             RightIntakeColor = "Green";
         }
@@ -73,8 +73,8 @@ public class ArtifactSensors {
         else {
             //myOpMode.telemetry.addLine("F");
             RightIntakeColor = "Nothing";
-        }*/
-        if (RightIntakeSensor.DetectColor() == "GREEN") {
+        }
+        /*if (RightIntakeSensor.DetectColor() == "GREEN") {
             RightIntakeColor = "Green";
         }
         else if (RightIntakeSensor.DetectColor() == "PURPLE") {
@@ -83,11 +83,11 @@ public class ArtifactSensors {
         else {
             //myOpMode.telemetry.addLine("C");
             RightIntakeColor = "Nothing";
-        }
+        }*/
 
         //myOpMode.telemetry.addLine("Left Launcher:");
         //LeftLaunchSensor.WhatDoISee();
-        /*if (LeftLaunchSensor.SeeColor(Green)) {
+        if (LeftLaunchSensor.SeeColor(Green)) {
             //myOpMode.telemetry.addLine("J");
             LeftLaunchColor = "Green";
             LeftLED.SetColorName(ColorOption.GREEN);
@@ -101,8 +101,8 @@ public class ArtifactSensors {
             //myOpMode.telemetry.addLine("L");
             LeftLaunchColor = "Nothing";
             LeftLED.SetColorName(ColorOption.OFF);
-        }*/
-        if (LeftLaunchSensor.DetectColor() == "GREEN") {
+        }
+        /*if (LeftLaunchSensor.DetectColor() == "GREEN") {
             LeftLaunchColor = "Green";
             LeftLED.SetColorName(ColorOption.GREEN);
         }
@@ -113,11 +113,11 @@ public class ArtifactSensors {
         else {
             LeftLaunchColor = "Nothing";
             LeftLED.SetColorName(ColorOption.OFF);
-        }
+        }*/
 
         //myOpMode.telemetry.addLine("Right Launcher:");
         //RightLaunchSensor.WhatDoISee();
-        /*if (RightLaunchSensor.SeeColor(Green)) {
+        if (RightLaunchSensor.SeeColor(Green)) {
             //myOpMode.telemetry.addLine("G");
             RightLaunchColor = "Green";
             RightLED.SetColorName(ColorOption.GREEN);
@@ -131,8 +131,8 @@ public class ArtifactSensors {
             //myOpMode.telemetry.addLine("I");
             RightLaunchColor = "Nothing";
             RightLED.SetColorName(ColorOption.OFF);
-        }*/
-        if (RightLaunchSensor.DetectColor() == "GREEN") {
+        }
+        /*if (RightLaunchSensor.DetectColor() == "GREEN") {
             RightLaunchColor = "Green";
             RightLED.SetColorName(ColorOption.GREEN);
         }
@@ -143,7 +143,7 @@ public class ArtifactSensors {
         else {
             RightLaunchColor = "Nothing";
             RightLED.SetColorName(ColorOption.OFF);
-        }
+        }*/
     }
 
 }
