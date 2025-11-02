@@ -8,6 +8,7 @@ import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
 import org.firstinspires.ftc.teamcode.cydogs.components.ArtifactSensors;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
+import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
@@ -165,23 +166,21 @@ public class CoolPeopleBlue extends LinearOpMode {
         tagReader = new AprilTagReaderDuo(this, "Red");
     }
 
-    private void initializePositions()
-    {
-        LauncherLED.SetColorName(ColorLED.ColorOption.OFF);
-        LeftChannelLED.SetColorName(ColorLED.ColorOption.OFF);
-        RightChannelLED.SetColorName(ColorLED.ColorOption.OFF);
+    private void initializePositions() {
+        LauncherLED.SetColorName(ColorOption.OFF);
+        LeftChannelLED.SetColorName(ColorOption.OFF);
+        RightChannelLED.SetColorName(ColorOption.OFF);
     }
 
-    private void checkRocketLauncherVelocity()
-    {
+    private void checkRocketLauncherVelocity() {
         if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocity)) {
-            LauncherLED.SetColorName(ColorLED.ColorOption.RED);
+            LauncherLED.SetColorName(ColorOption.RED);
         }
         else if (RocketLauncher3000.IsMotorAtSpeed(TargetLauncherVelocity)) {
-            LauncherLED.SetColorName(ColorLED.ColorOption.WHITE);
+            LauncherLED.SetColorName(ColorOption.WHITE);
         }
         else {
-            LauncherLED.SetColorName(ColorLED.ColorOption.OFF);
+            LauncherLED.SetColorName(ColorOption.OFF);
         }
     }
 

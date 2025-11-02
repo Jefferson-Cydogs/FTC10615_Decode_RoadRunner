@@ -16,69 +16,58 @@ public class LaunchersWithVelocity
     private LinearOpMode opMode;
     private DcMotorEx Launchers;
 
-    public void initLauncher()
-    {
+    public void initLauncher() {
     }
 
-    public LaunchersWithVelocity(LinearOpMode opMode)
-    {
+    public LaunchersWithVelocity(LinearOpMode opMode) {
         this.opMode = opMode;
 
         Launchers = opMode.hardwareMap.get(DcMotorEx.class,"RightLauncher");
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         Launchers.setDirection(DcMotorEx.Direction.REVERSE);
         Launchers.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        //Launchers.setVelocityPIDFCoefficients(300, 0, 0, 10);
+        Launchers.setVelocityPIDFCoefficients(75, 0, 0, 15.4863);
     }
 
-    public double GetCurrentVelocity()
-    {
+    public double GetCurrentVelocity() {
         return Launchers.getVelocity();
     }
 
     public void RunAtVelocity(double TargetVelocityPercentage) {
-        double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
-
-        Launchers.setVelocity(TargetVelocity);
-        /*while (Launchers.getVelocity() < TargetVelocity) {
-            //Do nothing
-        }*/
+        Launchers.setVelocity(TargetVelocityPercentage * MaxTicksPerSecond);
     }
 
-    public void StopLaunchersSafely()
-    {
-        while(Launchers.getVelocity() > (MaxTicksPerSecond*0.1)) {}
+    public void StopLaunchersSafely() {
+        /*double IntermediateVelocity = Launchers.getVelocity() / 3;
+
+        Launchers.setVelocity(IntermediateVelocity * 2);
+        opMode.sleep(200);
+        Launchers.setVelocity(IntermediateVelocity);
+        opMode.sleep(200);
+        Launchers.setVelocity(0);*/
+        while (Launchers.getVelocity() > (MaxTicksPerSecond*0.1)) {
+        }
 
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         Launchers.setVelocity(0);
     }
 
-    public void ResetLaunchersToFloat()
-    {
+    public void ResetLaunchersToFloat() {
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
     }
 
-    public boolean IsMotorAtSpeed(double TargetVelocityPercentage)
-    {
-        double CurrentVelocity = Launchers.getVelocity();
+    public boolean IsMotorAtSpeed(double TargetVelocityPercentage) {
         double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
 
-        return (Math.abs(CurrentVelocity - TargetVelocity) <= (TargetVelocity * 0.01));
+        return (Math.abs(Launchers.getVelocity() - TargetVelocity) <= (TargetVelocity * 0.01));
     }
 
-    public boolean IsMotorTooStrong(double TargetVelocityPercentage)
-    {
-        double CurrentVelocity= Launchers.getVelocity();
-        double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
-
-        return (CurrentVelocity > (TargetVelocity * 1.02));
+    public boolean IsMotorTooStrong(double TargetVelocityPercentage) {
+        return (Launchers.getVelocity() > ((TargetVelocityPercentage * MaxTicksPerSecond) * 1.02));
     }
 
-    public void TurnPowerOff()
-    {
+    public void TurnPowerOff() {
         Launchers.setVelocity(0);
     }
-
-
 
 }
