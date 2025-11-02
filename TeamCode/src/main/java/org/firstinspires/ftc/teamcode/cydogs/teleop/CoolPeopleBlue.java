@@ -85,32 +85,34 @@ public class CoolPeopleBlue extends LinearOpMode {
         }
     }
 
-    private void manageDriverControls()
-    {
+    private void manageDriverControls() {
         if (gamepad1.y) {
             TargetLauncherVelocity += 0.01;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
-            sleep(300);
-        }
-        else if (gamepad1.a) {
+            sleep(200);
+        } else if (gamepad1.a) {
             TargetLauncherVelocity -= 0.01;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
-            sleep(300);
-        }
-        else if (gamepad1.x) {
+            sleep(200);
+        } else if (gamepad1.x) {
             TargetLauncherVelocity = 0.53;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
-            sleep(300);
-        }
-        else if (gamepad1.b) {
+            //
+        } else if (gamepad1.b) {
+            TargetLauncherVelocity = 0.46;
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+        } else if (gamepad1.dpad_down){
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             //currentDetection = tagReader.GetScoringTag("Red");
-            if(eventTracker.doEvent("TurnToTag",currentTimer.seconds(),0.5)) {
+            if (eventTracker.doEvent("TurnToTag", currentTimer.seconds(), 0.5)) {
                 tagReader.displayDetections(tagReader.GetDetections());
                 //Wheels.InitializeAutonomous();
                 tagReader.turnToFaceAprilTagTeleop(Wheels, Team, .15, 3, currentTimer, eventTracker);
                 //Wheels.InitializeTeleop(.7, .3, .5);
             }
+
         }
+
     }
 
     private void manageManipulatorControls()
