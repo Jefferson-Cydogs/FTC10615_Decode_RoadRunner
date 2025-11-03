@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 
+
 public class ArtifactSensors {
     public String LeftIntakeColor;
     public String RightIntakeColor;
@@ -33,10 +34,9 @@ public class ArtifactSensors {
         RightLaunchSensor = new ColorFinder(opMode,"RightLaunchSensor");
     }
 
-    public void CheckSensors()
-    {
-       // myOpMode.telemetry.addLine("Left Intake:");
-       // LeftIntakeSensor.WhatDoISee();
+    public void CheckSensors() {
+        // myOpMode.telemetry.addLine("Left Intake:");
+        // LeftIntakeSensor.WhatDoISee();
         if (LeftIntakeSensor.SeeColor(Green)) {
            // myOpMode.telemetry.addLine("A");
             LeftIntakeColor = "Green";
@@ -49,19 +49,9 @@ public class ArtifactSensors {
             //myOpMode.telemetry.addLine("C");
             LeftIntakeColor = "Nothing";
         }
-        /*if (LeftIntakeSensor.DetectColor() == "GREEN") {
-            LeftIntakeColor = "Green";
-        }
-        else if (LeftIntakeSensor.DetectColor() == "PURPLE") {
-            LeftIntakeColor = "Purple";
-        }
-        else {
-            //myOpMode.telemetry.addLine("C");
-            LeftIntakeColor = "Nothing";
-        }*/
 
-      //  myOpMode.telemetry.addLine("Right Intake:");
-      //  RightIntakeSensor.WhatDoISee();
+        //  myOpMode.telemetry.addLine("Right Intake:");
+        //  RightIntakeSensor.WhatDoISee();
         if (RightIntakeSensor.SeeColor(Green)) {
             //myOpMode.telemetry.addLine("D");
             RightIntakeColor = "Green";
@@ -74,79 +64,42 @@ public class ArtifactSensors {
             //myOpMode.telemetry.addLine("F");
             RightIntakeColor = "Nothing";
         }
-        /*if (RightIntakeSensor.DetectColor() == "GREEN") {
-            RightIntakeColor = "Green";
-        }
-        else if (RightIntakeSensor.DetectColor() == "PURPLE") {
-            RightIntakeColor = "Purple";
-        }
-        else {
-            //myOpMode.telemetry.addLine("C");
-            RightIntakeColor = "Nothing";
-        }*/
 
-     //   myOpMode.telemetry.addLine("Left Launcher:");
-     //   LeftLaunchSensor.WhatDoISee();
+        //   myOpMode.telemetry.addLine("Left Launcher:");
+        //   LeftLaunchSensor.WhatDoISee();
         if (LeftLaunchSensor.SeeColor(Green)) {
             //myOpMode.telemetry.addLine("J");
             LeftLaunchColor = "Green";
             LeftLED.SetColorByName("green");
-            //LeftLED.SetColorName(ColorOption.GREEN);
         }
-        else if (LeftIntakeSensor.SeeColor(Purple)) {
+        else if (LeftLaunchSensor.SeeColor(Purple)) {
             //myOpMode.telemetry.addLine("K");
             LeftLaunchColor = "Purple";
-            LeftLED.SetColorName(ColorOption.PURPLE);
+            LeftLED.SetColorByName("purple");
         }
         else {
             //myOpMode.telemetry.addLine("L");
             LeftLaunchColor = "Nothing";
-            LeftLED.SetColorName(ColorOption.OFF);
+            LeftLED.SetColorByName("off");
         }
-        /*if (LeftLaunchSensor.DetectColor() == "GREEN") {
-            LeftLaunchColor = "Green";
-            LeftLED.SetColorName(ColorOption.GREEN);
-        }
-        else if (LeftLaunchSensor.DetectColor() == "PURPLE") {
-            LeftLaunchColor = "Purple";
-            LeftLED.SetColorName(ColorOption.PURPLE);
-        }
-        else {
-            LeftLaunchColor = "Nothing";
-            LeftLED.SetColorName(ColorOption.OFF);
-        }*/
 
-      //  myOpMode.telemetry.addLine("Right Launcher:");
-      //  RightLaunchSensor.WhatDoISee();
+        //  myOpMode.telemetry.addLine("Right Launcher:");
+        //  RightLaunchSensor.WhatDoISee();
         if (RightLaunchSensor.SeeColor(Green)) {
             //myOpMode.telemetry.addLine("G");
             RightLaunchColor = "Green";
             RightLED.SetColorByName("green");
-            //ightLED.SetColorName(ColorOption.GREEN);
         }
         else if (RightLaunchSensor.SeeColor(Purple)) {
             //myOpMode.telemetry.addLine("H");
             RightLaunchColor = "Purple";
-            RightLED.SetColorName(ColorOption.PURPLE);
+            RightLED.SetColorByName("purple");
         }
         else {
             //myOpMode.telemetry.addLine("I");
             RightLaunchColor = "Nothing";
-            RightLED.SetColorName(ColorOption.OFF);
+            RightLED.SetColorByName("off");
         }
-        /*if (RightLaunchSensor.DetectColor() == "GREEN") {
-            RightLaunchColor = "Green";
-            RightLED.SetColorName(ColorOption.GREEN);
-        }
-        else if (RightLaunchSensor.DetectColor() == "PURPLE") {
-            RightLaunchColor = "Purple";
-            RightLED.SetColorName(ColorOption.PURPLE);
-        }
-        else {
-            RightLaunchColor = "Nothing";
-            RightLED.SetColorName(ColorOption.OFF);
-        }*/
-
     }
 
 }

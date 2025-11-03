@@ -23,35 +23,37 @@ public class ColorLED {
     }
 
     public void SetColorByName(String ColorName) {
+        final double TOLERANCE = 0.01;
+
         switch (ColorName.toLowerCase()) {
             case "white":
-                if (myServo.getPosition() != 1.0) {
+                //if (Math.abs(myServo.getPosition() - 1.0) > TOLERANCE) {
                     myServo.setPosition(1.0);
-                }
+                //}
                 break;
             case "purple":
-                if (myServo.getPosition() != 0.720) {
+                //if (Math.abs(myServo.getPosition() - 0.720) > TOLERANCE) {
                     myServo.setPosition(0.720);
-                }
-                break;
-            case "green":
-                if (myServo.getPosition() != 0.500) {
-                    myServo.setPosition(0.500);
-                }
+                //}
                 break;
             case "blue":
-                if (myServo.getPosition() != 0.611) {
+                //if (Math.abs(myServo.getPosition() - 0.611) > TOLERANCE) {
                     myServo.setPosition(0.611);
-                }
+                //}
+                break;
+            case "green":
+                //if (Math.abs(myServo.getPosition() - 0.500) > TOLERANCE) {
+                    myServo.setPosition(0.500);
+                //}
                 break;
             case "red":
-                if (myServo.getPosition() != 0.280) {
+                //if (Math.abs(myServo.getPosition() - 0.280) > TOLERANCE) {
                     myServo.setPosition(0.280);
-                }
+                //}
                 break;
             case "off":
             default:
-                if (myServo.getPosition() != 0.0) {
+                if (Math.abs(myServo.getPosition() - 0.0) > TOLERANCE) {
                     myServo.setPosition(0.0);
                 }
         }
@@ -82,7 +84,7 @@ public class ColorLED {
     public void SetColorName(ColorOption Color) {
         double TargetPosition = Color.getPosition();
 
-        if (Math.abs(myServo.getPosition() - TargetPosition) > 0.01) {
+        if (Math.abs(myServo.getPosition() - TargetPosition) > 0.02) {
             myServo.setPosition(TargetPosition);
         }
     }
