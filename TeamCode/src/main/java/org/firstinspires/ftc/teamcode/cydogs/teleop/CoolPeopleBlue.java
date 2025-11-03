@@ -162,6 +162,8 @@ public class CoolPeopleBlue extends LinearOpMode {
             ArtifactEater.turnrightintakeoff();
             BumperCars.DeactivateRightBumper();
         }
+
+
     }
 
     private void initializeDevices()
