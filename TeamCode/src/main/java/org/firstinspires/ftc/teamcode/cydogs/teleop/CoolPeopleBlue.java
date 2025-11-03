@@ -75,7 +75,7 @@ public class CoolPeopleBlue extends LinearOpMode {
             }
 
             if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
-               // artifactSensors.CheckSensors();
+                //artifactSensors.CheckSensors();
                 telemetry.addLine("Checking Artifact Sensors");
             }
 
