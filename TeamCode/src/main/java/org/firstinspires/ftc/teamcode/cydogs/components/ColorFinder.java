@@ -3,23 +3,22 @@ package org.firstinspires.ftc.teamcode.cydogs.components;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.hardware.DistanceSensor;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
+import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
-import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 
+
 public class ColorFinder {
 
-    public static final float MIN_SATURATION = 0.5f;
-    public static final float MIN_VALUE = 0.3f;
+    //public static final float MIN_SATURATION = 0.5f;
+    //public static final float MIN_VALUE = 0.3f;
     public static final int REQUIRED_CONSECUTIVE_HITS = 3;
-
-    public String ColorFound;
+    //public String ColorFound;
 
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
@@ -32,35 +31,32 @@ public class ColorFinder {
         this.distanceSensor = hw.get(DistanceSensor.class, artifactColorSensor);
 
         // Adjust the gain.
-        colorSensor.setGain(2);
-
-        /*if (colorSensor instanceof SwitchableLight) {
-            try {
-                ((SwitchableLight) colorSensor).enableLight(true);
-            } catch (Exception ignored) {
-            }
-        }*/
+        //colorSensor.setGain(2); *Need to calculate this better
     }
 
     public boolean SeeColor(TargetColor targetColor) {
         int consecutiveHits = 0;
         int escapeCounter = 0;
+        double distanceToObject;
+        boolean isWithinRange;
 
-        while (consecutiveHits < REQUIRED_CONSECUTIVE_HITS && escapeCounter < 10) {
-                NormalizedRGBA colors = colorSensor.getNormalizedColors();
-                float[] hsv = new float[3];
-                int r = (int) (colors.red * 255);
-                int g = (int) (colors.green * 255);
-                int b = (int) (colors.blue * 255);
-                Color.RGBToHSV(r, g, b, hsv);
+        while ((consecutiveHits < REQUIRED_CONSECUTIVE_HITS) && (escapeCounter < 10)) {
+            distanceToObject = distanceSensor.getDistance(DistanceUnit.CM);
+            isWithinRange = ((distanceToObject >= 1) && (distanceToObject <= 5));
+            NormalizedRGBA colors = colorSensor.getNormalizedColors();
+            float[] hsv = new float[3];
+            int r = (int) (colors.red * 255);
+            int g = (int) (colors.green * 255);
+            int b = (int) (colors.blue * 255);
+            Color.RGBToHSV(r, g, b, hsv);
 
-                if (targetColor.matches(hsv) && distanceSensor.getDistance(DistanceUnit.MM) < 30) {
-                    consecutiveHits++;
-                    escapeCounter = 0;
-                }
-                else {
-                    escapeCounter++;
-                }
+            if (isWithinRange && targetColor.matches(hsv)) {
+                consecutiveHits++;
+                escapeCounter = 0;
+            }
+            else {
+                escapeCounter++;
+            }
 
             if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) {
                 return true;
@@ -69,12 +65,12 @@ public class ColorFinder {
         return false;
     }
 
-    public String DetectColor() {
+    /*public String DetectColor() {
         int color;
         float hue;
         float saturation;
 
-        if (distanceSensor.getDistance(DistanceUnit.MM) < 65) {
+        if (distanceSensor.getDistance(DistanceUnit.MM) < 50) {
             // Read color from the sensor in RGB format
             NormalizedRGBA normalizedColors = colorSensor.getNormalizedColors();
             // Convert RGB values to Hue and Saturation
@@ -94,9 +90,9 @@ public class ColorFinder {
             else if ((hue >= 350) || (hue < 30)) {
                 return "RED";
             }
-           /*else if (saturation < 0.2) {
-               return "White";
-           }*/
+            else if (saturation < 0.2) {
+                return "White";
+            }
             else {
                 return "OTHER";
             }
@@ -104,7 +100,7 @@ public class ColorFinder {
         else {
             return "NOTHING";
         }
-    }
+    }*/
 
     public void WhatDoISee() {
         NormalizedRGBA colors = colorSensor.getNormalizedColors();
