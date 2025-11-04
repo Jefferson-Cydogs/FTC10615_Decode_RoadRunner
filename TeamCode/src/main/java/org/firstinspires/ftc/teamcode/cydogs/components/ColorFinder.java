@@ -8,7 +8,6 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import org.firstinspires.ftc.robotcore.external.JavaUtil;
 
 import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 
@@ -18,6 +17,10 @@ public class ColorFinder {
     //public static final float MIN_SATURATION = 0.5f;
     //public static final float MIN_VALUE = 0.3f;
     public static final int REQUIRED_CONSECUTIVE_HITS = 3;
+    final double DISTANCE_THRESHOLD_CM = 3.0;
+    final int REQUIRED_MATCHES = 2;
+    private long lastCheckTime = 0;
+    private boolean lastResult = false;
     //public String ColorFound;
 
     private final LinearOpMode opMode;
@@ -30,19 +33,15 @@ public class ColorFinder {
         this.colorSensor = hw.get(NormalizedColorSensor.class, artifactColorSensor);
         this.distanceSensor = hw.get(DistanceSensor.class, artifactColorSensor);
 
-        // Adjust the gain.
-        //colorSensor.setGain(2); *Need to calculate this better
+        // Adjust the gain. Recommendation for FTC is 30.0?
+        //colorSensor.setGain(2); *Need to calculate this better.
     }
 
     public boolean SeeColor(TargetColor targetColor) {
         int consecutiveHits = 0;
         int escapeCounter = 0;
-        double distanceToObject;
-        boolean isWithinRange;
 
-        while ((consecutiveHits < REQUIRED_CONSECUTIVE_HITS) && (escapeCounter < 10)) {
-            distanceToObject = distanceSensor.getDistance(DistanceUnit.CM);
-            isWithinRange = ((distanceToObject >= 1) && (distanceToObject <= 5));
+        while (consecutiveHits < REQUIRED_CONSECUTIVE_HITS && escapeCounter < 10) {
             NormalizedRGBA colors = colorSensor.getNormalizedColors();
             float[] hsv = new float[3];
             int r = (int) (colors.red * 255);
@@ -50,11 +49,10 @@ public class ColorFinder {
             int b = (int) (colors.blue * 255);
             Color.RGBToHSV(r, g, b, hsv);
 
-            if (isWithinRange && targetColor.matches(hsv)) {
+            if (targetColor.matches(hsv)) {
                 consecutiveHits++;
                 escapeCounter = 0;
-            }
-            else {
+            } else {
                 escapeCounter++;
             }
 
@@ -62,7 +60,56 @@ public class ColorFinder {
                 return true;
             }
         }
+
         return false;
+    }
+
+    public boolean SeeColor2(TargetColor targetColor) {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastCheckTime < 500) {
+            return lastResult; // Return cached result
+        }
+
+        int matchCount = 0;
+
+        for (int i = 0; i < 3; i++) {
+            if (distanceSensor.getDistance(DistanceUnit.CM) > DISTANCE_THRESHOLD_CM) {
+                continue; // Too far, skip this reading
+            }
+
+            NormalizedRGBA colors = colorSensor.getNormalizedColors();
+            float[] hsv = new float[3];
+            int r = (int) (colors.red * 255);
+            int g = (int) (colors.green * 255);
+            int b = (int) (colors.blue * 255);
+            Color.RGBToHSV(r, g, b, hsv);
+
+            if (targetColor.matches(hsv)) {
+                matchCount++;
+            }
+        }
+
+        lastResult = matchCount >= REQUIRED_MATCHES;
+        lastCheckTime = currentTime;
+        return lastResult;
+    }
+
+    public void WhatDoISee() {
+        NormalizedRGBA colors = colorSensor.getNormalizedColors();
+        float[] hsv = new float[3];
+        int r = (int) (colors.red * 255);
+        int g = (int) (colors.green * 255);
+        int b = (int) (colors.blue * 255);
+        Color.RGBToHSV(r, g, b, hsv);
+
+        opMode.telemetry.addData("Normalized Red", "%.3f", colors.red);
+        opMode.telemetry.addData("Normalized Green", "%.3f", colors.green);
+        opMode.telemetry.addData("Normalized Blue", "%.3f", colors.blue);
+        opMode.telemetry.addData("Normalized Alpha", "%.3f", colors.alpha);
+        opMode.telemetry.addData("Distance:",distanceSensor.getDistance(DistanceUnit.MM));
+        opMode.telemetry.addData("RGB", "(%d, %d, %d)", r, g, b);
+
+        opMode.telemetry.addData("HSV", "H: %.1f  S: %.3f  V: %.3f", hsv[0], hsv[1], hsv[2]);
     }
 
     /*public String DetectColor() {
@@ -101,23 +148,5 @@ public class ColorFinder {
             return "NOTHING";
         }
     }*/
-
-    public void WhatDoISee() {
-        NormalizedRGBA colors = colorSensor.getNormalizedColors();
-        float[] hsv = new float[3];
-        int r = (int) (colors.red * 255);
-        int g = (int) (colors.green * 255);
-        int b = (int) (colors.blue * 255);
-        Color.RGBToHSV(r, g, b, hsv);
-
-        opMode.telemetry.addData("Normalized Red", "%.3f", colors.red);
-        opMode.telemetry.addData("Normalized Green", "%.3f", colors.green);
-        opMode.telemetry.addData("Normalized Blue", "%.3f", colors.blue);
-        opMode.telemetry.addData("Normalized Alpha", "%.3f", colors.alpha);
-        opMode.telemetry.addData("Distance:",distanceSensor.getDistance(DistanceUnit.MM));
-        opMode.telemetry.addData("RGB", "(%d, %d, %d)", r, g, b);
-
-        opMode.telemetry.addData("HSV", "H: %.1f  S: %.3f  V: %.3f", hsv[0], hsv[1], hsv[2]);
-    }
 
 }
