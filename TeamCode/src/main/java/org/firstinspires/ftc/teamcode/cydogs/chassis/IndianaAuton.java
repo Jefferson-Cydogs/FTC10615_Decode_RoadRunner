@@ -6,12 +6,13 @@ import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
+import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 
 public class IndianaAuton extends IndianaChassis {
     // declare devices
     public AprilTagReaderDuo TagReader;
-    public Intake Intakes;
+    public IntakeV2 Intake;
     public Feeders Feeders;
     public LaunchersWithVelocity Launchers;
     public ColorLED LauncherLED;
@@ -29,7 +30,7 @@ public class IndianaAuton extends IndianaChassis {
         Alliance = alliance.toLowerCase();
         TagReader = new AprilTagReaderDuo(currentOp,Alliance);
         Feeders = new Feeders(currentOp);
-        Intakes = new Intake(currentOp);
+        Intake = new IntakeV2(currentOp);
         LauncherLED = new ColorLED(currentOp,"LauncherLED");
         Launchers = new LaunchersWithVelocity(currentOp);
         LeftLED = new ColorLED(currentOp,"LeftLED");
@@ -149,16 +150,16 @@ public class IndianaAuton extends IndianaChassis {
 
     private void RunLeftIntakeAndBumper(int ForHowLong)
     {
-        Intakes.turnLeftIntakeon();
+        Intake.turnIntakeOn();
         Feeders.MoveLeftBumper(ForHowLong);
-        Intakes.turnleftintakeoff();
+        Intake.turnIntakeOff();
     }
 
     private void RunRightIntakeAndBumper(int ForHowLong)
     {
-        Intakes.turnRightIntakeon();
+        Intake.turnIntakeOn();
         Feeders.MoveRightBumper(ForHowLong);
-        Intakes.turnrightintakeoff();
+        Intake.turnIntakeOff();
     }
 
 

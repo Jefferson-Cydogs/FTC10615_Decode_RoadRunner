@@ -11,18 +11,19 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
+import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
 @TeleOp
-public class CoolPeopleBlue extends LinearOpMode {
+public class CoolPeopleBlueV2 extends LinearOpMode {
 
     /** declare variables here */
     private IndianaChassis Wheels;
 
-    private Intake ArtifactEater;
+    private IntakeV2 ArtifactEater;
     private Feeders BumperCars;
     private LaunchersWithVelocity RocketLauncher3000;
     //46% launcher from top of short distance
@@ -134,32 +135,32 @@ public class CoolPeopleBlue extends LinearOpMode {
         }
 
         if (gamepad2.left_trigger > 0.4) {
-            ArtifactEater.turnLeftIntakeon();
+            ArtifactEater.turnIntakeOn();
         }
         else if (gamepad2.left_bumper) {
-            ArtifactEater.turnLeftIntakeon();
+            ArtifactEater.turnIntakeOn();
             BumperCars.ActivateLeftBumper();
         }
         else if (gamepad2.dpad_left) {
-            ArtifactEater.reverseleftintake();
+            ArtifactEater.reverseIntake();
         }
         else {
-            ArtifactEater.turnleftintakeoff();
+            ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateLeftBumper();
         }
 
         if (gamepad2.right_trigger > 0.4) {
-            ArtifactEater.turnRightIntakeon();
+            ArtifactEater.turnIntakeOn();
         }
         else if (gamepad2.right_bumper) {
-            ArtifactEater.turnRightIntakeon();
+            ArtifactEater.turnIntakeOn();
             BumperCars.ActivateRightBumper();
         }
         else if (gamepad2.dpad_right) {
-            ArtifactEater.reverserightintake();
+            ArtifactEater.reverseIntake();
         }
         else {
-            ArtifactEater.turnrightintakeoff();
+            ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateRightBumper();
         }
 
@@ -169,7 +170,7 @@ public class CoolPeopleBlue extends LinearOpMode {
     private void initializeDevices()
     {
         RocketLauncher3000 = new LaunchersWithVelocity(this);
-        ArtifactEater = new Intake(this);
+        ArtifactEater = new IntakeV2(this);
         BumperCars = new Feeders(this);
         LauncherLED = new ColorLED(this,"LauncherLED");
         LeftChannelLED = new ColorLED(this,"LeftLED");
