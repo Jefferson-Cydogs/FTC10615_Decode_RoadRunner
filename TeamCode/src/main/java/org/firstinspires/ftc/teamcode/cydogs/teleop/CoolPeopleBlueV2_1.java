@@ -59,12 +59,12 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
         //VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         waitForStart();
-        tagReader.initAprilTag();
+        //tagReader.initAprilTag();
 
         while (opModeIsActive())
         {
             /** Execute OpMode actions here */
-            tagReader.displayDetections(tagReader.GetDetections());
+            //tagReader.displayDetections(tagReader.GetDetections());
             Wheels.OptimizedTeleopDrive();
             //Wheels.TraditionalTeleopDrive();
             manageDriverControls();
@@ -109,7 +109,7 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
             TargetLauncherVelocity = NearLauncherVelocity;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         }
-        else if (gamepad1.dpad_down) {
+        /*else if (gamepad1.dpad_down) {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             currentDetection = tagReader.GetScoringTag("Red");
             if (eventTracker.doEvent("TurnToTag", currentTimer.seconds(), 0.5)) {
@@ -118,12 +118,12 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
                tagReader.turnToFaceAprilTagTeleop(Wheels, Team, .15, 3, currentTimer, eventTracker);
                 //Wheels.InitializeTeleop(.7, .3, .5);
             }
-        }
+        }*/
     }
 
     private void manageManipulatorControls()
     {
-        if (gamepad2.triangleWasPressed()) {
+        if (gamepad2.triangle) {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         }
         else if (gamepad2.square) {
@@ -131,7 +131,7 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
                 RocketLauncher3000.RunAtVelocity(-0.2);
             }
         }
-        else if (gamepad2.squareWasReleased() || gamepad2.crossWasPressed()) {
+        else if (gamepad2.cross){
             RocketLauncher3000.TurnPowerOff();
         }
 
