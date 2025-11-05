@@ -74,8 +74,8 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
                 checkRocketLauncherVelocity();
             }
 
+            artifactSensors.CheckSensors2();
             if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
-                //artifactSensors.CheckSensors();
                 telemetry.addLine("Checking Artifact Sensors");
             }
 
