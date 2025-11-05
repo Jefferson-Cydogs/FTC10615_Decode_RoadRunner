@@ -7,6 +7,7 @@ import com.qualcomm.robotcore.hardware.Servo;
 public class ColorLED {
     public static final double SERVO_MIN = 0.0;
     public static final double SERVO_MAX = 1.0;
+    final double TOLERANCE = 0.02;
 
     private LinearOpMode opMode;
     private Servo myServo;
@@ -22,9 +23,8 @@ public class ColorLED {
         myServo.setPosition(ColorNumber);
     }
 
-    public void SetColorByName(String ColorName) {
-        final double TOLERANCE = 0.01;
-
+    public void SetColorByName(String ColorName)
+    {
         switch (ColorName.toLowerCase()) {
             case "white":
                 //if (Math.abs(myServo.getPosition() - 1.0) > TOLERANCE) {
@@ -53,7 +53,7 @@ public class ColorLED {
                 break;
             case "off":
             default:
-                if (Math.abs(myServo.getPosition() - 0.0) > TOLERANCE) {
+                if (myServo.getPosition() > TOLERANCE) {
                     myServo.setPosition(0.0);
                 }
         }

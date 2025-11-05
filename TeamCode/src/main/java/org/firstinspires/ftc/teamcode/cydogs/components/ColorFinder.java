@@ -66,7 +66,7 @@ public class ColorFinder {
 
     public boolean SeeColor2(TargetColor targetColor) {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastCheckTime < 500) {
+        if (currentTime - lastCheckTime < 200) {
             return lastResult; // Return cached result
         }
 
