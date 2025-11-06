@@ -68,7 +68,7 @@ public class BlueNearPlus3 extends LinearOpMode {
             indiana.StrafeLeft(203, .45, 100);
 
             // Get purple
-            indiana.Intakes.turnLeftIntakeon();
+            indiana.Intake.turnIntakeOn();
             indiana.Feeders.ActivateLeftBumper();
             indiana.MoveStraight(425, .4, 100);
             indiana.MoveStraight(340, .08, 300);
@@ -76,12 +76,12 @@ public class BlueNearPlus3 extends LinearOpMode {
             indiana.Feeders.ReverseLeftBumper();
 
             // Get Green
-            indiana.Intakes.turnRightIntakeon();
+            indiana.Intake.turnIntakeOn();
             indiana.Feeders.ActivateRightBumper();
             indiana.StrafeLeft(127,.4, 100);
             indiana.MoveStraight(275, .15, 200);
             indiana.Feeders.DeactivateLeftBumper();
-            indiana.Intakes.turnleftintakeoff();
+            indiana.Intake.turnIntakeOff();
             indiana.Feeders.DeactivateRightBumper();
 
 
@@ -93,7 +93,7 @@ public class BlueNearPlus3 extends LinearOpMode {
 
             indiana.MoveStraight(-500, .5, 100);
             //indiana.Feeders.DeactivateRightBumper();
-            indiana.Intakes.turnrightintakeoff();
+            indiana.Intake.turnIntakeOff();
             indiana.Launchers.TurnPowerOff();
             sleep(50);
 
