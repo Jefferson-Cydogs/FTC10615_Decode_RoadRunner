@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
-import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
+import org.firstinspires.ftc.teamcode.cydogs.z_archive.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 
@@ -201,9 +201,21 @@ public class IndianaAuton extends IndianaChassis {
     {
         MoveStraight(1100, 0.55, 100);
         RotateLeft(83, 0.55, 100);
-
+        myOpMode.sleep(150);
         GetMotif();
         ColorLEDForMotif();
+    }
+
+    public void EjectAllArtifacts(int forHowLong)
+    {
+        Intake.reverseIntake();
+        Feeders.ReverseLeftBumper();
+        Feeders.ReverseRightBumper();
+        myOpMode.sleep(forHowLong);
+        Feeders.DeactivateLeftBumper();
+        Feeders.DeactivateRightBumper();
+        Intake.turnIntakeOff();
+
     }
 
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
@@ -10,6 +11,7 @@ import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
 @Autonomous
+@Disabled
 public class Test_Rotate extends LinearOpMode {
 
     /* declare variables

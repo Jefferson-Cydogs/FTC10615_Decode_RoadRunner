@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ColorFinder;
 
 
 @TeleOp
+@Disabled
 public class TelopTestColorSensor extends LinearOpMode {
 
     // declare variables here

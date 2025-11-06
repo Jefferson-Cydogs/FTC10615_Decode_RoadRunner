@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.cydogs.teleop;
+package org.firstinspires.ftc.teamcode.cydogs.z_archive;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -6,18 +6,15 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
-import org.firstinspires.ftc.teamcode.cydogs.components.ColorFinder;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
-import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
-import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
 @TeleOp
 @Disabled
-public class CoolPeopleBlueWithColorSensors extends LinearOpMode {
+public class CoolPeopleMadeThisTeleop extends LinearOpMode {
 
     // declare variables here
     private IndianaChassis Wheels;
@@ -32,18 +29,6 @@ public class CoolPeopleBlueWithColorSensors extends LinearOpMode {
 
     private AprilTagReaderDuo tagReader;
     private AprilTagDetection currentDetection;
-    private String LeftIntakeColor;
-    private String RightIntakeColor;
-    private String LeftLaunchColor;
-    private String RightLaunchColor;
-    private ColorFinder LeftIntakeSensor;
-    private ColorFinder RightIntakeSensor;
-    private ColorFinder LeftLaunchSensor;
-    private ColorFinder RightLaunchSensor;
-    private TargetColor Green = TargetColor.ARTIFACTGREEN;
-    private TargetColor Purple = TargetColor.ARTIFACTPURPLE;
-
-    public String Team = "Blue";
 
     //46% launcher from top of short distance
     //53% launcher velocity from long distance
@@ -64,44 +49,7 @@ public class CoolPeopleBlueWithColorSensors extends LinearOpMode {
         waitForStart();
         while (opModeIsActive())
         {
-            if (LeftIntakeSensor.SeeColor(Green))
-            {
-             LeftIntakeColor = "Green";
-            } else if (LeftIntakeSensor.SeeColor(Purple)) {
-                LeftIntakeColor = "Purple";
-            }
-            else LeftIntakeColor = "Nothing";
-
-            if (RightIntakeSensor.SeeColor(Green))
-            {
-                RightIntakeColor = "Green";
-            } else if (RightIntakeSensor.SeeColor(Purple)) {
-                RightIntakeColor = "Purple";
-            }
-            else RightIntakeColor = "Nothing";
-
-            if (RightLaunchSensor.SeeColor(Green))
-            {
-                RightLaunchColor = "Green";
-                RightLED.SetColorByName("Green");
-            } else if (RightLaunchSensor.SeeColor(Purple)) {
-                RightLaunchColor = "Purple";
-                RightLED.SetColorByName("Purple");
-            }
-            else RightLaunchColor = "Nothing";
-            RightLED.SetColorByName("Off");
-            if (LeftLaunchSensor.SeeColor(Green))
-            {
-                LeftLaunchColor = "Green";
-                LeftLED.SetColorByName("Green");
-            } else if (LeftIntakeSensor.SeeColor(Purple)) {
-                LeftLaunchColor = "Purple";
-                LeftLED.SetColorByName("Purple");
-            }
-            else LeftLaunchColor = "Nothing";
-            LeftLED.SetColorByName("Off");
             // Execute OpMode actions here
-
             Wheels.OptimizedTeleopDrive();
             manageDriverControls();
             manageManipulatorControls();
@@ -200,12 +148,6 @@ public class CoolPeopleBlueWithColorSensors extends LinearOpMode {
         RightLED = new ColorLED(this,"RightLED");
         LeftLED = new ColorLED(this,"LeftLED");
         tagReader = new AprilTagReaderDuo(this, "Red");
-        LeftIntakeSensor = new ColorFinder(this, "LeftIntakeSensor");
-        RightIntakeSensor = new ColorFinder(this, "RightIntakeSensor");
-        LeftLaunchSensor = new ColorFinder(this, "LeftLaunchSensor");
-        RightLaunchSensor = new ColorFinder(this,"RightLaunchSensor");
-        //BackParkingSensor (Name of parking sensor)
-        //LeftParkingSensor (Name of parking sensor
     }
 
     private void initializePositions()
