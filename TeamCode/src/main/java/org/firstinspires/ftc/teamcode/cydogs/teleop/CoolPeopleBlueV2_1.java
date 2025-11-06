@@ -133,6 +133,7 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
         }
         else if (gamepad2.cross){
             RocketLauncher3000.TurnPowerOff();
+            //LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(0.6,0.05,20);
         }
 
         if (gamepad2.left_trigger > 0.4) {
