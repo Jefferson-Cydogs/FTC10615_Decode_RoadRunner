@@ -17,7 +17,7 @@ public class ColorFinder {
     //public static final float MIN_SATURATION = 0.5f;
     //public static final float MIN_VALUE = 0.3f;
     public static final int REQUIRED_CONSECUTIVE_HITS = 3;
-    final double DISTANCE_THRESHOLD_CM = 3.0;
+    final double DISTANCE_THRESHOLD_CM = 6.0;
     final int REQUIRED_MATCHES = 2;
     private long lastCheckTime = 0;
     private boolean lastResult = false;
@@ -33,8 +33,10 @@ public class ColorFinder {
         this.colorSensor = hw.get(NormalizedColorSensor.class, artifactColorSensor);
         this.distanceSensor = hw.get(DistanceSensor.class, artifactColorSensor);
 
-        // Adjust the gain. Recommendation for FTC is 30.0?
-        //colorSensor.setGain(2); *Need to calculate this better.
+        // Adjust the gain, as the sensor may default to an unpredictable value, leading to inconsistent color readings.
+        // Recommendation based on FTC documentation: 10.0 - 20.0 for bright lighting or LEDs, 20.0 - 40.0 for normal indoor lighting.
+        // 30.0 is a safe default for FTC
+        colorSensor.setGain(30);
     }
 
     public boolean SeeColor(TargetColor targetColor) {
@@ -66,7 +68,7 @@ public class ColorFinder {
 
     public boolean SeeColor2(TargetColor targetColor) {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastCheckTime < 250) {
+        if (currentTime - lastCheckTime < 200) {
             return lastResult; // Return cached result
         }
 
@@ -117,7 +119,7 @@ public class ColorFinder {
         float hue;
         float saturation;
 
-        if (distanceSensor.getDistance(DistanceUnit.MM) < 50) {
+        if (distanceSensor.getDistance(DistanceUnit.MM) < 60) {
             // Read color from the sensor in RGB format
             NormalizedRGBA normalizedColors = colorSensor.getNormalizedColors();
             // Convert RGB values to Hue and Saturation
