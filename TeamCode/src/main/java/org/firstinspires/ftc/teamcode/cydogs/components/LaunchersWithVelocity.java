@@ -22,7 +22,7 @@ public class LaunchersWithVelocity
     public LaunchersWithVelocity(LinearOpMode opMode) {
         this.opMode = opMode;
 
-        Launchers = opMode.hardwareMap.get(DcMotorEx.class,"RightLauncher");
+        Launchers = opMode.hardwareMap.get(DcMotorEx.class,"Launchers");
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         Launchers.setDirection(DcMotorEx.Direction.REVERSE);
         Launchers.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -50,6 +50,34 @@ public class LaunchersWithVelocity
 
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
         Launchers.setVelocity(0);
+    }
+
+    public class LauncherDecelerator {
+        /**
+         * Smoothly decelerates a motor in a separate thread.
+         *
+         * @param decayFactor  Power reduction factor per step (e.g., 0.6 = 40% drop)
+         * @param minThreshold Minimum power before stopping (e.g., 0.05)
+         * @param intervalMs   Delay between steps in milliseconds (e.g., 20)
+         */
+        public void decelerateAsync(double decayFactor, double minThreshold, int intervalMs) {
+            new Thread(() -> {
+                double velocity = Launchers.getVelocity();
+
+                while (Math.abs(velocity) > minThreshold) {
+                    velocity *= decayFactor;
+                    Launchers.setVelocity(velocity);
+
+                    try {
+                        Thread.sleep(intervalMs);
+                    } catch (InterruptedException e) {
+                        break;
+                    }
+                }
+
+                Launchers.setVelocity(0);
+            }).start();
+        }
     }
 
     public void ResetLaunchersToFloat() {
