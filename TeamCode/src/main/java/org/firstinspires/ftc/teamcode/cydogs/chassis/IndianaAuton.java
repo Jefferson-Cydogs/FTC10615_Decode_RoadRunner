@@ -13,6 +13,7 @@ public class IndianaAuton extends IndianaChassis {
     // declare devices
     public AprilTagReaderDuo TagReader;
     public IntakeV2 Intake;
+    public Intake Intakes;
     public Feeders Feeders;
     public LaunchersWithVelocity Launchers;
     public ColorLED LauncherLED;
