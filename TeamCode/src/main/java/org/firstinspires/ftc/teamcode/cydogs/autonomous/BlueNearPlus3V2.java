@@ -46,13 +46,14 @@ public class BlueNearPlus3V2 extends LinearOpMode {
             indiana.Feeders.MoveBumpersToFixBug();
 
             indiana.BlueNearOpeningFlourish();
+
     // #LauncherON
             indiana.Launchers.RunAtVelocity(velocityPercentage);
-            indiana.RotateLeft(48, 0.55, 200);
+            indiana.RotateLeft(47, 0.55, 200);
 
 
             indiana.ShootThreeShots(velocityPercentage);
-
+// after shooting three, maybe eject what is left??
             //indiana.Launchers.TurnPowerOff();
             indiana.Launchers.RunAtVelocity(0.2);
             sleep(150);
@@ -64,7 +65,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
     // #LauncherOFF
 
             indiana.RotateLeft(29,.5,100);
-            indiana.StrafeLeft(203, .45, 100);
+            indiana.StrafeLeft(193, .45, 100);
 
             // Get purple
     // #Intake ON
@@ -73,7 +74,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
     // #LeftFeeder ON
             indiana.Feeders.ActivateLeftBumper();
             indiana.MoveStraight(425, .4, 100);
-            indiana.MoveStraight(340, .08, 300);
+            indiana.MoveStraight(320, .12, 300);
 
     // #LeftFeeder OFF
             indiana.Feeders.DeactivateLeftBumper();
@@ -85,7 +86,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
     // #RightFeeder ON
             indiana.Feeders.ActivateRightBumper();
             indiana.StrafeLeft(127,.4, 100);
-            indiana.MoveStraight(275, .15, 200);
+            indiana.MoveStraight(270, .3, 200);
 
     // #LeftFeeder OFF
             indiana.Feeders.DeactivateLeftBumper();
@@ -103,7 +104,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
 
 
 
-            indiana.MoveStraight(-1000, .5, 100);
+            indiana.MoveStraight(-970, .5, 100);
 
 
     // #Intake OFF
@@ -115,15 +116,16 @@ public class BlueNearPlus3V2 extends LinearOpMode {
 
             // Go shoot
     // #Launchers ON
-            indiana.Launchers.RunAtVelocity(.4);
+            double lastShotVelocity = 0.38;
+            indiana.Launchers.RunAtVelocity(lastShotVelocity);
             //indiana.RotateRight(32, .5, 100);
             indiana.StrafeRight(1100, .6, 100);
-            indiana.RotateRight(12,.5,100);
+            indiana.RotateRight(13,.5,100);
             //indiana.MoveStraight(350, .8, 0);
             //indiana.StrafeRight(400, .8, 200);
 
             //indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, -8,.3, 3, currentTimer, eventTracker);
-            indiana.ShootThreeShotsSecondTime(.4);
+            indiana.ShootThreeShotsSecondTime(lastShotVelocity);
     // #Launchers OFF
             indiana.Launchers.TurnPowerOff();
 
