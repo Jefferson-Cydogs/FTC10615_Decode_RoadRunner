@@ -52,7 +52,7 @@ public class LaunchersWithVelocity
         Launchers.setVelocity(0);
     }
 
-    public class LauncherDecelerator {
+    public static class LauncherDecelerator {
         /**
          * Smoothly decelerates a motor in a separate thread.
          *
@@ -60,13 +60,13 @@ public class LaunchersWithVelocity
          * @param minThreshold Minimum power before stopping (e.g., 0.05)
          * @param intervalMs   Delay between steps in milliseconds (e.g., 20)
          */
-        public void decelerateAsync(double decayFactor, double minThreshold, int intervalMs) {
+        public static void decelerateAsync(DcMotorEx motor, double decayFactor, double minThreshold, int intervalMs) {
             new Thread(() -> {
-                double velocity = Launchers.getVelocity();
+                double velocity = motor.getVelocity();
 
                 while (Math.abs(velocity) > minThreshold) {
                     velocity *= decayFactor;
-                    Launchers.setVelocity(velocity);
+                    motor.setVelocity(velocity);
 
                     try {
                         Thread.sleep(intervalMs);
@@ -75,7 +75,7 @@ public class LaunchersWithVelocity
                     }
                 }
 
-                Launchers.setVelocity(0);
+                motor.setVelocity(0);
             }).start();
         }
     }

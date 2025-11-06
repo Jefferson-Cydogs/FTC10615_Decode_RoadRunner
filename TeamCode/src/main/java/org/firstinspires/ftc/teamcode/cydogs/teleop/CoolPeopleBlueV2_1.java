@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
@@ -132,8 +133,8 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
             }
         }
         else if (gamepad2.cross){
-            RocketLauncher3000.TurnPowerOff();
-            //LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(0.6,0.05,20);
+            //RocketLauncher3000.TurnPowerOff();
+            LaunchersWithVelocity.LauncherDecelerator.decelerateAsync((DcMotorEx) RocketLauncher3000, 0.6,0.05,20);
         }
 
         if (gamepad2.left_trigger > 0.4) {
