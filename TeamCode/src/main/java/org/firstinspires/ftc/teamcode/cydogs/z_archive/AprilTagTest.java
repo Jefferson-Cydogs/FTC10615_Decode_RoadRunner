@@ -1,17 +1,16 @@
-package org.firstinspires.ftc.teamcode.cydogs.teleop;
+package org.firstinspires.ftc.teamcode.cydogs.z_archive;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.Servo;
 
-import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
+import org.firstinspires.ftc.teamcode.cydogs.learning.AprilTagWheelie;
 
 
 @TeleOp
-public class IndianaTeleop extends LinearOpMode {
+@Disabled
+public class AprilTagTest extends LinearOpMode {
 
     // declare variables here
     private DcMotor BackLeftWheel;
@@ -28,34 +27,14 @@ public class IndianaTeleop extends LinearOpMode {
     private double Rotate;
     private double FastStraight;
     private double FastStrafe;
-    private double highSpeedDrive = 0.7;
+    private double highSpeedDrive = 0.8;
     private double lowSpeedDrive = 0.3;
     private double rotateSpeedDrive = 0.5;
 
-    private CRServo LeftFeeder;
-    private CRServo RightFeeder;
-    private CRServo Intake;
-    private Servo IntakeGate;
-    private DcMotor LeftLauncher;
-    private DcMotor RightLauncher;
-    private ColorSensor BackParkingSensor ;
-    private ColorSensor LeftParkingSensor ;
-    private ColorSensor LeftIntakeSensor ;
-    private ColorSensor RightIntakeSensor ;
 
-    // LeftFeeder, RightFeeder
-    // Intake
-    // LeftIntakeSensor
-    // RightIntakeSensor
-    // LeftLauncher
-    // RightLauncher
-    // IntakeGate
-    // BackParkingSensor
-    // LeftParkingSensor
-    // LauncherLED
+    private String currentMotif;
 
-
-
+    private AprilTagWheelie wheelieTag;
     @Override
     public void runOpMode() {
 
@@ -63,26 +42,26 @@ public class IndianaTeleop extends LinearOpMode {
         initializeWheels();
         initializeDevices();
         initializePositions();
-
-        ColorLED CL = new ColorLED(this,"LauncherLED");
+        wheelieTag = new AprilTagWheelie(this,"Blue");
+        wheelieTag.initAprilTag();
         waitForStart();
         while (opModeIsActive()) {
             // Execute OpMode actions here
-            CL.SetColor(.7);
-            // .5 is green
-            // .7 is
             driveChassis();
             manageDriverControls();
-            manageManipulatorControls();
-
+            telemetry.update();
+            sleep(100);
         }
     }
 
     private void manageDriverControls()
     {
-        if(gamepad1.y)
-        {
-            // do something if triangle is pushed
+        if(gamepad1.triangle){
+
+            currentMotif = wheelieTag.telemetryAprilTag();
+            telemetry.addData("Found Motif: ", currentMotif);
+
+            sleep(500);
         }
         else if(gamepad1.square)
         {
@@ -91,62 +70,18 @@ public class IndianaTeleop extends LinearOpMode {
 
     }
 
-    private void manageManipulatorControls()
-    {
-        if(gamepad1.right_bumper)
-        {
-            Intake.setPower(.8);
-
-        }
-        else
-        {
-            Intake.setPower(0);
-        }
-
-        if(gamepad1.dpad_up)
-        {
-            RightLauncher.setPower(.6);
-            LeftLauncher.setPower(.6);
-            // need to indicate when full power
-
-        }
-        if(gamepad1.dpad_down)
-        {
-            RightLauncher.setPower(0);
-            LeftLauncher.setPower(0);
-        }
-        if(gamepad1.x)
-        {
-            LeftFeeder.setPower(.6);
-            sleep(200);
-            LeftFeeder.setPower(0);
-        }
-        if(gamepad1.b)
-        {
-            RightFeeder.setPower(.6);
-            sleep(200);
-            RightFeeder.setPower(0);
-
-        }
-    }
-        // lED on back for when launchers are at full speed
     private void initializeWheels()
     {
-        BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
-        FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
-        BackRightWheel = hardwareMap.get(DcMotor.class, "BackRightWheel");
-        FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
-
-        // 0 is left back
-        // 1 is front left
-        // 2 is front right
-        // 3 is right back
+        BackLeftWheel = hardwareMap.get(DcMotor.class, "leftBackWheel");
+        FrontLeftWheel = hardwareMap.get(DcMotor.class, "leftFrontWheel");
+        BackRightWheel = hardwareMap.get(DcMotor.class, "rightBackWheel");
+        FrontRightWheel = hardwareMap.get(DcMotor.class, "rightFrontWheel");
 
         // INITIALIZATION BLOCKS:
         // > Reverse motors'/servos' direction as needed. FORWARD is default.
-        BackLeftWheel.setDirection(DcMotor.Direction.FORWARD);
+        BackLeftWheel.setDirection(DcMotor.Direction.REVERSE);
         FrontLeftWheel.setDirection(DcMotor.Direction.REVERSE);
-        BackRightWheel.setDirection(DcMotor.Direction.REVERSE);
+        BackRightWheel.setDirection(DcMotor.Direction.FORWARD);
         FrontRightWheel.setDirection(DcMotor.Direction.FORWARD);
         // > Set motors' ZeroPower behavior
         BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
@@ -172,26 +107,6 @@ public class IndianaTeleop extends LinearOpMode {
 
     private void initializeDevices()
     {
-
-        LeftLauncher = hardwareMap.get(DcMotor.class, "LeftLauncher");
-        RightLauncher = hardwareMap.get(DcMotor.class, "RightLauncher");
-        LeftFeeder =hardwareMap.get(CRServo.class, "LeftFeeder");
-        RightFeeder =hardwareMap.get(CRServo.class, "RightFeeder");
-        Intake =hardwareMap.get(CRServo.class, "Intake");
-        Intake.setDirection(CRServo.Direction.REVERSE);
-        RightFeeder.setDirection(CRServo.Direction.REVERSE);
-
-        BackParkingSensor = hardwareMap.get(ColorSensor.class,"BackParkingSensor");
-        LeftParkingSensor = hardwareMap.get(ColorSensor.class,"LeftParkingSensor");
-        LeftIntakeSensor = hardwareMap.get(ColorSensor.class,"LeftIntakeSensor");
-        RightIntakeSensor = hardwareMap.get(ColorSensor.class,"RightIntakeSensor");
-
-        LeftLauncher.setDirection(DcMotor.Direction.REVERSE);
-        LeftLauncher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-        RightLauncher.setDirection(DcMotor.Direction.REVERSE);
-        RightLauncher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
-
-
 
     }
 

@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
-import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
+import org.firstinspires.ftc.teamcode.cydogs.z_archive.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 

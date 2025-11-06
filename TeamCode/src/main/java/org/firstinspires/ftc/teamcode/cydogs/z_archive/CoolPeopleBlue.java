@@ -1,5 +1,6 @@
-package org.firstinspires.ftc.teamcode.cydogs.teleop;
+package org.firstinspires.ftc.teamcode.cydogs.z_archive;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -10,13 +11,13 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ArtifactSensors;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
-import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
 @TeleOp
+@Disabled
 public class CoolPeopleBlue extends LinearOpMode {
 
     /** declare variables here */
