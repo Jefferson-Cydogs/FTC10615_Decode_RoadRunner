@@ -120,17 +120,17 @@ public class IndianaAuton extends IndianaChassis {
         {
             ShootPurple(900,velocityPercentage,300);
             ShootPurple(300, velocityPercentage, 1500);//2000
-            ShootGreen(300, velocityPercentage, 1500);
+            ShootGreen(300, velocityPercentage, 2500);
 
         } else if(CurrentMotif=="GPP") {
-            ShootGreen(900, velocityPercentage, 1500);
+            ShootGreen(900, velocityPercentage, 2500);
             ShootPurple(300,velocityPercentage,300);
             ShootPurple(300, velocityPercentage, 1500);
         }
         else  // PGP
         {
             ShootPurple(900,velocityPercentage,300);
-            ShootGreen(300, velocityPercentage, 1500);
+            ShootGreen(300, velocityPercentage, 2500);
             ShootPurple(300, velocityPercentage, 1500);
 
         }
@@ -206,10 +206,18 @@ public class IndianaAuton extends IndianaChassis {
         ColorLEDForMotif();
     }
 
+    public void RedNearOpeningFlourish()
+    {
+        MoveStraight(1100, 0.55, 100);
+        RotateRight(70, 0.55, 100);
+        myOpMode.sleep(150);
+        GetMotif();
+        ColorLEDForMotif();
+    }
+
     public void EjectAllArtifacts(int forHowLong)
     {
-        Intake.reverseIntake();
-        Feeders.ReverseLeftBumper();
+        Intake.reverseIntake();        Feeders.ReverseLeftBumper();
         Feeders.ReverseRightBumper();
         myOpMode.sleep(forHowLong);
         Feeders.DeactivateLeftBumper();

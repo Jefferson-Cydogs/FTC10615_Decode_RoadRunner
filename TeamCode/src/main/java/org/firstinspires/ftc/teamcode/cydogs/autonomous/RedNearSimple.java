@@ -10,31 +10,28 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
+@Autonomous(name= "Red Near Simple", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+public class RedNearSimple extends LinearOpMode {
 
-@Autonomous(name= "Blue Long Simple", group= "Autonomous", preselectTeleOp = "Cool People Blue")
-public class BlueLongSimple extends LinearOpMode {
 
-    // declare variables
-    private double velocityPercentage = 0.52;
+    private double velocityPercentage = .41;
 
     private IndianaAuton indiana;
-
     private ElapsedTime currentTimer;
     private EventTracker eventTracker;
-
     @Override
     public void runOpMode() {
         // load 2 purple on left side
         // load 1 green on right side by launcher
 
 
-        indiana = new IndianaAuton(this, "blue");
+        indiana = new IndianaAuton(this, "red");
         indiana.InitializeAuton();
-
         currentTimer = new ElapsedTime();
         eventTracker = new EventTracker();
         int startWaitTime = indiana.AskStartWaitTime();
 
+        // Wait for the start button to be pressed on the driver station
         waitForStart();
 
         if (opModeIsActive()) {
@@ -44,24 +41,22 @@ public class BlueLongSimple extends LinearOpMode {
             // this clears bumper servo bug
             indiana.Feeders.MoveBumpersToFixBug();
 
-            indiana.MoveStraight(200,0.5,100);
-            sleep(500);
-            indiana.GetMotif();
-            indiana.ColorLEDForMotif();
+            indiana.RedNearOpeningFlourish();
+            // rotated 13 less degrees
 
-            sleep(200);
-
-            indiana.RotateLeft(30,0.5,100);
-
+            // #LauncherON
             indiana.Launchers.RunAtVelocity(velocityPercentage);
+            indiana.RotateRight(60, 0.55, 200);
+
 
             indiana.ShootThreeShots(velocityPercentage);
+            sleep(500);
+            indiana.StrafeLeft(500,.6,100);
 
-            indiana.Launchers.TurnPowerOff();
-
-            indiana.MoveStraight(-200,0.5,100);
-
+            indiana.ColorLEDForAlliance();
+            sleep(2000);
         }
+
     }
 
 

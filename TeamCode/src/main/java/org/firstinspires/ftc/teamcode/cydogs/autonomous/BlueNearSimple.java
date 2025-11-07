@@ -21,57 +21,42 @@ public class BlueNearSimple extends LinearOpMode {
     private EventTracker eventTracker;
     @Override
     public void runOpMode() {
-                // load 2 purple on left side
-                // load 1 green on right side by launcher
+        // load 2 purple on left side
+        // load 1 green on right side by launcher
 
 
-                 indiana = new IndianaAuton(this, "blue");
-                 indiana.InitializeAuton();
-                currentTimer = new ElapsedTime();
-                eventTracker = new EventTracker();
-                int startWaitTime = indiana.AskStartWaitTime();
+        indiana = new IndianaAuton(this, "blue");
+        indiana.InitializeAuton();
+        currentTimer = new ElapsedTime();
+        eventTracker = new EventTracker();
+        int startWaitTime = indiana.AskStartWaitTime();
 
-                // Wait for the start button to be pressed on the driver station
-                waitForStart();
+        // Wait for the start button to be pressed on the driver station
+        waitForStart();
 
-                if (opModeIsActive()) {
-                    sleep(startWaitTime*1000);
-
-
-                    // this clears bumper servo bug
-                    indiana.Feeders.MoveBumpers();
-
-                    indiana.BlueNearOpeningFlourish();
-
-                    indiana.Launchers.RunAtVelocity(velocityPercentage);
-                    indiana.RotateLeft(47, 0.55, 100);
-                   // indiana.TagReader.turnToFaceAprilTagAuton(indiana,indiana.Alliance, .3, 3, currentTimer, eventTracker);
+        if (opModeIsActive()) {
+            sleep(startWaitTime*1000);
 
 
-                    indiana.ShootThreeShots(velocityPercentage);
+            // this clears bumper servo bug
+            indiana.Feeders.MoveBumpersToFixBug();
 
-                    indiana.Launchers.TurnPowerOff();
+            indiana.BlueNearOpeningFlourish();
 
-                    indiana.MoveStraight(700, .5,100);
-                    indiana.StrafeRight(400, .5, 100);
-                    sleep(2000);
-
-
+            // #LauncherON
+            indiana.Launchers.RunAtVelocity(velocityPercentage);
+            indiana.RotateLeft(47, 0.55, 200);
 
 
-                }
+            indiana.ShootThreeShots(velocityPercentage);
+            sleep(500);
+            indiana.StrafeRight(500,.6,100);
+
+            indiana.ColorLEDForAlliance();
+            sleep(2000);
+        }
 
     }
-
-
-
-
-
-
-
-
-
-
 
 
 }

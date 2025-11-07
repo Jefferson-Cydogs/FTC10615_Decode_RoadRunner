@@ -54,6 +54,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
 
             indiana.ShootThreeShots(velocityPercentage);
 // after shooting three, maybe eject what is left??
+            indiana.EjectAllArtifacts(2000);
             //indiana.Launchers.TurnPowerOff();
             indiana.Launchers.RunAtVelocity(0.2);
             sleep(150);
