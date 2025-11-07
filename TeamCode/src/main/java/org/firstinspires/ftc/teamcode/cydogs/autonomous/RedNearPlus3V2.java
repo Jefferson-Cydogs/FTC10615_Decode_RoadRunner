@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class RedNearPlus3V2 extends LinearOpMode {
 
 
-    private double velocityPercentage = 0.41;
+    private double velocityPercentage = 0.40;
 
     private IndianaAuton indiana;
     private ElapsedTime currentTimer;
@@ -49,7 +49,8 @@ public class RedNearPlus3V2 extends LinearOpMode {
 
     // #LauncherON
             indiana.Launchers.RunAtVelocity(velocityPercentage);
-            indiana.RotateRight(60, 0.55, 200);
+            indiana.ReverseFeeders(300);
+            indiana.RotateRight(61, 0.55, 200);
 
 
             indiana.ShootThreeShots(velocityPercentage);
@@ -65,8 +66,8 @@ public class RedNearPlus3V2 extends LinearOpMode {
             //sleep(50);
     // #LauncherOFF
 
-            indiana.RotateRight(29,.5,100);
-            indiana.StrafeRight(200, .45, 100);
+            indiana.RotateRight(30,.5,100);
+            indiana.StrafeRight(300, .45, 100);
 
             // Get purple
     // #Intake ON
@@ -74,8 +75,8 @@ public class RedNearPlus3V2 extends LinearOpMode {
 
     // #LeftFeeder ON
             indiana.Feeders.ActivateLeftBumper();
-            indiana.MoveStraight(425, .4, 100);
-            indiana.MoveStraight(310, .12, 300);
+            indiana.MoveStraight(415, .4, 100);
+            indiana.MoveStraight(300, .12, 300);
 
     // #LeftFeeder OFF
             indiana.Feeders.DeactivateLeftBumper();
@@ -87,7 +88,7 @@ public class RedNearPlus3V2 extends LinearOpMode {
     // #RightFeeder ON
             indiana.Feeders.ActivateRightBumper();
             indiana.StrafeLeft(127,.4, 100);
-            indiana.MoveStraight(270, .3, 200);
+            indiana.MoveStraight(318, .3, 200);
 
     // #LeftFeeder OFF
             indiana.Feeders.DeactivateLeftBumper();
@@ -105,8 +106,9 @@ public class RedNearPlus3V2 extends LinearOpMode {
 
 
 
-            indiana.MoveStraight(-970, .5, 100);
+            indiana.MoveStraight(-1070, .5, 100);
 
+            indiana.ReverseFeeders(200);
 
     // #Intake OFF
             indiana.Intake.turnIntakeOff();
@@ -117,11 +119,11 @@ public class RedNearPlus3V2 extends LinearOpMode {
 
             // Go shoot
     // #Launchers ON
-            double lastShotVelocity = 0.38;
+            double lastShotVelocity = 0.39;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
             //indiana.RotateRight(32, .5, 100);
-            indiana.StrafeLeft(1100, .6, 100);
-            indiana.RotateLeft(13,.5,100);
+            indiana.StrafeLeft(1000, .6, 100);
+            indiana.RotateLeft(6,.5,100);
             //indiana.MoveStraight(350, .8, 0);
             //indiana.StrafeRight(400, .8, 200);
 

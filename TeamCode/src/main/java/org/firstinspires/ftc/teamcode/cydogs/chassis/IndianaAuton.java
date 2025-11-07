@@ -98,17 +98,17 @@ public class IndianaAuton extends IndianaChassis {
         {
             ShootPurple(900,velocityPercentage,300);
             ShootPurple(300, velocityPercentage, 1500);//2000
-            ShootGreen(300, velocityPercentage, 500);
+            ShootGreen(300, velocityPercentage, 500, false);
 
         } else if(CurrentMotif=="GPP") {
-            ShootGreen(900, velocityPercentage, 500);
+            ShootGreen(900, velocityPercentage, 500, true);
             ShootPurple(300,velocityPercentage,300);
             ShootPurple(300, velocityPercentage, 1500);
         }
         else  // PGP
         {
             ShootPurple(900,velocityPercentage,300);
-            ShootGreen(300, velocityPercentage, 500);
+            ShootGreen(300, velocityPercentage, 500, true);
             ShootPurple(300, velocityPercentage, 1500);
 
         }
@@ -119,19 +119,19 @@ public class IndianaAuton extends IndianaChassis {
         if (CurrentMotif == "PPG")
         {
             ShootPurple(900,velocityPercentage,300);
-            ShootPurple(300, velocityPercentage, 1500);//2000
-            ShootGreen(300, velocityPercentage, 2500);
+            ShootPurple(600, velocityPercentage, 1500);//2000
+            ShootGreen(600, velocityPercentage, 2500, false);
 
         } else if(CurrentMotif=="GPP") {
-            ShootGreen(900, velocityPercentage, 2500);
-            ShootPurple(300,velocityPercentage,300);
-            ShootPurple(300, velocityPercentage, 1500);
+            ShootGreen(900, velocityPercentage, 2500, true);
+            ShootPurple(600,velocityPercentage,300);
+            ShootPurple(600, velocityPercentage, 1500);
         }
         else  // PGP
         {
             ShootPurple(900,velocityPercentage,300);
-            ShootGreen(300, velocityPercentage, 2500);
-            ShootPurple(300, velocityPercentage, 1500);
+            ShootGreen(600, velocityPercentage, 2500, true);
+            ShootPurple(600, velocityPercentage, 1500);
 
         }
     }
@@ -142,27 +142,41 @@ public class IndianaAuton extends IndianaChassis {
         while(!Launchers.IsMotorAtSpeed(velocityPercentage)){}
         RunLeftIntakeAndBumper(bumperRunTime);
     }
-    public void ShootGreen(int sleepFirst, double velocityPercentage, int bumperRunTime)
+    public void ShootGreen(int sleepFirst, double velocityPercentage, int bumperRunTime, boolean noIntake)
     {
         myOpMode.sleep(sleepFirst);
         while(!Launchers.IsMotorAtSpeed(velocityPercentage)){}
-        RunRightIntakeAndBumper(bumperRunTime);
+        if(noIntake) {RunRightBumperNoIntake(bumperRunTime);}
+        else {RunRightIntakeAndBumper(bumperRunTime);}
+
     }
 
     private void RunLeftIntakeAndBumper(int ForHowLong)
     {
         Intake.turnIntakeOn();
         Feeders.MoveLeftBumper(ForHowLong);
-        Intake.turnIntakeOff();
+       Intake.turnIntakeOff();
     }
 
     private void RunRightIntakeAndBumper(int ForHowLong)
     {
-        Intake.turnIntakeOn();
+       Intake.turnIntakeOn();
         Feeders.MoveRightBumper(ForHowLong);
-        Intake.turnIntakeOff();
+      Intake.turnIntakeOff();
+    }
+    private void RunLeftBumperNoIntake(int ForHowLong)
+    {
+
+        Feeders.MoveLeftBumper(ForHowLong);
+
     }
 
+    private void RunRightBumperNoIntake(int ForHowLong)
+    {
+
+        Feeders.MoveRightBumper(ForHowLong);
+
+    }
 
     public int AskStartWaitTime() {
         int delaySeconds = 0;
@@ -209,7 +223,7 @@ public class IndianaAuton extends IndianaChassis {
     public void RedNearOpeningFlourish()
     {
         MoveStraight(1100, 0.55, 100);
-        RotateRight(70, 0.55, 100);
+        RotateRight(68, 0.55, 100);
         myOpMode.sleep(150);
         GetMotif();
         ColorLEDForMotif();
@@ -217,7 +231,8 @@ public class IndianaAuton extends IndianaChassis {
 
     public void EjectAllArtifacts(int forHowLong)
     {
-        Intake.reverseIntake();        Feeders.ReverseLeftBumper();
+        Intake.reverseIntake();
+        Feeders.ReverseLeftBumper();
         Feeders.ReverseRightBumper();
         myOpMode.sleep(forHowLong);
         Feeders.DeactivateLeftBumper();
@@ -226,6 +241,14 @@ public class IndianaAuton extends IndianaChassis {
 
     }
 
+    public void ReverseFeeders(int forHowLong)
+    {
+        Feeders.ReverseLeftBumper();
+        Feeders.ReverseRightBumper();
+        myOpMode.sleep(forHowLong);
+        Feeders.DeactivateLeftBumper();
+        Feeders.DeactivateRightBumper();
+    }
 
 
 }

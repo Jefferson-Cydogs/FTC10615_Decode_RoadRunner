@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode.cydogs.components;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 
 public class IntakeV2 {
     private LinearOpMode opMode;
-    private DcMotor intake;
+    private DcMotorEx intake;
 
     private double standardSpeed = 0.8;
     private double standardReverseSpeed = -0.8;
@@ -16,9 +17,9 @@ public class IntakeV2 {
     {
         this.opMode = opMode;
 
-        intake = opMode.hardwareMap.get(DcMotor.class, "Intake");
+        intake = opMode.hardwareMap.get(DcMotorEx.class, "Intake");
 
-        intake.setDirection(DcMotor.Direction.REVERSE);
+        intake.setDirection(DcMotorEx.Direction.REVERSE);
 
     }
 

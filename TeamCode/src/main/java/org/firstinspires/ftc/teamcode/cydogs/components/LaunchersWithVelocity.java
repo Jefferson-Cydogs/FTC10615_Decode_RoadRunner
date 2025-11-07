@@ -14,7 +14,7 @@ public class LaunchersWithVelocity
     public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04
 
     private LinearOpMode opMode;
-    private DcMotorEx Launchers;
+    public DcMotorEx Launchers;
 
     public void initLauncher() {
     }
@@ -87,7 +87,7 @@ public class LaunchersWithVelocity
     public boolean IsMotorAtSpeed(double TargetVelocityPercentage) {
         double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
 
-        return (Math.abs(Launchers.getVelocity() - TargetVelocity) <= (TargetVelocity * 0.02));
+        return (Math.abs(Launchers.getVelocity() - TargetVelocity) <= (TargetVelocity * 0.015));
     }
 
     public boolean IsMotorTooStrong(double TargetVelocityPercentage) {

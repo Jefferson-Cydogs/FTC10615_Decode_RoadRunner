@@ -68,36 +68,10 @@ public class BlueNearPlus3V2 extends LinearOpMode {
             indiana.RotateLeft(29,.5,100);
             indiana.StrafeLeft(193, .45, 100);
 
-            // Get purple
-    // #Intake ON
-            indiana.Intake.turnIntakeOn();
-
-    // #LeftFeeder ON
-            indiana.Feeders.ActivateLeftBumper();
-            indiana.MoveStraight(425, .4, 100);
-            indiana.MoveStraight(320, .12, 300);
-
-    // #LeftFeeder OFF
-            indiana.Feeders.DeactivateLeftBumper();
-
-    // #LeftFeeder REVERSE
-            indiana.Feeders.ReverseLeftBumper();
-
-            // Get Green
-    // #RightFeeder ON
-            indiana.Feeders.ActivateRightBumper();
-            indiana.StrafeLeft(127,.4, 100);
-            indiana.MoveStraight(270, .3, 200);
-
-    // #LeftFeeder OFF
-            indiana.Feeders.DeactivateLeftBumper();
-
-    // #RightFeeder OFF
-            indiana.Feeders.DeactivateRightBumper();
-
+            GetPurplePurpleGreen();
 
             // Got green, back up
-            indiana.Launchers.ResetLaunchersToFloat();
+            //indiana.Launchers.ResetLaunchersToFloat();
 
     // #Launchers REVERSE
             indiana.Launchers.RunAtVelocity(-.15);
@@ -141,7 +115,36 @@ public class BlueNearPlus3V2 extends LinearOpMode {
     }
 
 
+    private void GetPurplePurpleGreen()
+    {
+        // Get purple
+        // #Intake ON
+        indiana.Intake.turnIntakeOn();
 
+        // #LeftFeeder ON
+        indiana.Feeders.ActivateLeftBumper();
+        indiana.MoveStraight(425, .4, 100);
+        indiana.MoveStraight(320, .12, 300);
+
+        // #LeftFeeder OFF
+        indiana.Feeders.DeactivateLeftBumper();
+
+        // #LeftFeeder REVERSE
+        indiana.Feeders.ReverseLeftBumper();
+
+        // Get Green
+        // #RightFeeder ON
+        indiana.Feeders.ActivateRightBumper();
+        indiana.StrafeLeft(127,.4, 100);
+        indiana.MoveStraight(270, .3, 200);
+
+        // #LeftFeeder OFF
+        indiana.Feeders.DeactivateLeftBumper();
+
+        // #RightFeeder OFF
+        indiana.Feeders.DeactivateRightBumper();
+
+    }
 
 
 

@@ -5,17 +5,18 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
+import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
 
-@Autonomous(name= "Blue Long Simple", group= "Autonomous", preselectTeleOp = "Cool People Blue")
-public class BlueLongSimple extends LinearOpMode {
+@Autonomous(name= "Blue Long Plus 3", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+public class BlueLongPlus3 extends LinearOpMode {
 
     // declare variables
-    private double velocityPercentage = 0.5;
+    private double velocityPercentage = 0.515;
 
     private IndianaAuton indiana;
 
@@ -59,11 +60,51 @@ public class BlueLongSimple extends LinearOpMode {
             indiana.ShootThreeShots(velocityPercentage);
 
             indiana.Launchers.TurnPowerOff();
+            indiana.EjectAllArtifacts(2000);
 
-            indiana.MoveStraight(400,0.5,100);
+            indiana.MoveStraight(370,0.5,400);
+            LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(indiana.Launchers.Launchers, 0.5,0.02,50);
+            indiana.RotateLeft(48, .3, 400);
+
+            GetGreenPurplePurple();
+
+            indiana.MoveStraight(-620, .5, 400);
+            indiana.Intake.turnIntakeOff();
+            indiana.RotateRight(50, .3, 400);
+            indiana.Launchers.RunAtVelocity(velocityPercentage);
+            indiana.MoveStraight(-520, .4, 400);
+            indiana.ShootThreeShotsSecondTime(velocityPercentage);
+
+            indiana.MoveStraight(500, .6, 400);
+
             indiana.ColorLEDForAlliance();
             sleep(2000);
         }
+    }
+
+    private void GetGreenPurplePurple()
+    {
+        // Get Green
+        // #Intake ON
+        indiana.Intake.turnIntakeOn();
+
+        // #LeftFeeder ON
+        indiana.Feeders.ActivateRightBumper();
+        indiana.MoveStraight(400, .3, 400);
+        //indiana.MoveStraight(170, .3, 200);
+
+        // Get Purples
+        // #RightFeeder ON
+        indiana.Feeders.ActivateLeftBumper();
+        indiana.StrafeRight(80,.4, 400);
+        indiana.MoveStraight(370, .12, 400);
+
+        // #LeftFeeder OFF
+        indiana.Feeders.DeactivateRightBumper();
+
+        // #RightFeeder OFF
+        indiana.Feeders.DeactivateLeftBumper();
+
     }
 
 
