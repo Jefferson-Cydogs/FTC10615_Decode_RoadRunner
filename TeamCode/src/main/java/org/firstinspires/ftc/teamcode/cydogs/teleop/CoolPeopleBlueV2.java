@@ -107,7 +107,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         }
         else if (gamepad1.dpad_down) {
-            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+           // RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             //currentDetection = tagReader.GetScoringTag("Red");
            // if (eventTracker.doEvent("TurnToTag", currentTimer.seconds(), 0.5)) {
                 //tagReader.displayDetections(tagReader.GetDetections());
