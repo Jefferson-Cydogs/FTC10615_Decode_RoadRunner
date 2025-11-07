@@ -11,8 +11,8 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
 
-@Autonomous(name= "Blue Long Simple", group= "Autonomous", preselectTeleOp = "Cool People Blue")
-public class BlueLongSimple extends LinearOpMode {
+@Autonomous(name= "Red Long Simple", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+public class RedLongSimple extends LinearOpMode {
 
     // declare variables
     private double velocityPercentage = 0.52;
@@ -28,7 +28,7 @@ public class BlueLongSimple extends LinearOpMode {
         // load 1 green on right side by launcher
 
 
-        indiana = new IndianaAuton(this, "blue");
+        indiana = new IndianaAuton(this, "red");
         indiana.InitializeAuton();
 
         currentTimer = new ElapsedTime();
@@ -51,7 +51,7 @@ public class BlueLongSimple extends LinearOpMode {
 
             sleep(200);
 
-            indiana.RotateLeft(16,0.5,100);
+            indiana.RotateRight(16,0.5,100);
 
             indiana.Launchers.RunAtVelocity(velocityPercentage);
 

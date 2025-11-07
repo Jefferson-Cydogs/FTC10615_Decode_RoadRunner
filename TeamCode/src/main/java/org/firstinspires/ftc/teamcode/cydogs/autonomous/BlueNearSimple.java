@@ -50,6 +50,7 @@ public class BlueNearSimple extends LinearOpMode {
 
             indiana.ShootThreeShots(velocityPercentage);
             sleep(500);
+            indiana.MoveStraight(400, .6, 100);
             indiana.StrafeRight(500,.6,100);
 
             indiana.ColorLEDForAlliance();

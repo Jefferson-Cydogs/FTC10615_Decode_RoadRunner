@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.cydogs.learning;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 
 
 @TeleOp
+@Disabled
 public class Test_Led extends LinearOpMode {
 
     // declare variables here

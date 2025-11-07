@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.learning;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
@@ -11,6 +12,7 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 //    @Autonomous puts this code in the autonomous category on driver station
 
 @Autonomous
+@Disabled
 public class BlueSideLong extends LinearOpMode {
 
     // declare variables

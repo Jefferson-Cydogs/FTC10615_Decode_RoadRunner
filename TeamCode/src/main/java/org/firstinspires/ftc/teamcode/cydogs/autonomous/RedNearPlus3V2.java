@@ -66,7 +66,7 @@ public class RedNearPlus3V2 extends LinearOpMode {
     // #LauncherOFF
 
             indiana.RotateRight(29,.5,100);
-            indiana.StrafeRight(193, .45, 100);
+            indiana.StrafeRight(200, .45, 100);
 
             // Get purple
     // #Intake ON
@@ -75,7 +75,7 @@ public class RedNearPlus3V2 extends LinearOpMode {
     // #LeftFeeder ON
             indiana.Feeders.ActivateLeftBumper();
             indiana.MoveStraight(425, .4, 100);
-            indiana.MoveStraight(320, .12, 300);
+            indiana.MoveStraight(310, .12, 300);
 
     // #LeftFeeder OFF
             indiana.Feeders.DeactivateLeftBumper();
@@ -86,7 +86,7 @@ public class RedNearPlus3V2 extends LinearOpMode {
             // Get Green
     // #RightFeeder ON
             indiana.Feeders.ActivateRightBumper();
-            indiana.StrafeRight(127,.4, 100);
+            indiana.StrafeLeft(127,.4, 100);
             indiana.MoveStraight(270, .3, 200);
 
     // #LeftFeeder OFF
