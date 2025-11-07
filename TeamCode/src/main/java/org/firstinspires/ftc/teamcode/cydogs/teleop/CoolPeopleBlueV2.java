@@ -73,10 +73,10 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
                 checkRocketLauncherVelocity();
             }
 
-            if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
+            //if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
                 //artifactSensors.CheckSensors();
                 //telemetry.addLine("Checking Artifact Sensors");
-            }
+            //}
 
             //voltage = voltageSensor.getVoltage();
             //telemetry.addData("Battery Voltage", voltage);
@@ -90,46 +90,44 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     }
 
     private void manageDriverControls() {
-        if (gamepad1.y) {
+        if (gamepad1.triangleWasPressed()) {
             TargetLauncherVelocity += 0.01;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
-            sleep(200);
-        } else if (gamepad1.a) {
+        } else if (gamepad1.crossWasPressed()) {
             TargetLauncherVelocity -= 0.01;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
-            sleep(200);
-        } else if (gamepad1.x) {
+        } else if (gamepad1.squareWasPressed()) {
             TargetLauncherVelocity = FarLauncherVelocity;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
-            //
-        } else if (gamepad1.b) {
+        } else if (gamepad1.circleWasPressed()) {
             TargetLauncherVelocity = NearLauncherVelocity;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         }
-        else if (gamepad1.dpad_down) {
-            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+        //else if (gamepad1.dpad_down) {
+            //RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             //currentDetection = tagReader.GetScoringTag("Red");
-           // if (eventTracker.doEvent("TurnToTag", currentTimer.seconds(), 0.5)) {
+            // if (eventTracker.doEvent("TurnToTag", currentTimer.seconds(), 0.5)) {
                 //tagReader.displayDetections(tagReader.GetDetections());
                 //Wheels.InitializeAutonomous();
                //tagReader.turnToFaceAprilTagTeleop(Wheels, Team, .15, 3, currentTimer, eventTracker);
                 //Wheels.InitializeTeleop(.7, .3, .5);
            // }
-        }
+        //}
     }
 
     private void manageManipulatorControls()
     {
-        if (gamepad2.a) {
-            RocketLauncher3000.TurnPowerOff();
+        if (gamepad2.triangle) {
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         }
-        else if (gamepad2.x) {
+        else if (gamepad2.square) {
             if (RocketLauncher3000.GetCurrentVelocity() <= 0) {
                 RocketLauncher3000.RunAtVelocity(-0.2);
             }
         }
-        else if (gamepad2.y) {
-            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+        else if (gamepad2.cross) {
+            LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(RocketLauncher3000.Launchers, 0.5,0.02,50);
+            //RocketLauncher3000.TurnPowerOff();
         }
 
         if (gamepad2.left_trigger > 0.4) {
@@ -155,8 +153,6 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateRightBumper();
         }
-
-
     }
 
     private void initializeDevices()
