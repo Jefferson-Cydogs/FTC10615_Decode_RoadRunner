@@ -97,19 +97,19 @@ public class IndianaAuton extends IndianaChassis {
         if (CurrentMotif == "PPG")
         {
             ShootPurple(900,velocityPercentage,300);
-            ShootPurple(300, velocityPercentage, 1500);//2000
-            ShootGreen(300, velocityPercentage, 500, false);
+            ShootPurple(600, velocityPercentage, 1500);//2000
+            ShootGreen(600, velocityPercentage, 500, false);
 
         } else if(CurrentMotif=="GPP") {
             ShootGreen(900, velocityPercentage, 500, true);
-            ShootPurple(300,velocityPercentage,300);
-            ShootPurple(300, velocityPercentage, 1500);
+            ShootPurple(600,velocityPercentage,300);
+            ShootPurple(600, velocityPercentage, 1500);
         }
         else  // PGP
         {
             ShootPurple(900,velocityPercentage,300);
-            ShootGreen(300, velocityPercentage, 500, true);
-            ShootPurple(300, velocityPercentage, 1500);
+            ShootGreen(600, velocityPercentage, 500, true);
+            ShootPurple(600, velocityPercentage, 1500);
 
         }
     }

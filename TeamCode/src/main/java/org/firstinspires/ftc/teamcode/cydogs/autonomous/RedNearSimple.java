@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class RedNearSimple extends LinearOpMode {
 
 
-    private double velocityPercentage = .41;
+    private double velocityPercentage = .402;
 
     private IndianaAuton indiana;
     private ElapsedTime currentTimer;
