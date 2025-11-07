@@ -125,28 +125,28 @@ public class ArtifactSensors {
 
         if (LeftLaunchSensor.SeeColor2(Green)) {
             LeftLaunchColor = "Green";
-            LeftLED.SetColorName(ColorOption.GREEN);
+            LeftLED.SetColorByName("green");
         }
         else if (LeftLaunchSensor.SeeColor2(Purple)) {
             LeftLaunchColor = "Purple";
-            LeftLED.SetColorName(ColorOption.PURPLE);
+            LeftLED.SetColorByName("purple");
         }
         else {
             LeftLaunchColor = "Nothing";
-            LeftLED.SetColorName(ColorOption.OFF);
+            LeftLED.SetColorByName("off");
         }
 
         if (RightLaunchSensor.SeeColor2(Green)) {
             RightLaunchColor = "Green";
-            RightLED.SetColorName(ColorOption.GREEN);
+            RightLED.SetColorByName("green");
         }
         else if (RightLaunchSensor.SeeColor2(Purple)) {
             RightLaunchColor = "Purple";
-            RightLED.SetColorName(ColorOption.PURPLE);
+            RightLED.SetColorByName("purple");
         }
         else {
             RightLaunchColor = "Nothing";
-            RightLED.SetColorName(ColorOption.OFF);
+            RightLED.SetColorByName("off");
         }
     }
 
