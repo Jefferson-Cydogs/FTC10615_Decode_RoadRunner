@@ -4,16 +4,16 @@ import androidx.annotation.NonNull;
 
 
 public enum TargetColor {
-    RED(0, 30, 350, 360), //Standard Color Sensor values. RED wraps around the hue circle
+    //ARTIFACTGREEN(110, 190), //Joe's empirical values
+    ARTIFACTGREEN(140, 170), //Francisco's empirical values
     //GREEN(100, 140), //Joe's empirical values
     //GREEN(90, 150), //Standard Color Sensor values
-    //BLUE(190, 260), //Joe's empirical values
-    BLUE(150, 225), //Standard Color Sensor values
+    //ARTIFACTPURPLE(200, 270), //Joe's empirical values
+    ARTIFACTPURPLE(180, 240), //Francisco's empirical values
     //PURPLE(225, 350), //Standard Color Sensor values
-    //ARTIFACTGREEN(110, 190), //Joe's empirical values
-    ARTIFACTGREEN(150, 170), //Francisco's empirical values
-    //ARTIFACTPURPLE(200, 270); //Joe's empirical values
-    ARTIFACTPURPLE(165, 240); //Francisco's empirical values
+    RED(0, 30, 350, 360), //Standard Color Sensor values. RED wraps around the hue circle
+    //BLUE(190, 260), //Joe's empirical values
+    BLUE(150, 225); //Standard Color Sensor values
 
     private final float low1, high1;
     private final float low2, high2;
