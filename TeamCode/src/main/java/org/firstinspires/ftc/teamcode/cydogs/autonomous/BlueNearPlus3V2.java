@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
+import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 
@@ -14,7 +15,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class BlueNearPlus3V2 extends LinearOpMode {
 
 
-    private double velocityPercentage = 0.41;
+    private double velocityPercentage = 0.402;
 
     private IndianaAuton indiana;
     private ElapsedTime currentTimer;
@@ -61,7 +62,8 @@ public class BlueNearPlus3V2 extends LinearOpMode {
             //indiana.Launchers.RunAtVelocity(0.2);
             //sleep(100);
             indiana.Launchers.RunAtVelocity(0.09);
-            indiana.Launchers.StopLaunchersSafely();
+            LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(indiana.Launchers.Launchers, 0.5,0.02,50);
+
             //sleep(50);
     // #LauncherOFF
 
@@ -135,7 +137,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
         // Get Green
         // #RightFeeder ON
         indiana.Feeders.ActivateRightBumper();
-        indiana.StrafeLeft(127,.4, 100);
+        indiana.StrafeLeft(117,.4, 100);
         indiana.MoveStraight(270, .3, 200);
 
         // #LeftFeeder OFF

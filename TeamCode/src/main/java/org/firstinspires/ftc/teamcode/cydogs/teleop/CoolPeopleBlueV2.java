@@ -121,7 +121,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private void manageManipulatorControls()
     {
         if (gamepad2.a) {
-            RocketLauncher3000.TurnPowerOff();
+            LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(RocketLauncher3000.Launchers, 0.5,0.02,50);
         }
         else if (gamepad2.x) {
             if (RocketLauncher3000.GetCurrentVelocity() <= 0) {
