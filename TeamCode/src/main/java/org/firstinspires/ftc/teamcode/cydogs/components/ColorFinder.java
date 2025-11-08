@@ -17,7 +17,7 @@ public class ColorFinder {
     //public static final float MIN_SATURATION = 0.5f;
     //public static final float MIN_VALUE = 0.3f;
     public static final int REQUIRED_CONSECUTIVE_HITS = 3;
-    final double DISTANCE_THRESHOLD_CM = 7.0;
+    final double DISTANCE_THRESHOLD_CM = 6.0;
     final int REQUIRED_MATCHES = 2;
     private long lastCheckTime = 0;
     private boolean lastResult = false;
@@ -68,7 +68,7 @@ public class ColorFinder {
 
     public boolean SeeColor2(TargetColor targetColor) {
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastCheckTime < 200) {
+        if (currentTime - lastCheckTime < 500) {
             return lastResult; // Return cached result
         }
 
