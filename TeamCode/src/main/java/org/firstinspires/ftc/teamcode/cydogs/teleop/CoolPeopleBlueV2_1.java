@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
+@Disabled
 @TeleOp
 public class CoolPeopleBlueV2_1 extends LinearOpMode {
 

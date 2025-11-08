@@ -2,9 +2,11 @@ package org.firstinspires.ftc.teamcode.cydogs.configs;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+@Disabled
 @TeleOp(name = "Gamepad Dashboard Visualizer", group = "Debug")
 public class GamepadDashboardVisualizer extends LinearOpMode {
 
