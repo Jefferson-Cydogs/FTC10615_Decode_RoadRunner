@@ -49,6 +49,10 @@ public class REVColorDistanceSensor extends LinearOpMode {
         waitForStart();
         if (opModeIsActive()) {
             // Put run blocks here.
+            ((NormalizedColorSensor) LeftIntakeSensor).setGain(gain);
+            ((NormalizedColorSensor) RightIntakeSensor).setGain(gain);
+            ((NormalizedColorSensor) LeftLaunchSensor).setGain(gain);
+            ((NormalizedColorSensor) RightLaunchSensor).setGain(gain);
             while (opModeIsActive()) {
                 // Adjust the gain.
                 if (gamepad1.yWasPressed()) {
@@ -64,7 +68,8 @@ public class REVColorDistanceSensor extends LinearOpMode {
                     ((NormalizedColorSensor) LeftLaunchSensor).setGain(gain);
                     ((NormalizedColorSensor) RightLaunchSensor).setGain(gain);
                 }
-                telemetry.addData("LeftIntake Gain", ((NormalizedColorSensor) LeftIntakeSensor).getGain());
+                telemetry.addData("Gain", gain);
+
                 // Display distance info.
                 telemetry.addData("LeftIntake Dist to tgt (cm)", ((DistanceSensor) LeftIntakeSensor).getDistance(DistanceUnit.CM));
                 // Display reflected light.
@@ -107,7 +112,6 @@ public class REVColorDistanceSensor extends LinearOpMode {
                 //    telemetry.addData("Check Sat", "Is surface white?");
                 //}
 
-                telemetry.addData("RightIntake Gain", ((NormalizedColorSensor) RightIntakeSensor).getGain());
                 telemetry.addData("RightIntake Dist to tgt (cm)", ((DistanceSensor) RightIntakeSensor).getDistance(DistanceUnit.CM));
                 RINormalizedColors = ((NormalizedColorSensor) RightIntakeSensor).getNormalizedColors();
                 RIColor = RINormalizedColors.toColor();
@@ -130,7 +134,6 @@ public class REVColorDistanceSensor extends LinearOpMode {
                     telemetry.addData("RightIntake Color", "Red");
                 }
 
-                telemetry.addData("LeftLaunch Gain", ((NormalizedColorSensor) LeftLaunchSensor).getGain());
                 telemetry.addData("LeftLaunch Dist to tgt (cm)", ((DistanceSensor) LeftLaunchSensor).getDistance(DistanceUnit.CM));
                 LLNormalizedColors = ((NormalizedColorSensor) LeftLaunchSensor).getNormalizedColors();
                 LLColor = LLNormalizedColors.toColor();
@@ -153,7 +156,6 @@ public class REVColorDistanceSensor extends LinearOpMode {
                     telemetry.addData("LeftLauncher Color", "Red");
                 }
 
-                telemetry.addData("RightLaunch Gain", ((NormalizedColorSensor) RightLaunchSensor).getGain());
                 telemetry.addData("RightLaunch Dist to tgt (cm)", ((DistanceSensor) RightLaunchSensor).getDistance(DistanceUnit.CM));
                 RLNormalizedColors = ((NormalizedColorSensor) RightLaunchSensor).getNormalizedColors();
                 RLColor = RLNormalizedColors.toColor();
@@ -177,7 +179,7 @@ public class REVColorDistanceSensor extends LinearOpMode {
                 }
 
                 telemetry.update();
-                sleep(250);
+                sleep(500);
                 //if (value < 0.16) {
                 //    telemetry.addData("Check Val", "Is surface black?");
                 //}
