@@ -126,7 +126,7 @@ public class RedNearPlus3V2 extends LinearOpMode {
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
             //indiana.RotateRight(32, .5, 100);
             indiana.StrafeLeft(1000, .6, 100);
-            indiana.RotateLeft(7,.5,100);
+            indiana.RotateLeft(10,.5,100);
             //indiana.MoveStraight(350, .8, 0);
             //indiana.StrafeRight(400, .8, 200);
 
@@ -144,6 +144,8 @@ public class RedNearPlus3V2 extends LinearOpMode {
         }
 
     }
+
+
 
 
 }
