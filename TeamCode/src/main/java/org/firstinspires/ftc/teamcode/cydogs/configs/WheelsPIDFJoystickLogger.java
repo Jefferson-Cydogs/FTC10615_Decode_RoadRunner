@@ -11,7 +11,6 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 @Config
-@Disabled
 @TeleOp
 public class WheelsPIDFJoystickLogger extends LinearOpMode {
 

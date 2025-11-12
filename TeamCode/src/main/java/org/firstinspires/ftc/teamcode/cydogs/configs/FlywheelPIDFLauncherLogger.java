@@ -15,7 +15,6 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import java.util.ArrayList;
 
 @Config
-@Disabled
 @Autonomous
 public class FlywheelPIDFLauncherLogger extends LinearOpMode {
 
@@ -37,7 +36,7 @@ public class FlywheelPIDFLauncherLogger extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        flywheel = hardwareMap.get(DcMotorEx.class, "RightLauncher");
+        flywheel = hardwareMap.get(DcMotorEx.class, "Launchers");
         leftLauncherServo = hardwareMap.get(CRServo.class, "LeftFeeder");
         rightLauncherServo = hardwareMap.get(CRServo.class, "RightFeeder");
 
