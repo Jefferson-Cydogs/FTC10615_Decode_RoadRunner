@@ -126,6 +126,12 @@ public class IndianaChassis {
         BackLeftWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         BackRightWheel.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
+        // Set the PIDF coefficients per wheel motor; only applies for RUN_USING_ENCODER and after selecting it
+        //((DcMotorEx) FrontLeftWheel).setVelocityPIDFCoefficients(0,0,0,11.754005);
+        //((DcMotorEx) FrontRightWheel).setVelocityPIDFCoefficients(0,0,0,11.754005);
+        //((DcMotorEx) BackLeftWheel).setVelocityPIDFCoefficients(8,0,0,10.175712);
+        //((DcMotorEx) BackRightWheel).setVelocityPIDFCoefficients(0,0,0,0);
+
         // Ensure motors are stopped, for predictable behavior and avoiding unintended motion
         FrontLeftWheel.setPower(0);
         FrontRightWheel.setPower(0);
