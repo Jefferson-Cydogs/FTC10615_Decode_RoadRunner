@@ -9,9 +9,11 @@ public class LaunchersWithVelocity
     // Specs for typical motors we use:
     //    GoBilda 5203 Series Yellow Jacket 223 RPM, 751.8 PPR
     //    GoBilda 5203 Series Yellow Jacket 312 RPM, 537.7 PPR
+    //       Without gearbox, theoretical 6,000RPM, empirical is 4,620RPM; ticks/second is always 28 at the motor shaft for goBilda Yellow Jacket motors
     //    GoBilda 5203 Series Yellow Jacket 435 RPM, 384.5 PPR
     // Max TPS = (Motor's RPM / 60) * Motor's TicksPerRotation
     public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04
+    //public static final double MaxTicksPerSecond = (4620.0 / 60.0) * 28.0; //TPS=2,156 without gearbox
 
     private LinearOpMode opMode;
     public DcMotorEx Launchers;
@@ -19,12 +21,14 @@ public class LaunchersWithVelocity
     public void initLauncher() {
     }
 
-    public LaunchersWithVelocity(LinearOpMode opMode) {
+    public LaunchersWithVelocity(LinearOpMode opMode)
+    {
         this.opMode = opMode;
 
         Launchers = opMode.hardwareMap.get(DcMotorEx.class,"Launchers");
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         Launchers.setDirection(DcMotorEx.Direction.REVERSE);
+        Launchers.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         Launchers.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         Launchers.setVelocityPIDFCoefficients(75, 0, 0, 15.4863);
     }
@@ -33,11 +37,13 @@ public class LaunchersWithVelocity
         return Launchers.getVelocity();
     }
 
-    public void RunAtVelocity(double TargetVelocityPercentage) {
+    public void RunAtVelocity(double TargetVelocityPercentage)
+    {
         Launchers.setVelocity(TargetVelocityPercentage * MaxTicksPerSecond);
     }
 
-    public void StopLaunchersSafely() {
+    public void StopLaunchersSafely()
+    {
         /*double IntermediateVelocity = Launchers.getVelocity() / 3;
 
         Launchers.setVelocity(IntermediateVelocity * 2);
@@ -52,7 +58,13 @@ public class LaunchersWithVelocity
         Launchers.setVelocity(0);
     }
 
-    public static class LauncherDecelerator {
+    public void ResetLaunchersToFloat()
+    {
+        Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+    }
+
+    public static class LauncherDecelerator
+    {
         /**
          * Smoothly decelerates a motor in a separate thread.
          *
@@ -70,7 +82,8 @@ public class LaunchersWithVelocity
 
                     try {
                         Thread.sleep(intervalMs);
-                    } catch (InterruptedException e) {
+                    }
+                    catch (InterruptedException e) {
                         break;
                     }
                 }
@@ -80,18 +93,16 @@ public class LaunchersWithVelocity
         }
     }
 
-    public void ResetLaunchersToFloat() {
-        Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-    }
-
-    public boolean IsMotorAtSpeed(double TargetVelocityPercentage) {
+    public boolean IsMotorAtSpeed(double TargetVelocityPercentage)
+    {
         double TargetVelocity = TargetVelocityPercentage * MaxTicksPerSecond;
 
         return (Math.abs(Launchers.getVelocity() - TargetVelocity) <= (TargetVelocity * 0.015));
     }
 
-    public boolean IsMotorTooStrong(double TargetVelocityPercentage) {
-        return (Launchers.getVelocity() > ((TargetVelocityPercentage * MaxTicksPerSecond) * 1.02));
+    public boolean IsMotorTooStrong(double TargetVelocityPercentage)
+    {
+        return (Launchers.getVelocity() > ((TargetVelocityPercentage * MaxTicksPerSecond) * 1.015));
     }
 
     public void TurnPowerOff() {

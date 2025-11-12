@@ -11,11 +11,18 @@ public class MotorRPMReader extends LinearOpMode {
     private DcMotor motor;
     private ElapsedTime timer = new ElapsedTime();
 
+    double currentTime;
+    int currentPosition;
+    double deltaTime;
+    int deltaTicks;
     private int lastEncoderPosition = 0;
     private double lastTime = 0;
+    double ticksPerSecond;
+    double rpm;
+    private double maxrpm = 0;
 
     // Set this to the encoder ticks per revolution of the motor shaft
-    private static final double TICKS_PER_REV = 537.7;
+    private static final double TICKS_PER_REV = 28.0; //value at the shaft (without gearbox)
 
     @Override
     public void runOpMode() {
@@ -27,21 +34,25 @@ public class MotorRPMReader extends LinearOpMode {
         timer.reset();
 
         while (opModeIsActive()) {
-            double currentTime = timer.seconds();
-            int currentPosition = motor.getCurrentPosition();
+            currentTime = timer.seconds();
+            currentPosition = motor.getCurrentPosition();
 
-            double deltaTime = currentTime - lastTime;
-            int deltaTicks = currentPosition - lastEncoderPosition;
+            deltaTime = currentTime - lastTime;
+            deltaTicks = currentPosition - lastEncoderPosition;
 
             lastTime = currentTime;
             lastEncoderPosition = currentPosition;
 
-            double ticksPerSecond = deltaTicks / deltaTime;
-            double rpm = (ticksPerSecond / TICKS_PER_REV) * 60.0;
+            ticksPerSecond = deltaTicks / deltaTime;
+            rpm = (ticksPerSecond / TICKS_PER_REV) * 60.0;
+            if (rpm > maxrpm) {
+                maxrpm = rpm;
+            }
 
             telemetry.addData("Motor Power", motor.getPower());
             telemetry.addData("Encoder Position", currentPosition);
             telemetry.addData("RPM", rpm);
+            telemetry.addData("Max RPM", maxrpm);
             telemetry.update();
 
             motor.setPower(1.0); // Run motor at full power
