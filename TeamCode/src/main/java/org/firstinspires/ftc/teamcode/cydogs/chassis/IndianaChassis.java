@@ -12,15 +12,15 @@ public class IndianaChassis {
     public DcMotor FrontRightWheel;
     public DcMotor BackLeftWheel;
     public DcMotor BackRightWheel;
+    private final double DriveControlDeadZone = 0.05;
+    private float RightStickYValue;
+    private float RightStickXValue;
+    private float LeftStickYValue;
+    private float LeftStickXValue;
+    private float TriggersValue;
     private double highSpeedDrive = 0.7;
     private double lowSpeedDrive = 0.3;
     private double rotateSpeedDrive = 0.5;
-    private final double DriveControlDeadZone = 0.05;
-    private float gamepad1_RightStickYValue;
-    private float gamepad1_RightStickXValue;
-    private float gamepad1_LeftStickYValue;
-    private float gamepad1_LeftStickXValue;
-    private float gamepad1_TriggersValue;
     private double FastStraight;
     private double Straight;
     private double FastStrafe;
@@ -39,8 +39,8 @@ public class IndianaChassis {
     private final int MotorsRPM = 312;
     private final double MotorsTicksPerRevolution = 537.7;
     // mmPer90DegreeRotation needs to be configured for each robot based on it's chassis size
-    private double mmPer90DegreesRotation=785;
-    private double strafeCompensation = 1.081;
+    private final double mmPer90DegreesRotation=785;
+    private final double strafeCompensation = 1.081;
     //public static final int OneTileMM = 610;
 
     /** This is the constructor for the class.  It takes a parameter for currentOp, which allows
@@ -81,12 +81,13 @@ public class IndianaChassis {
         BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
         // Clear Encoders of prior data; only necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
+        // or their encoders data will be read (even when using RUN_WITHOUT_ENCODER)
         //FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         //BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default); suggested if Auton was using RUN_TO_POSITION
+        // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default); suggested anyway if Auton was using RUN_TO_POSITION
         FrontLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontRightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -134,32 +135,30 @@ public class IndianaChassis {
 
     public void TraditionalTeleopDrive()
     {
-        gamepad1_RightStickYValue = -myOpMode.gamepad1.right_stick_y;
-        gamepad1_RightStickXValue = myOpMode.gamepad1.right_stick_x;
-        gamepad1_LeftStickYValue = -myOpMode.gamepad1.left_stick_y;
-        gamepad1_LeftStickXValue = myOpMode.gamepad1.left_stick_x;
-        gamepad1_TriggersValue = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
+        RightStickYValue = -myOpMode.gamepad1.right_stick_y;
+        RightStickXValue = myOpMode.gamepad1.right_stick_x;
+        LeftStickYValue = -myOpMode.gamepad1.left_stick_y;
+        LeftStickXValue = myOpMode.gamepad1.left_stick_x;
+        TriggersValue = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
 
-        if (gamepad1_RightStickYValue != 0 || gamepad1_RightStickXValue != 0 || gamepad1_LeftStickYValue != 0 || gamepad1_LeftStickXValue != 0 || gamepad1_TriggersValue != 0)
-        {
+        if (RightStickYValue != 0 || RightStickXValue != 0 || LeftStickYValue != 0 || LeftStickXValue != 0 || TriggersValue != 0) {
             // Set robot's fast move forward(+) or backwards(-) power
-            FastStraight = highSpeedDrive * (0.75 * Math.pow(gamepad1_RightStickYValue, 3) + 0.25 * gamepad1_RightStickYValue);
+            FastStraight = highSpeedDrive * (0.75 * Math.pow(RightStickYValue, 3) + 0.25 * RightStickYValue);
             // Set robot's move forward(+) or backwards(-) power
-            Straight = lowSpeedDrive * gamepad1_LeftStickYValue;
+            Straight = lowSpeedDrive * LeftStickYValue;
             // Set robot's fast strafe right(+) or left(-) power
-            FastStrafe = highSpeedDrive * (0.75 * Math.pow(gamepad1_RightStickXValue, 3) + 0.25 * gamepad1_RightStickXValue);
+            FastStrafe = highSpeedDrive * (0.75 * Math.pow(RightStickXValue, 3) + 0.25 * RightStickXValue);
             // Set robot's strafe right(+) or left(-) power
-            Strafe = lowSpeedDrive * gamepad1_LeftStickXValue;
+            Strafe = lowSpeedDrive * LeftStickXValue;
             // Set robot's clockwise(+) or counter-clockwise(-) rotation power
-            Rotate = rotateSpeedDrive * (0.75 * Math.pow(gamepad1_TriggersValue, 3) + 0.25 * gamepad1_TriggersValue);
+            Rotate = rotateSpeedDrive * (0.75 * Math.pow(TriggersValue, 3) + 0.25 * TriggersValue);
             // MOve all wheels based on the above calculations, using formulas for Mecanum wheels.
             FrontLeftWheel.setPower(FastStraight + Straight + FastStrafe + Strafe + Rotate);
             FrontRightWheel.setPower(FastStraight + Straight - FastStrafe - Strafe - Rotate);
             BackLeftWheel.setPower(FastStraight + Straight - FastStrafe - Strafe + Rotate);
             BackRightWheel.setPower(FastStraight + Straight + FastStrafe + Strafe - Rotate);
         }
-        else
-        {
+        else {
             // Stop all motors if their controls are not touched
             FrontLeftWheel.setPower(0);
             FrontRightWheel.setPower(0);
@@ -170,19 +169,19 @@ public class IndianaChassis {
 
     public void OptimizedTeleopDrive()
     {
-        FastStraight = -myOpMode.gamepad1.right_stick_y;
-        Straight = -myOpMode.gamepad1.left_stick_y;
-        FastStrafe = myOpMode.gamepad1.right_stick_x;
-        Strafe = myOpMode.gamepad1.left_stick_x;
-        Rotate = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
+        RightStickYValue = -myOpMode.gamepad1.right_stick_y;
+        RightStickXValue = myOpMode.gamepad1.right_stick_x;
+        LeftStickYValue = -myOpMode.gamepad1.left_stick_y;
+        LeftStickXValue = myOpMode.gamepad1.left_stick_x;
+        TriggersValue = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
 
         // Use a third-degree polynomial function on fast movements for better control, less important on slow movements
         // Calculate each variable only when the joystick value is higher than the DeadZone number, otherwise make it 0
-        FastStraight = abs(FastStraight) > DriveControlDeadZone ? (float)(highSpeedDrive * (0.75 * pow(FastStraight, 3) + 0.25 * FastStraight)) : 0;
-        FastStrafe = abs(FastStrafe) > DriveControlDeadZone ? (float)(highSpeedDrive * (0.75 * pow(FastStrafe, 3) + 0.25 * FastStrafe)) : 0;
-        Rotate = abs(Rotate) > DriveControlDeadZone ? (float)(rotateSpeedDrive * (0.75 * pow(Rotate, 3) + 0.25 * Rotate)): 0;
-        Straight = abs(Straight) > DriveControlDeadZone ? (float)(lowSpeedDrive * Straight) : 0;
-        Strafe = abs(Strafe) > DriveControlDeadZone ? (float)(lowSpeedDrive * Strafe) : 0;
+        FastStraight = abs(RightStickYValue) > DriveControlDeadZone ? (float)(highSpeedDrive * (0.75 * pow(RightStickYValue, 3) + 0.25 * RightStickYValue)) : 0;
+        Straight = abs(LeftStickYValue) > DriveControlDeadZone ? (float)(lowSpeedDrive * LeftStickYValue) : 0;
+        FastStrafe = abs(RightStickXValue) > DriveControlDeadZone ? (float)(highSpeedDrive * (0.75 * pow(RightStickXValue, 3) + 0.25 * RightStickXValue)) : 0;
+        Strafe = abs(LeftStickXValue) > DriveControlDeadZone ? (float)(lowSpeedDrive * LeftStickXValue) : 0;
+        Rotate = abs(TriggersValue) > DriveControlDeadZone ? (float)(rotateSpeedDrive * (0.75 * pow(TriggersValue, 3) + 0.25 * TriggersValue)): 0;
 
         FrontLeftPower = FastStraight + Straight + FastStrafe + Strafe + Rotate;
         FrontRightPower = FastStraight + Straight - FastStrafe - Strafe - Rotate;
@@ -230,8 +229,7 @@ public class IndianaChassis {
         ((DcMotorEx) BackRightWheel).setVelocity(TicksPerSecond);
 
         while (myOpMode.opModeIsActive() &&
-               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy())
-        {
+               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy()) {
             // Do nothing until at least 1 wheel reaches TargetPosition
         }
         myOpMode.sleep(WaitTime);
@@ -256,8 +254,7 @@ public class IndianaChassis {
         ((DcMotorEx) BackRightWheel).setVelocity(TicksPerSecond);
 
         while (myOpMode.opModeIsActive() &&
-               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy())
-        {
+               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy()) {
             // Do nothing until at least 1 wheel reaches TargetPosition
         }
         myOpMode.sleep(WaitTime);
@@ -270,7 +267,8 @@ public class IndianaChassis {
     }
 
     /** Rotates left until reaching Position */
-    public void RotateLeft(double degrees, double VelocityPercentage, int WaitTime) {
+    public void RotateLeft(double degrees, double VelocityPercentage, int WaitTime)
+    {
         // Convert degrees to a distance in mm
         double mmToTarget = degrees * (mmPer90DegreesRotation / 90.0);
         // Uses the formula we've always had for rotation
@@ -290,8 +288,7 @@ public class IndianaChassis {
         ((DcMotorEx) BackRightWheel).setVelocity(TicksPerSecond);
 
         while (myOpMode.opModeIsActive() &&
-               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy())
-        {
+               FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy()) {
             // Do nothing until at least 1 wheel reaches TargetPosition
         }
         myOpMode.sleep(WaitTime);
@@ -304,7 +301,8 @@ public class IndianaChassis {
     }
 
 
-    public void setTurnPower(double power) {
+    public void setTurnPower(double power)
+    {
         FrontLeftWheel.setPower(-power);
         BackLeftWheel.setPower(-power);
         FrontRightWheel.setPower(power);
@@ -312,7 +310,8 @@ public class IndianaChassis {
     }
 
     // Stop all motors
-    public void stopMotors() {
+    public void stopMotors()
+    {
         FrontLeftWheel.setPower(0);
         FrontRightWheel.setPower(0);
         BackLeftWheel.setPower(0);
