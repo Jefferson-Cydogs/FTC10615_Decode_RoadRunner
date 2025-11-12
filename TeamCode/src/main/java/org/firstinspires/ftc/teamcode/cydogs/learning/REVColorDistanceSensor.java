@@ -13,7 +13,6 @@ import com.qualcomm.robotcore.hardware.OpticalDistanceSensor;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
-@Disabled
 @TeleOp
 public class REVColorDistanceSensor extends LinearOpMode {
 
@@ -115,28 +114,6 @@ public class REVColorDistanceSensor extends LinearOpMode {
                 //    telemetry.addData("Check Sat", "Is surface white?");
                 //}
 
-                telemetry.addData("RightIntake Dist to tgt (cm)", ((DistanceSensor) RightIntakeSensor).getDistance(DistanceUnit.CM));
-                RINormalizedColors = ((NormalizedColorSensor) RightIntakeSensor).getNormalizedColors();
-                RIColor = RINormalizedColors.toColor();
-                RIHue = JavaUtil.colorToHue(RIColor);
-                telemetry.addData("RightIntake Hue", Double.parseDouble(JavaUtil.formatNumber(RIHue, 0)));
-                JavaUtil.showColor(hardwareMap.appContext, RIColor);
-                if (RIHue < 30) {
-                    telemetry.addData("RightIntake Color", "Red");
-                } else if (RIHue < 60) {
-                    telemetry.addData("RightIntake Color", "Orange");
-                } else if (RIHue < 90) {
-                    telemetry.addData("RightIntake Color", "Yellow");
-                } else if (RIHue < 150) {
-                    telemetry.addData("RightIntake Color", "Green");
-                } else if (RIHue < 225) {
-                    telemetry.addData("RightIntake Color", "Blue");
-                } else if (RIHue < 350) {
-                    telemetry.addData("RightIntake Color", "purple");
-                } else {
-                    telemetry.addData("RightIntake Color", "Red");
-                }
-
                 telemetry.addData("LeftLaunch Dist to tgt (cm)", ((DistanceSensor) LeftLaunchSensor).getDistance(DistanceUnit.CM));
                 LLNormalizedColors = ((NormalizedColorSensor) LeftLaunchSensor).getNormalizedColors();
                 LLColor = LLNormalizedColors.toColor();
@@ -157,6 +134,28 @@ public class REVColorDistanceSensor extends LinearOpMode {
                     telemetry.addData("LeftLauncher Color", "purple");
                 } else {
                     telemetry.addData("LeftLauncher Color", "Red");
+                }
+
+                telemetry.addData("RightIntake Dist to tgt (cm)", ((DistanceSensor) RightIntakeSensor).getDistance(DistanceUnit.CM));
+                RINormalizedColors = ((NormalizedColorSensor) RightIntakeSensor).getNormalizedColors();
+                RIColor = RINormalizedColors.toColor();
+                RIHue = JavaUtil.colorToHue(RIColor);
+                telemetry.addData("RightIntake Hue", Double.parseDouble(JavaUtil.formatNumber(RIHue, 0)));
+                JavaUtil.showColor(hardwareMap.appContext, RIColor);
+                if (RIHue < 30) {
+                    telemetry.addData("RightIntake Color", "Red");
+                } else if (RIHue < 60) {
+                    telemetry.addData("RightIntake Color", "Orange");
+                } else if (RIHue < 90) {
+                    telemetry.addData("RightIntake Color", "Yellow");
+                } else if (RIHue < 150) {
+                    telemetry.addData("RightIntake Color", "Green");
+                } else if (RIHue < 225) {
+                    telemetry.addData("RightIntake Color", "Blue");
+                } else if (RIHue < 350) {
+                    telemetry.addData("RightIntake Color", "purple");
+                } else {
+                    telemetry.addData("RightIntake Color", "Red");
                 }
 
                 telemetry.addData("RightLaunch Dist to tgt (cm)", ((DistanceSensor) RightLaunchSensor).getDistance(DistanceUnit.CM));
