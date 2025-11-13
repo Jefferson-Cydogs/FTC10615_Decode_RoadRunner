@@ -61,4 +61,4 @@ public class WheelieAutonShort extends LinearOpMode {
         wheels.RotateLeft(125, 0.5, 500);
         wheels.MoveStraight(1000, 0.5, 100);
 
-    }
+    }}
