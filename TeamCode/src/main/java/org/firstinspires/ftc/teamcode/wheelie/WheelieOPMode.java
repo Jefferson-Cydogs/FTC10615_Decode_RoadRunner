@@ -8,9 +8,9 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Range;
 
 @TeleOp(name="WheelieOPMode", group="Linear OpMode")
-@Disabled
 public class WheelieOPMode extends LinearOpMode {
     private int WheelDiameter=104;
     private int RPM = 435;
@@ -69,35 +69,20 @@ public class WheelieOPMode extends LinearOpMode {
         waitForStart();
         runtime.reset();
         while (opModeIsActive()) {
-            double max;
-            double axial   = -gamepad1.left_stick_y;  // Note: pushing stick forward gives negative value
-            double lateral =  gamepad1.left_stick_x;
-            double yaw     =  gamepad1.right_stick_x;
-            double frontLeftPower  = axial + lateral + yaw;
-            double frontRightPower = axial - lateral - yaw;
-            double backLeftPower   = axial - lateral + yaw;
-            double backRightPower  = axial + lateral - yaw;
+            double drive = -gamepad1.left_stick_y;
+            double turn  =  gamepad1.right_stick_x;
+            double leftPower = Range.clip(drive + turn, -1.0, 1.0);
+            double rightPower = Range.clip(drive - turn, -1.0, 1.0);
 
 
-            max = Math.max(Math.abs(frontLeftPower), Math.abs(frontRightPower));
-            max = Math.max(max, Math.abs(backLeftPower));
-            max = Math.max(max, Math.abs(backRightPower));
-
-            if (max > 1.0) {
-                frontLeftPower  /= max;
-                frontRightPower /= max;
-                backLeftPower   /= max;
-                backRightPower  /= max;
-            }
-
-            frontLeftDrive.setPower(frontLeftPower);
-            frontRightDrive.setPower(frontRightPower);
-            backLeftDrive.setPower(backLeftPower);
-            backRightDrive.setPower(backRightPower);
+            frontLeftDrive.setPower(frontLeftDrive);
+            frontRightDrive.setPower(frontRightDrive);
+            backLeftDrive.setPower(backLeftDrive);
+            backRightDrive.setPower(backRightDrive);
 
             telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftPower, frontRightPower);
-            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftPower, backRightPower);
+            telemetry.addData("Front left/Right", "%4.2f, %4.2f", frontLeftDrive, frontRightDrive);
+            telemetry.addData("Back  left/Right", "%4.2f, %4.2f", backLeftDrive, backRightDrive);
             telemetry.update();
             OpMode myOpMode = null;
 
