@@ -1,7 +1,6 @@
 package org.firstinspires.ftc.teamcode.wheelie;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
@@ -12,9 +11,13 @@ import org.firstinspires.ftc.teamcode.cydogs.learning.WheelieLauncher;
 
 
 
-@Autonomous(name= "WheelieAutonShort", group= "Autonomous")
 
-public class WheelieAutonShort extends LinearOpMode {
+
+
+
+@Autonomous(name= "WheelieAutonLong", group= "Autonomous")
+
+public class WheelieAutonLong extends LinearOpMode {
 
 
     private String currentMotif;
@@ -38,28 +41,20 @@ public class WheelieAutonShort extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            light.SetColor(0.67);
+            wheels.MoveStraight(1800, 0.5, 100);
+            currentMotif = wheelieTag.telemetryAprilTag();
+            telemetry.addData("Found Motif: ", currentMotif);
+            telemetry.update();
+            sleep(1000);
+            wheels.RotateLeft(60,0.5,500);
+            shooter.runAtPower(0.6);
+            sleep(3530);
+            pusher.MoveFeeder();
+            sleep(2300);
+            pusher.MoveFeeder();
+            sleep(2300);
+            pusher.MoveFeeder();
+            sleep(2000);
+            shooter.turnPowerOff();
+
         }
-          wheels.MoveStraight(1700, 0.5, 100);
-          wheels.RotateRight(60,0.5, 500);
-        currentMotif = wheelieTag.telemetryAprilTag();
-        telemetry.addData("Found Motif: ", currentMotif);
-        telemetry.update();
-        sleep(1000);
-        wheels.RotateLeft(37.0,0.5,100);
-        wheels.MoveStraight(-1800,0.5,500);
-        shooter.runAtPower(0.6);
-        sleep(3530);
-        pusher.MoveFeeder();
-        sleep(2300);
-        pusher.MoveFeeder();
-        sleep(2300);
-        pusher.MoveFeeder();
-        sleep(2000);
-        shooter.turnPowerOff();
-
-        wheels.MoveStraight(850,0.5,100);
-        wheels.RotateRight(40,0.5,100);
-        wheels.MoveStraight(1600,0.5,100);
-
-    }}
