@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.cydogs.learning.WheelieLauncher;
 
 
 
-@Autonomous(name= "Blue_Basket_sample", group= "Autonomous")
+@Autonomous(name= "WheelieAutonShort", group= "Autonomous")
 
 public class WheelieAutonShort extends LinearOpMode {
 
