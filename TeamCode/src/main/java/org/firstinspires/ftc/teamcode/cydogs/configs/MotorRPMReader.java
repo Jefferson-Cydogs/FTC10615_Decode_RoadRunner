@@ -1,11 +1,13 @@
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @TeleOp(name = "Motor RPM Reader", group = "Diagnostics")
+@Disabled
 public class MotorRPMReader extends LinearOpMode {
 
     private DcMotor motor;
