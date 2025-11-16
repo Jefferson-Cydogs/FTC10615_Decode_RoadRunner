@@ -10,7 +10,7 @@ public class IntakeV2 {
     private LinearOpMode opMode;
     private DcMotorEx intake;
 
-    private double standardSpeed = 0.8;
+    private double standardSpeed = 0.7;
     private double standardReverseSpeed = -0.9;
 
     public IntakeV2(LinearOpMode opMode)

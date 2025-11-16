@@ -137,6 +137,9 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             ArtifactEater.turnIntakeOn();
             BumperCars.ActivateLeftBumper();
         }
+        else if (gamepad2.dpad_left) {
+            BumperCars.ReverseLeftBumper();
+        }
         else {
             ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateLeftBumper();
@@ -148,6 +151,9 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         else if (gamepad2.right_bumper) {
             ArtifactEater.turnIntakeOn();
             BumperCars.ActivateRightBumper();
+        }
+        else if (gamepad2.dpad_right) {
+            BumperCars.ReverseRightBumper();
         }
         else {
             ArtifactEater.turnIntakeOff();
