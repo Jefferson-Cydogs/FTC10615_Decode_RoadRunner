@@ -8,24 +8,28 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 @Config
+@Disabled
 @TeleOp
 public class FlywheelVelocityGraph extends LinearOpMode {
 
-    public static double P = 0.0;
+    public static double P = 7.0;
     public static double I = 0.0;
     public static double D = 0.0;
-    public static double F = 13.0;
+    public static double F = 12.5;
 
     public static double targetVelocity = 1380; // ticks per second
 
+    DcMotorEx flywheel;
+
     @Override
     public void runOpMode() {
-        DcMotorEx flywheel = hardwareMap.get(DcMotorEx.class, "RightLauncher");
-        flywheel.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        flywheel.setDirection(DcMotorEx.Direction.REVERSE);
+        flywheel = hardwareMap.get(DcMotorEx.class, "Launchers");
+        flywheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
+        flywheel.setDirection(DcMotorSimple.Direction.REVERSE);
         flywheel.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         FtcDashboard dashboard = FtcDashboard.getInstance();

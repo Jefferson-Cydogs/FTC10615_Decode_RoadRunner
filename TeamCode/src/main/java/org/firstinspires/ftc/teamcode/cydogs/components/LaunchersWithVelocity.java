@@ -12,7 +12,7 @@ public class LaunchersWithVelocity
     //       Without gearbox, theoretical 6,000RPM, empirical is 4,620RPM; ticks/second is always 28 at the motor shaft for goBILDA Yellow Jacket motors
     //    GoBilda 5203 Series Yellow Jacket 435 RPM, 384.5 PPR
     // Max TPS = (Motor's RPM / 60) * Motor's TicksPerRotation
-    //public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04
+    //public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04 with no modifications
     public static final double MaxTicksPerSecond = (4620.0 / 60.0) * 28.0; //TPS=2,156 without gearbox
     private final double VelocityTolerance = 0.015; //1.5%
 
@@ -31,7 +31,7 @@ public class LaunchersWithVelocity
         Launchers.setDirection(DcMotorEx.Direction.REVERSE);
         Launchers.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         Launchers.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        Launchers.setVelocityPIDFCoefficients(75, 0, 0, 15.4863); //need to recalculate
+        Launchers.setVelocityPIDFCoefficients(75, 0, 0, 15.4863);
     }
 
     public double GetCurrentVelocity() {
@@ -64,7 +64,7 @@ public class LaunchersWithVelocity
         Launchers.setVelocity(IntermediateVelocity);
         opMode.sleep(200);
         Launchers.setVelocity(0);*/
-        while (Launchers.getVelocity() > (MaxTicksPerSecond*0.1)) {
+        while (Launchers.getVelocity() > (MaxTicksPerSecond * 0.1)) {
         }
 
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
