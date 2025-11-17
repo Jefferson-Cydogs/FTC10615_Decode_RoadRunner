@@ -68,7 +68,6 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
             /** Execute OpMode actions here */
             //tagReader.displayDetections(tagReader.GetDetections());
             Wheels.OptimizedTeleopDrive();
-            //Wheels.TraditionalTeleopDrive();
             manageDriverControls();
             manageManipulatorControls();
 
