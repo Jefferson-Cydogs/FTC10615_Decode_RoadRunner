@@ -18,7 +18,6 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
-@Disabled
 @TeleOp
 public class CoolPeopleBlueV2_1 extends LinearOpMode {
 
@@ -69,7 +68,6 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
             /** Execute OpMode actions here */
             //tagReader.displayDetections(tagReader.GetDetections());
             Wheels.OptimizedTeleopDrive();
-            //Wheels.TraditionalTeleopDrive();
             manageDriverControls();
             manageManipulatorControls();
 

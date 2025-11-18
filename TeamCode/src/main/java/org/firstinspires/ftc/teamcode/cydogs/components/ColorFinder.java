@@ -3,11 +3,12 @@ package org.firstinspires.ftc.teamcode.cydogs.components;
 import android.graphics.Color;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
+import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 
@@ -21,13 +22,13 @@ public class ColorFinder {
     final int REQUIRED_MATCHES = 2;
     private long lastCheckTime = 0;
     private boolean lastResult = false;
-    //public String ColorFound;
 
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
     private final DistanceSensor distanceSensor;
 
-    public ColorFinder(LinearOpMode opMode, String artifactColorSensor) {
+    public ColorFinder(LinearOpMode opMode, String artifactColorSensor)
+    {
         this.opMode = opMode;
         HardwareMap hw = opMode.hardwareMap;
         this.colorSensor = hw.get(NormalizedColorSensor.class, artifactColorSensor);
@@ -39,7 +40,8 @@ public class ColorFinder {
         colorSensor.setGain(30);
     }
 
-    public boolean SeeColor(TargetColor targetColor) {
+    public boolean SeeColor(TargetColor targetColor)
+    {
         int consecutiveHits = 0;
         int escapeCounter = 0;
 
@@ -66,7 +68,13 @@ public class ColorFinder {
         return false;
     }
 
-    public boolean SeeColor2(TargetColor targetColor) {
+    public boolean SeeColor2(TargetColor targetColor)
+    {
+        NormalizedRGBA NormalizedColors;
+        int Color;
+        float Hue;
+        //float Saturation;
+
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastCheckTime < 500) {
             return lastResult; // Return cached result
@@ -79,14 +87,12 @@ public class ColorFinder {
                 continue; // Too far, skip this reading
             }
 
-            NormalizedRGBA colors = colorSensor.getNormalizedColors();
-            float[] hsv = new float[3];
-            int r = (int) (colors.red * 255);
-            int g = (int) (colors.green * 255);
-            int b = (int) (colors.blue * 255);
-            Color.RGBToHSV(r, g, b, hsv);
+            NormalizedColors = colorSensor.getNormalizedColors();
+            Color = NormalizedColors.toColor();
+            Hue = JavaUtil.colorToHue(Color);
+            //Saturation = JavaUtil.colorToSaturation(Color);
 
-            if (targetColor.matches(hsv)) {
+            if (targetColor.matches2(Hue)) {
                 matchCount++;
             }
         }
@@ -96,7 +102,8 @@ public class ColorFinder {
         return lastResult;
     }
 
-    public void WhatDoISee() {
+    public void WhatDoISee()
+    {
         NormalizedRGBA colors = colorSensor.getNormalizedColors();
         float[] hsv = new float[3];
         int r = (int) (colors.red * 255);
@@ -113,42 +120,5 @@ public class ColorFinder {
 
         opMode.telemetry.addData("HSV", "H: %.1f  S: %.3f  V: %.3f", hsv[0], hsv[1], hsv[2]);
     }
-
-    /*public String DetectColor() {
-        int color;
-        float hue;
-        float saturation;
-
-        if (distanceSensor.getDistance(DistanceUnit.MM) < 60) {
-            // Read color from the sensor in RGB format
-            NormalizedRGBA normalizedColors = colorSensor.getNormalizedColors();
-            // Convert RGB values to Hue and Saturation
-            color = normalizedColors.toColor();
-            hue = JavaUtil.colorToHue(color);
-            //saturation = JavaUtil.colorToSaturation(color);
-
-            if (hue >= 90 && hue < 150) {
-                return "GREEN";
-            }
-            else if (hue >= 150 && hue < 225) {
-                return "BLUE";
-            }
-            else if (hue >= 225 && hue < 350) {
-                return "PURPLE";
-            }
-            else if ((hue >= 350) || (hue < 30)) {
-                return "RED";
-            }
-            else if (saturation < 0.2) {
-                return "White";
-            }
-            else {
-                return "OTHER";
-            }
-        }
-        else {
-            return "NOTHING";
-        }
-    }*/
 
 }

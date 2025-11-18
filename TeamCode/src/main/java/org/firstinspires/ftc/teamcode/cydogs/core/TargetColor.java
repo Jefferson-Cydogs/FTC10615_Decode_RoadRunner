@@ -45,6 +45,13 @@ public enum TargetColor {
         return inPrimaryRange || inSecondaryRange;
     }
 
+    public boolean matches2(float hue) {
+        boolean inPrimaryRange = (low1 <= hue) && (hue <= high1);
+        boolean inSecondaryRange = (0 <= low2) && (low2 <= hue) && (hue <= high2); // Only check if second range exists
+
+        return inPrimaryRange || inSecondaryRange;
+    }
+
     @Override
     @NonNull
     public String toString() {
