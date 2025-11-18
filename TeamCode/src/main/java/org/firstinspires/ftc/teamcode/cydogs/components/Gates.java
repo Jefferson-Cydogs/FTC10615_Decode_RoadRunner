@@ -21,7 +21,7 @@ public class Gates {
         leftGate = opMode.hardwareMap.get(CRServo.class,"LeftGate");
         rightGate = opMode.hardwareMap.get(CRServo.class,"RightGate");
 
-        rightGate.setDirection(CRServo.Direction.REVERSE);
+        //rightGate.setDirection(CRServo.Direction.REVERSE);
     }
 
     public void OpenLeftGate()

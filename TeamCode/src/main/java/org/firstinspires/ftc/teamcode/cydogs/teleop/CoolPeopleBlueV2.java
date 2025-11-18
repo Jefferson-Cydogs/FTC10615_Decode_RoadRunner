@@ -10,6 +10,7 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
+import org.firstinspires.ftc.teamcode.cydogs.components.Gates;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -168,6 +169,15 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateRightBumper();
         }
+        if(gamepad2.dpad_up)
+        {
+            Gates.OpenLeftGate();
+            Gates.OpenRightGate();
+        } else if (gamepad2.dpad_down) {
+            Gates.CloseRightGate();
+            Gates.CloseLeftGate();
+
+        }
     }
 
     private void initializeDevices()
@@ -175,6 +185,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         RocketLauncher3000 = new LaunchersWithVelocity(this);
         ArtifactEater = new IntakeV2(this);
         BumperCars = new Feeders(this);
+        Gates = new Gates(this);
         LauncherLED = new ColorLED(this,"LauncherLED");
         LeftChannelLED = new ColorLED(this,"LeftLED");
         RightChannelLED = new ColorLED(this,"RightLED");
@@ -186,6 +197,8 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         LauncherLED.SetColorName(ColorOption.OFF);
         LeftChannelLED.SetColorName(ColorOption.OFF);
         RightChannelLED.SetColorName(ColorOption.OFF);
+        Gates.CloseLeftGate();
+        Gates.CloseRightGate();
     }
 
     private void checkRocketLauncherVelocity() {
