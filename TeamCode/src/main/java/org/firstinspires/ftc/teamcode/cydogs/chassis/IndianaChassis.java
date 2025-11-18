@@ -18,13 +18,16 @@ public class IndianaChassis {
     private float LeftStickYValue;
     private float LeftStickXValue;
     private float TriggersValue;
+    private float BumpersValue;
     private double highSpeedDrive = 0.7;
     private double lowSpeedDrive = 0.3;
-    private double rotateSpeedDrive = 0.5;
+    private double rotateSpeedDrive = 0.6;
+    private float rotateLowSpeedDrive = 0.3f;
     private double FastStraight;
     private double Straight;
     private double FastStrafe;
     private double Strafe;
+    private double FastRotate;
     private double Rotate;
     private double FrontLeftPower;
     private double FrontRightPower;
@@ -180,6 +183,15 @@ public class IndianaChassis {
         LeftStickYValue = -myOpMode.gamepad1.left_stick_y;
         LeftStickXValue = myOpMode.gamepad1.left_stick_x;
         TriggersValue = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
+        if (myOpMode.gamepad1.right_bumper) {
+            BumpersValue = rotateLowSpeedDrive;
+        }
+        else if (myOpMode.gamepad1.left_bumper) {
+            BumpersValue = -rotateLowSpeedDrive;
+        }
+        else {
+            BumpersValue = 0;
+        }
 
         // Use a third-degree polynomial function on fast movements for better control, less important on slow movements
         // Calculate each variable only when the joystick value is higher than the DeadZone number, otherwise make it 0
@@ -187,12 +199,13 @@ public class IndianaChassis {
         Straight = abs(LeftStickYValue) > DriveControlDeadZone ? (float)(lowSpeedDrive * LeftStickYValue) : 0;
         FastStrafe = abs(RightStickXValue) > DriveControlDeadZone ? (float)(highSpeedDrive * (0.75 * pow(RightStickXValue, 3) + 0.25 * RightStickXValue)) : 0;
         Strafe = abs(LeftStickXValue) > DriveControlDeadZone ? (float)(lowSpeedDrive * LeftStickXValue) : 0;
-        Rotate = abs(TriggersValue) > DriveControlDeadZone ? (float)(rotateSpeedDrive * (0.75 * pow(TriggersValue, 3) + 0.25 * TriggersValue)): 0;
+        FastRotate = abs(TriggersValue) > DriveControlDeadZone ? (float)(rotateSpeedDrive * (0.75 * pow(TriggersValue, 3) + 0.25 * TriggersValue)): 0;
+        Rotate = BumpersValue;
 
-        FrontLeftPower = FastStraight + Straight + FastStrafe + Strafe + Rotate;
-        FrontRightPower = FastStraight + Straight - FastStrafe - Strafe - Rotate;
-        BackLeftPower = FastStraight + Straight - FastStrafe - Strafe + Rotate;
-        BackRightPower = FastStraight + Straight + FastStrafe + Strafe - Rotate;
+        FrontLeftPower = FastStraight + Straight + FastStrafe + Strafe + FastRotate + Rotate;
+        FrontRightPower = FastStraight + Straight - FastStrafe - Strafe - FastRotate - Rotate;
+        BackLeftPower = FastStraight + Straight - FastStrafe - Strafe + FastRotate + Rotate;
+        BackRightPower = FastStraight + Straight + FastStrafe + Strafe - FastRotate - Rotate;
 
         // If any power exceeds 1.0, determine the maximum between them then normalize all using that maximum
         double maxPower = max(abs(FrontLeftPower),
