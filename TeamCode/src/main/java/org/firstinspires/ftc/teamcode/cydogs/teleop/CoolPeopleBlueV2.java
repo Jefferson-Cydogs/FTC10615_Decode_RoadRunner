@@ -168,7 +168,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         else {
             ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateRightBumper();
-        }
+        }//
         if(gamepad2.dpad_up)
         {
             Gates.OpenLeftGate();
