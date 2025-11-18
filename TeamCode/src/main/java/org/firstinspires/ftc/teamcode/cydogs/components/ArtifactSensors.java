@@ -103,31 +103,31 @@ public class ArtifactSensors {
     }
 
     public void CheckSensors2() {
-        if (LeftIntakeSensor.SeeColor2(Green)) {
+        if (LeftIntakeSensor.SeeArtifactColor(Green)) {
             LeftIntakeColor = "Green";
         }
-        else if (LeftIntakeSensor.SeeColor2(Purple)) {
+        else if (LeftIntakeSensor.SeeArtifactColor(Purple)) {
             LeftIntakeColor = "Purple";
         }
         else {
             LeftIntakeColor = "Nothing";
         }
 
-        if (RightIntakeSensor.SeeColor2(Green)) {
+        if (RightIntakeSensor.SeeArtifactColor(Green)) {
             RightIntakeColor = "Green";
         }
-        else if (RightIntakeSensor.SeeColor2(Purple)) {
+        else if (RightIntakeSensor.SeeArtifactColor(Purple)) {
             RightIntakeColor = "Purple";
         }
         else {
             RightIntakeColor = "Nothing";
         }
 
-        if (LeftLaunchSensor.SeeColor2(Green)) {
+        if (LeftLaunchSensor.SeeArtifactColor(Green)) {
             LeftLaunchColor = "Green";
             LeftLED.SetColorName(ColorOption.GREEN);
         }
-        else if (LeftLaunchSensor.SeeColor2(Purple)) {
+        else if (LeftLaunchSensor.SeeArtifactColor(Purple)) {
             LeftLaunchColor = "Purple";
             LeftLED.SetColorName(ColorOption.PURPLE);
         }
@@ -136,11 +136,11 @@ public class ArtifactSensors {
             LeftLED.SetColorName(ColorOption.OFF);
         }
 
-        if (RightLaunchSensor.SeeColor2(Green)) {
+        if (RightLaunchSensor.SeeArtifactColor(Green)) {
             RightLaunchColor = "Green";
             RightLED.SetColorName(ColorOption.GREEN);
         }
-        else if (RightLaunchSensor.SeeColor2(Purple)) {
+        else if (RightLaunchSensor.SeeArtifactColor(Purple)) {
             RightLaunchColor = "Purple";
             RightLED.SetColorName(ColorOption.PURPLE);
         }
