@@ -16,7 +16,6 @@ After selection you can control servos position using gamepad.
 
 
 @TeleOp
-@Disabled
 public class Config_Servo2 extends LinearOpMode {
 
 
@@ -41,8 +40,8 @@ public class Config_Servo2 extends LinearOpMode {
 
         //Display selection Instructions during Intialzation
         telemetry.addLine("Select Servo to Test using PlayStation Controller Buttons.")
-                .addData("\nCross(X)", "Extension")
-                .addData("\nCircle(O)", "Delivery Box")
+                .addData("\nCross(X)", "RightGate")
+                .addData("\nCircle(O)", "LeftGate")
                 .addData("\nSquare(N)", "Specimen Gripper")
                 .addData("\nTriangle(A)", "Extension Box Rotator")
                 .addData("\nCurrent Selection", selectedServoName);
@@ -56,13 +55,13 @@ public class Config_Servo2 extends LinearOpMode {
         while (opModeIsActive() && selectedServo == null) {
 //Check for servo selection buttons based on PlayStation controller mapping
             if (gamepad1.a) {//Cross(X)button
-                selectedServoName = "Extension";
+                selectedServoName = "RightGate";
                 selectedServo = initalizeServo(selectedServoName);
                 telemetry.addData("Selected Servo", selectedServoName);
                 telemetry.update();
                 sleep(300);//delay to prevent multiple selections
             } else if (gamepad1.b) {//Circle button
-                selectedServoName = "DeliveryBox";
+                selectedServoName = "LeftGate";
                 selectedServo = initalizeServo(selectedServoName);
                 telemetry.addData("Selected Servo", selectedServoName);
                 telemetry.update();

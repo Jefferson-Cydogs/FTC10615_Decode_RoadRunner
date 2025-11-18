@@ -23,11 +23,13 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
     private IntakeV2 ArtifactEater;
     private Feeders BumperCars;
+
+    private Gates Gates;
     private LaunchersWithVelocity RocketLauncher3000;
     //46% launcher from top of short distance
     //53% launcher velocity from long distance
-    private final double NearLauncherVelocity = 0.42;
-    private final double FarLauncherVelocity = 0.52;
+    private final double NearLauncherVelocity = 0.5;
+    private final double FarLauncherVelocity = 0.67;
     private double TargetLauncherVelocity = NearLauncherVelocity;
 
     private ColorLED LauncherLED;
@@ -42,6 +44,13 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private EventTracker eventTracker;
 
     public String Team = "blue";
+
+    // Right Gate
+    //   Closed  .93
+    //   Open  .13
+    // Left Gate
+    //   Closed
+    //   Open
 
     @Override
     public void runOpMode()
