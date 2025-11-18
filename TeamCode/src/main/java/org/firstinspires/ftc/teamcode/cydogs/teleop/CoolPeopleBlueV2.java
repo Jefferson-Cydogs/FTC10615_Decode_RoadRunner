@@ -60,7 +60,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
         /** Execute initialization actions here */
         Wheels = new IndianaChassis(this);
-        Wheels.InitializeChassisTeleop(.8,.3,.6);
+        Wheels.InitializeChassisTeleop(.8,.3,.7);
         initializeDevices();
         initializePositions();
         currentTimer = new ElapsedTime();

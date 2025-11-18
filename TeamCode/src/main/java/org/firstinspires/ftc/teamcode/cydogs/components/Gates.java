@@ -13,13 +13,13 @@ public class Gates {
     private double rightGateClose = 0.86;
     private double rightGateOpen = 0.06;
     private double leftGateClose = 0.81;
-    private double leftGateOpen = 0.08;
+    private double leftGateOpen = 0.07;
     public Gates(LinearOpMode opMode)
     {
         this.opMode = opMode;
 
-        leftGate = opMode.hardwareMap.get(CRServo.class,"LeftGate");
-        rightGate = opMode.hardwareMap.get(CRServo.class,"RightGate");
+        leftGate = opMode.hardwareMap.get(Servo.class,"LeftGate");
+        rightGate = opMode.hardwareMap.get(Servo.class,"RightGate");
 
         //rightGate.setDirection(CRServo.Direction.REVERSE);
     }
