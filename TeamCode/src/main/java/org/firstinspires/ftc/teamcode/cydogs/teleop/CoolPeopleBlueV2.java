@@ -75,7 +75,6 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             /** Execute OpMode actions here */
             //tagReader.displayDetections(tagReader.GetDetections());
             Wheels.OptimizedTeleopDrive();
-            //Wheels.TraditionalTeleopDrive();
             manageDriverControls();
             manageManipulatorControls();
 
@@ -92,8 +91,8 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             //telemetry.addData("Battery Voltage", voltage);
 
             if(eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
-                telemetry.addData("Target Launcher Power:", TargetLauncherVelocity);
-                telemetry.addData("Current Launcher Power:", RocketLauncher3000.GetCurrentVelocity());
+                telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocity);
+                telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocity());
                 telemetry.update();
             }
         }
@@ -137,7 +136,14 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         }
         else if (gamepad2.cross) {
             LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(RocketLauncher3000.Launchers, 0.5,0.02,50);
-            //RocketLauncher3000.TurnPowerOff();
+        }
+        else if (gamepad2.dpadUpWasPressed()) {
+            Gates.OpenLeftGate();
+            Gates.OpenRightGate();
+        }
+        else if (gamepad2.dpadDownWasPressed()) {
+            Gates.CloseRightGate();
+            Gates.CloseLeftGate();
         }
 
         if (gamepad2.left_trigger > 0.4) {
@@ -168,15 +174,6 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         else {
             ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateRightBumper();
-        }//
-        if(gamepad2.dpad_up)
-        {
-            Gates.OpenLeftGate();
-            Gates.OpenRightGate();
-        } else if (gamepad2.dpad_down) {
-            Gates.CloseRightGate();
-            Gates.CloseLeftGate();
-
         }
     }
 
