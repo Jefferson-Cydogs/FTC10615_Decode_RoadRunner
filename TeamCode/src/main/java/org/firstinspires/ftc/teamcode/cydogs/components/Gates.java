@@ -12,7 +12,7 @@ public class Gates {
 
     private double rightGateClose = 0.86;
     private double rightGateOpen = 0.06;
-    private double leftGateClose = 0.81;
+    private double leftGateClose = 0.83;
     private double leftGateOpen = 0.07;
     public Gates(LinearOpMode opMode)
     {
