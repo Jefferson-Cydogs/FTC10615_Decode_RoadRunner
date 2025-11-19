@@ -17,22 +17,27 @@ public class ColorFinder {
 
     //public static final float MIN_SATURATION = 0.5f;
     //public static final float MIN_VALUE = 0.3f;
+    private NormalizedRGBA NormalizedColors;
+    private int NormalizedColor;
+    private float Hue;
     public static final int REQUIRED_CONSECUTIVE_HITS = 3;
-    final double DISTANCE_THRESHOLD_CM = 6.0;
-    final int REQUIRED_MATCHES = 2;
-    private long lastCheckTime = 0;
-    private boolean lastResult = false;
+    private final double DISTANCE_THRESHOLD_CM = 6.0;
+    private final int REQUIRED_MATCHES = 2;
+    private long lastArtifactCheckTime = 0;
+    private long lastSquareCheckTime = 0;
+    private boolean lastArtifactResult = false;
+    private boolean lastSquareResult = false;
 
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
     private final DistanceSensor distanceSensor;
 
-    public ColorFinder(LinearOpMode opMode, String artifactColorSensor)
+    public ColorFinder(LinearOpMode opMode, String ColorDistanceSensor)
     {
         this.opMode = opMode;
         HardwareMap hw = opMode.hardwareMap;
-        this.colorSensor = hw.get(NormalizedColorSensor.class, artifactColorSensor);
-        this.distanceSensor = hw.get(DistanceSensor.class, artifactColorSensor);
+        this.colorSensor = hw.get(NormalizedColorSensor.class, ColorDistanceSensor);
+        this.distanceSensor = hw.get(DistanceSensor.class, ColorDistanceSensor);
 
         // Adjust the gain, as the sensor may default to an unpredictable value, leading to inconsistent color readings.
         // Recommendation based on FTC documentation: 10.0 - 20.0 for bright lighting or LEDs, 20.0 - 40.0 for normal indoor lighting.
@@ -68,16 +73,11 @@ public class ColorFinder {
         return false;
     }
 
-    public boolean SeeColor2(TargetColor targetColor)
+    public boolean SeeArtifactColor(TargetColor targetColor)
     {
-        NormalizedRGBA NormalizedColors;
-        int Color;
-        float Hue;
-        //float Saturation;
-
         long currentTime = System.currentTimeMillis();
-        if (currentTime - lastCheckTime < 500) {
-            return lastResult; // Return cached result
+        if (currentTime - lastArtifactCheckTime < 500) {
+            return lastArtifactResult; // Return cached result
         }
 
         int matchCount = 0;
@@ -88,18 +88,41 @@ public class ColorFinder {
             }
 
             NormalizedColors = colorSensor.getNormalizedColors();
-            Color = NormalizedColors.toColor();
-            Hue = JavaUtil.colorToHue(Color);
-            //Saturation = JavaUtil.colorToSaturation(Color);
+            NormalizedColor = NormalizedColors.toColor();
+            Hue = JavaUtil.colorToHue(NormalizedColor);
 
             if (targetColor.matches2(Hue)) {
                 matchCount++;
             }
         }
 
-        lastResult = matchCount >= REQUIRED_MATCHES;
-        lastCheckTime = currentTime;
-        return lastResult;
+        lastArtifactResult = matchCount >= REQUIRED_MATCHES;
+        lastArtifactCheckTime = currentTime;
+        return lastArtifactResult;
+    }
+
+    public boolean SeeSquareColor(TargetColor targetColor)
+    {
+        long currentTime = System.currentTimeMillis();
+        if (currentTime - lastSquareCheckTime < 500) {
+            return lastSquareResult; // Return cached result
+        }
+
+        int matchCount = 0;
+
+        for (int i = 0; i < 3; i++) {
+            NormalizedColors = colorSensor.getNormalizedColors();
+            NormalizedColor = NormalizedColors.toColor();
+            Hue = JavaUtil.colorToHue(NormalizedColor);
+
+            if (targetColor.matches2(Hue)) {
+                matchCount++;
+            }
+        }
+
+        lastSquareResult = matchCount >= REQUIRED_MATCHES;
+        lastSquareCheckTime = currentTime;
+        return lastSquareResult;
     }
 
     public void WhatDoISee()

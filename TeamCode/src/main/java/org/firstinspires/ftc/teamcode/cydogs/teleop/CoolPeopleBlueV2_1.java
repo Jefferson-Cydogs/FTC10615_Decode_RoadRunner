@@ -76,16 +76,16 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
             }
 
             artifactSensors.CheckSensors2();
-            if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
+            /*if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
                 telemetry.addLine("Checking Artifact Sensors");
-            }
+            }*/
 
             //voltage = voltageSensor.getVoltage();
             //telemetry.addData("Battery Voltage", voltage);
 
             if(eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
-                telemetry.addData("Target Launcher Power:", TargetLauncherVelocity);
-                telemetry.addData("Current Launcher Power:", RocketLauncher3000.GetCurrentVelocity());
+                telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocity);
+                telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocity());
                 telemetry.update();
             }
         }
