@@ -112,6 +112,7 @@ public class ArtifactSensors {
         else {
             LeftIntakeColor = "Nothing";
         }
+        //myOpMode.telemetry.addData("Left Intake Color:", LeftIntakeColor);
 
         if (RightIntakeSensor.SeeArtifactColor(Green)) {
             RightIntakeColor = "Green";
@@ -122,6 +123,7 @@ public class ArtifactSensors {
         else {
             RightIntakeColor = "Nothing";
         }
+        //myOpMode.telemetry.addData("Right Intake Color:", RightIntakeColor);
 
         if (LeftLaunchSensor.SeeArtifactColor(Green)) {
             LeftLaunchColor = "Green";
@@ -135,6 +137,7 @@ public class ArtifactSensors {
             LeftLaunchColor = "Nothing";
             LeftLED.SetColorName(ColorOption.OFF);
         }
+        //myOpMode.telemetry.addData("Left Launch Color:", LeftLaunchColor);
 
         if (RightLaunchSensor.SeeArtifactColor(Green)) {
             RightLaunchColor = "Green";
@@ -148,6 +151,9 @@ public class ArtifactSensors {
             RightLaunchColor = "Nothing";
             RightLED.SetColorName(ColorOption.OFF);
         }
+        //myOpMode.telemetry.addData("Right Launch Color:", RightLaunchColor);
+
+        //myOpMode.telemetry.update();
     }
 
 }

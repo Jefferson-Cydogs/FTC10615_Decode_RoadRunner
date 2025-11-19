@@ -1,7 +1,5 @@
 package org.firstinspires.ftc.teamcode.cydogs.components;
 
-import android.graphics.Color;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
@@ -9,6 +7,7 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
 import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
+import android.graphics.Color;
 
 import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 
@@ -16,13 +15,9 @@ import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 public class ColorFinder {
 
     //public static final float MIN_SATURATION = 0.5f;
-    //public static final float MIN_VALUE = 0.3f;
-    private NormalizedRGBA NormalizedColors;
-    private int NormalizedColor;
-    private float Hue;
     public static final int REQUIRED_CONSECUTIVE_HITS = 3;
-    private final double DISTANCE_THRESHOLD_CM = 6.0;
-    private final int REQUIRED_MATCHES = 2;
+    private static final double DISTANCE_THRESHOLD_CM = 6.0;
+    private static final int REQUIRED_MATCHES = 2;
     private long lastArtifactCheckTime = 0;
     private long lastSquareCheckTime = 0;
     private boolean lastArtifactResult = false;
@@ -30,14 +25,12 @@ public class ColorFinder {
 
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
-    private final DistanceSensor distanceSensor;
 
     public ColorFinder(LinearOpMode opMode, String ColorDistanceSensor)
     {
         this.opMode = opMode;
         HardwareMap hw = opMode.hardwareMap;
         this.colorSensor = hw.get(NormalizedColorSensor.class, ColorDistanceSensor);
-        this.distanceSensor = hw.get(DistanceSensor.class, ColorDistanceSensor);
 
         // Adjust the gain, as the sensor may default to an unpredictable value, leading to inconsistent color readings.
         // Recommendation based on FTC documentation: 10.0 - 20.0 for bright lighting or LEDs, 20.0 - 40.0 for normal indoor lighting.
@@ -75,21 +68,29 @@ public class ColorFinder {
 
     public boolean SeeArtifactColor(TargetColor targetColor)
     {
+        String DeviceName = colorSensor.getDeviceName();
+
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastArtifactCheckTime < 500) {
+            opMode.telemetry.addData(DeviceName + "Cached Result", lastArtifactResult);
+            opMode.telemetry.update();
             return lastArtifactResult; // Return cached result
         }
 
         int matchCount = 0;
 
         for (int i = 0; i < 3; i++) {
-            if (distanceSensor.getDistance(DistanceUnit.CM) > DISTANCE_THRESHOLD_CM) {
+            double Distance = ((DistanceSensor) colorSensor).getDistance(DistanceUnit.CM);
+            if (Distance > DISTANCE_THRESHOLD_CM) {
+                opMode.telemetry.addData(DeviceName + "Reading " + (i + 1), "Too far (%.2f cm)", Distance);
                 continue; // Too far, skip this reading
             }
 
-            NormalizedColors = colorSensor.getNormalizedColors();
-            NormalizedColor = NormalizedColors.toColor();
-            Hue = JavaUtil.colorToHue(NormalizedColor);
+            NormalizedRGBA NormalizedColors = colorSensor.getNormalizedColors();
+            int RawColor = NormalizedColors.toColor();
+            float Hue = JavaUtil.colorToHue(RawColor);
+
+            opMode.telemetry.addData(DeviceName + "Reading " + (i + 1), "Hue: %.1f, Distance: %.2f cm", Hue, Distance);
 
             if (targetColor.matches2(Hue)) {
                 matchCount++;
@@ -98,6 +99,11 @@ public class ColorFinder {
 
         lastArtifactResult = matchCount >= REQUIRED_MATCHES;
         lastArtifactCheckTime = currentTime;
+
+        opMode.telemetry.addData(DeviceName + "Match Count", matchCount);
+        opMode.telemetry.addData(DeviceName + "Artifact Detected", lastArtifactResult);
+        opMode.telemetry.update();
+
         return lastArtifactResult;
     }
 
@@ -111,9 +117,9 @@ public class ColorFinder {
         int matchCount = 0;
 
         for (int i = 0; i < 3; i++) {
-            NormalizedColors = colorSensor.getNormalizedColors();
-            NormalizedColor = NormalizedColors.toColor();
-            Hue = JavaUtil.colorToHue(NormalizedColor);
+            NormalizedRGBA NormalizedColors = colorSensor.getNormalizedColors();
+            int RawColor = NormalizedColors.toColor();
+            float Hue = JavaUtil.colorToHue(RawColor);
 
             if (targetColor.matches2(Hue)) {
                 matchCount++;
@@ -138,9 +144,8 @@ public class ColorFinder {
         opMode.telemetry.addData("Normalized Green", "%.3f", colors.green);
         opMode.telemetry.addData("Normalized Blue", "%.3f", colors.blue);
         opMode.telemetry.addData("Normalized Alpha", "%.3f", colors.alpha);
-        opMode.telemetry.addData("Distance:",distanceSensor.getDistance(DistanceUnit.MM));
+        opMode.telemetry.addData("Distance:",((DistanceSensor) colorSensor).getDistance(DistanceUnit.MM));
         opMode.telemetry.addData("RGB", "(%d, %d, %d)", r, g, b);
-
         opMode.telemetry.addData("HSV", "H: %.1f  S: %.3f  V: %.3f", hsv[0], hsv[1], hsv[2]);
     }
 

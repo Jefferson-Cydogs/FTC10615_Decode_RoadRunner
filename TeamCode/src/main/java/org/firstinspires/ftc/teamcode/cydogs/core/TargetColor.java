@@ -24,14 +24,16 @@ public enum TargetColor {
     }
 
     // Constructor for 2 hue ranges (for RED)
-    TargetColor(float low1, float high1, float low2, float high2) {
+    TargetColor(float low1, float high1, float low2, float high2)
+    {
         this.low1 = low1;
         this.high1 = high1;
         this.low2 = low2;
         this.high2 = high2;
     }
 
-    public boolean matches(float[] hsv) {
+    public boolean matches(float[] hsv)
+    {
         float h = hsv[0];
         float s = hsv[1];
         float v = hsv[2];
@@ -45,7 +47,8 @@ public enum TargetColor {
         return inPrimaryRange || inSecondaryRange;
     }
 
-    public boolean matches2(float hue) {
+    public boolean matches2(float hue)
+    {
         boolean inPrimaryRange = (low1 <= hue) && (hue <= high1);
         boolean inSecondaryRange = (0 <= low2) && (low2 <= hue) && (hue <= high2); // Only check if second range exists
 
@@ -54,7 +57,8 @@ public enum TargetColor {
 
     @Override
     @NonNull
-    public String toString() {
+    public String toString()
+    {
         return name().charAt(0) + name().substring(1).toLowerCase(); // "Red", "Blue", etc.
     }
 
