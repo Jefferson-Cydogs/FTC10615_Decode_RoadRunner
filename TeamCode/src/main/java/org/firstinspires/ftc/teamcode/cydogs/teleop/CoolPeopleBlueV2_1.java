@@ -19,6 +19,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
 @TeleOp
+@Disabled
 public class CoolPeopleBlueV2_1 extends LinearOpMode {
 
     /** declare variables here */
@@ -71,21 +72,21 @@ public class CoolPeopleBlueV2_1 extends LinearOpMode {
             manageDriverControls();
             manageManipulatorControls();
 
-            if(eventTracker.doEvent("CheckLauncher",currentTimer.seconds(), 0.5)) {
+            if (eventTracker.doEvent("CheckLauncher",currentTimer.seconds(), 0.5)) {
                 checkRocketLauncherVelocity();
             }
 
-            artifactSensors.CheckSensors2();
-            /*if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
-                telemetry.addLine("Checking Artifact Sensors");
-            }*/
+            if (eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
+                artifactSensors.CheckSensors();
+                //telemetry.addLine("Checking Artifact Sensors");
+            }
 
             //voltage = voltageSensor.getVoltage();
             //telemetry.addData("Battery Voltage", voltage);
 
-            if(eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
+            if (eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
                 telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocity);
-                telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocity());
+                //telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocity());
                 telemetry.update();
             }
         }

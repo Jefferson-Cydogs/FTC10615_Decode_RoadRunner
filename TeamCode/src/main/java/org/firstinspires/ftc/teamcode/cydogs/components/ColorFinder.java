@@ -16,12 +16,10 @@ public class ColorFinder {
 
     //public static final float MIN_SATURATION = 0.5f;
     public static final int REQUIRED_CONSECUTIVE_HITS = 3;
-    private static final double DISTANCE_THRESHOLD_CM = 6.0;
+    private static final double DISTANCE_THRESHOLD_CM = 5.5;
     private static final int REQUIRED_MATCHES = 2;
-    private long lastArtifactCheckTime = 0;
-    private long lastSquareCheckTime = 0;
-    private boolean lastArtifactResult = false;
-    private boolean lastSquareResult = false;
+    //private long lastArtifactCheckTime = 0;
+    //private boolean lastArtifactResult = false;
 
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
@@ -66,14 +64,10 @@ public class ColorFinder {
         return false;
     }
 
-    public boolean SeeArtifactColor(TargetColor targetColor)
+    /*public boolean SeeArtifactColorWithTimer(TargetColor targetColor)
     {
-        String DeviceName = colorSensor.getDeviceName();
-
         long currentTime = System.currentTimeMillis();
         if (currentTime - lastArtifactCheckTime < 500) {
-            opMode.telemetry.addData(DeviceName + "Cached Result", lastArtifactResult);
-            opMode.telemetry.update();
             return lastArtifactResult; // Return cached result
         }
 
@@ -82,15 +76,12 @@ public class ColorFinder {
         for (int i = 0; i < 3; i++) {
             double Distance = ((DistanceSensor) colorSensor).getDistance(DistanceUnit.CM);
             if (Distance > DISTANCE_THRESHOLD_CM) {
-                opMode.telemetry.addData(DeviceName + "Reading " + (i + 1), "Too far (%.2f cm)", Distance);
                 continue; // Too far, skip this reading
             }
 
             NormalizedRGBA NormalizedColors = colorSensor.getNormalizedColors();
             int RawColor = NormalizedColors.toColor();
             float Hue = JavaUtil.colorToHue(RawColor);
-
-            opMode.telemetry.addData(DeviceName + "Reading " + (i + 1), "Hue: %.1f, Distance: %.2f cm", Hue, Distance);
 
             if (targetColor.matches2(Hue)) {
                 matchCount++;
@@ -100,20 +91,33 @@ public class ColorFinder {
         lastArtifactResult = matchCount >= REQUIRED_MATCHES;
         lastArtifactCheckTime = currentTime;
 
-        opMode.telemetry.addData(DeviceName + "Match Count", matchCount);
-        opMode.telemetry.addData(DeviceName + "Artifact Detected", lastArtifactResult);
-        opMode.telemetry.update();
-
         return lastArtifactResult;
+    }*/
+
+    public boolean SeeArtifactColor(TargetColor targetColor)
+    {
+        int matchCount = 0;
+
+        for (int i = 0; i < 3; i++) {
+            double Distance = ((DistanceSensor) colorSensor).getDistance(DistanceUnit.CM);
+            if (Distance > DISTANCE_THRESHOLD_CM) {
+                continue; // Too far, skip this reading
+            }
+
+            NormalizedRGBA NormalizedColors = colorSensor.getNormalizedColors();
+            int RawColor = NormalizedColors.toColor();
+            float Hue = JavaUtil.colorToHue(RawColor);
+
+            if (targetColor.matches2(Hue)) {
+                matchCount++;
+            }
+        }
+
+        return (matchCount >= REQUIRED_MATCHES);
     }
 
     public boolean SeeSquareColor(TargetColor targetColor)
     {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastSquareCheckTime < 500) {
-            return lastSquareResult; // Return cached result
-        }
-
         int matchCount = 0;
 
         for (int i = 0; i < 3; i++) {
@@ -126,9 +130,7 @@ public class ColorFinder {
             }
         }
 
-        lastSquareResult = matchCount >= REQUIRED_MATCHES;
-        lastSquareCheckTime = currentTime;
-        return lastSquareResult;
+        return (matchCount >= REQUIRED_MATCHES);
     }
 
     public void WhatDoISee()

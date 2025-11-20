@@ -14,7 +14,7 @@ public class LaunchersWithVelocity
     // Max TPS = (Motor's RPM / 60) * Motor's TicksPerRotation
     //public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04 with no modifications
     public static final double MaxTicksPerSecond = (4620.0 / 60.0) * 28.0; //TPS=2,156 without gearbox
-    private final double VelocityTolerance = 0.015; //1.5%
+    private final double VelocityTolerance = 0.02; //1.5%
 
     private LinearOpMode opMode;
     public DcMotorEx Launchers;
@@ -43,6 +43,8 @@ public class LaunchersWithVelocity
         Launchers.setVelocity(TargetVelocityPercentage * MaxTicksPerSecond);
     }
 
+    /** Fix from goBILDA for the Floodgate Power Switch disconnect issue.
+        Would need to be called in a loop, until reaching targetVelocity. Needs testing* */
     void setSafeVelocity(double targetVelocity)
     {
         final double SLEW_RATE = 0.2 * MaxTicksPerSecond;

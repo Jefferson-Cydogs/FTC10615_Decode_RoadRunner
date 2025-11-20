@@ -319,7 +319,6 @@ public class IndianaChassis {
         RotateLeft(-1*degree, VelocityPercentage, WaitTime);
     }
 
-
     public void setTurnPower(double power)
     {
         FrontLeftWheel.setPower(-power);
