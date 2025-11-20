@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
 @Autonomous(name= "Blue Near Plus 3 V2", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+@Disabled
 public class BlueNearPlus3V2 extends LinearOpMode {
 
 

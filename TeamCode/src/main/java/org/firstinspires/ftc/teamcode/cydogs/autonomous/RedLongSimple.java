@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -12,6 +13,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 //    @Autonomous puts this code in the autonomous category on driver station
 
 @Autonomous(name= "Red Long Simple", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+@Disabled
 public class RedLongSimple extends LinearOpMode {
 
     // declare variables
