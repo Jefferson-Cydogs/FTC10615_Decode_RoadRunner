@@ -15,6 +15,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import java.util.ArrayList;
 
 @Config
+@Disabled
 @Autonomous
 public class FlywheelPIDFLauncherLogger extends LinearOpMode {
 

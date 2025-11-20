@@ -14,6 +14,7 @@ import org.firstinspires.ftc.robotcore.external.JavaUtil;
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 
 @TeleOp
+@Disabled
 public class REVColorDistanceSensor extends LinearOpMode {
 
     private ColorSensor LeftIntakeSensor;

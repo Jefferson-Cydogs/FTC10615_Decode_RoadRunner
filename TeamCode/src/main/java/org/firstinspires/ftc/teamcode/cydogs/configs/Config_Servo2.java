@@ -7,21 +7,19 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
-
 /*
 This allows you to select which servos to test during initialization.
 Using PlayStation controller buttons, Includes error handling to make sure servos are configured properly.
 After selection you can control servos position using gamepad.
 */
 
-
 @TeleOp
+@Disabled
 public class Config_Servo2 extends LinearOpMode {
-
 
     //Declare the servos
 
-    //Varaible to keep track of the servo
+    //Variable to keep track of the servo
     private Servo selectedServo = null;
     private String selectedServoName = "None";
 
