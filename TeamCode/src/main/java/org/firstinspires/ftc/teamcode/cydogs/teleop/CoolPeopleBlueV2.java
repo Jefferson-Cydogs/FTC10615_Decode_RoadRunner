@@ -6,6 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.ArtifactSensors;
+//import org.firstinspires.ftc.teamcode.cydogs.components.ParkingSensors;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
@@ -24,11 +25,10 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
     private IntakeV2 ArtifactEater;
     private Feeders BumperCars;
-
     private Gates Gates;
     private LaunchersWithVelocity RocketLauncher3000;
-    //46% launcher from top of short distance
-    //53% launcher velocity from long distance
+    //50% launcher from top of short distance
+    //67% launcher velocity from long distance
     private final double NearLauncherVelocity = 0.5;
     private final double FarLauncherVelocity = 0.67;
     private double TargetLauncherVelocity = NearLauncherVelocity;
@@ -37,21 +37,15 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private ColorLED LeftChannelLED;
     private ColorLED RightChannelLED;
     private ArtifactSensors artifactSensors;
+    //private ParkingSensors parkingSensors
 
-   // private AprilTagReaderDuo tagReader;
+    //private AprilTagReaderDuo tagReader;
     private AprilTagDetection currentDetection;
 
     private ElapsedTime currentTimer;
     private EventTracker eventTracker;
 
     public String Team = "blue";
-
-    // Right Gate
-    //   Closed  .93
-    //   Open  .13
-    // Left Gate
-    //   Closed
-    //   Open
 
     @Override
     public void runOpMode()
@@ -70,8 +64,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         waitForStart();
         //tagReader.initAprilTag();
 
-        while (opModeIsActive())
-        {
+        while (opModeIsActive()) {
             /** Execute OpMode actions here */
             //tagReader.displayDetections(tagReader.GetDetections());
             Wheels.OptimizedTeleopDrive();
@@ -82,23 +75,23 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
                 checkRocketLauncherVelocity();
             }
 
-            //if(eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
-                //artifactSensors.CheckSensors();
-                //telemetry.addLine("Checking Artifact Sensors");
-            //}
+            if (eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
+                artifactSensors.CheckSensors();
+            }
 
             //voltage = voltageSensor.getVoltage();
-            //telemetry.addData("Battery Voltage", voltage);
 
             if(eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
                 telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocity);
-                telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocity());
+                //telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocity());
                 telemetry.update();
             }
         }
     }
 
-    private void manageDriverControls() {
+
+    private void manageDriverControls()
+    {
         if (gamepad1.triangleWasPressed()) {
             TargetLauncherVelocity += 0.01;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
@@ -187,18 +180,21 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         LeftChannelLED = new ColorLED(this,"LeftLED");
         RightChannelLED = new ColorLED(this,"RightLED");
         artifactSensors = new ArtifactSensors(this);
-      //  tagReader = new AprilTagReaderDuo(this, "Red");
+        //parkingSensors = new ParkingSensors (this);
+        //tagReader = new AprilTagReaderDuo(this, "Red");
     }
 
-    private void initializePositions() {
+    private void initializePositions()
+    {
+        Gates.CloseLeftGate();
+        Gates.CloseRightGate();
         LauncherLED.SetColorName(ColorOption.OFF);
         LeftChannelLED.SetColorName(ColorOption.OFF);
         RightChannelLED.SetColorName(ColorOption.OFF);
-        Gates.CloseLeftGate();
-        Gates.CloseRightGate();
     }
 
-    private void checkRocketLauncherVelocity() {
+    private void checkRocketLauncherVelocity()
+    {
         if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocity)) {
             LauncherLED.SetColorName(ColorOption.RED);
         }
