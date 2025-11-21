@@ -7,6 +7,7 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.z_archive.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
+import org.firstinspires.ftc.teamcode.cydogs.components.Gates;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 
 public class IndianaAuton extends IndianaChassis {
@@ -19,6 +20,7 @@ public class IndianaAuton extends IndianaChassis {
     public ColorLED LauncherLED;
     private ColorLED LeftLED;
     private ColorLED RightLED;
+    public Gates Gates;
 
     // declare public properties
     public String CurrentMotif = "None";
@@ -36,6 +38,7 @@ public class IndianaAuton extends IndianaChassis {
         Launchers = new LaunchersWithVelocity(currentOp);
         LeftLED = new ColorLED(currentOp,"LeftLED");
         RightLED = new ColorLED(currentOp,"RightLED");
+        Gates = new Gates(currentOp);
 
     }
 
@@ -48,6 +51,8 @@ public class IndianaAuton extends IndianaChassis {
         LauncherLED.SetColorByName(Alliance);
         LeftLED.SetColorByName(Alliance);
         RightLED.SetColorByName(Alliance);
+        Gates.CloseLeftGate();
+        Gates.CloseRightGate();
     }
 
     public void GetMotif()
@@ -213,9 +218,12 @@ public class IndianaAuton extends IndianaChassis {
 
     public void BlueNearOpeningFlourish()
     {
-        MoveStraight(1100, 0.55, 100);
-        RotateLeft(83, 0.55, 100);
-        myOpMode.sleep(150);
+            // was .55
+        MoveStraight(1100, 0.6, 100);
+        RotateLeft(83, 0.6, 100);
+
+            // was 150
+        myOpMode.sleep(100);
         GetMotif();
         ColorLEDForMotif();
     }
@@ -250,5 +258,48 @@ public class IndianaAuton extends IndianaChassis {
         Feeders.DeactivateRightBumper();
     }
 
+    public void ShootFirstThreeShotsFast(double velocityPercentage)
+    {
+        if (CurrentMotif == "PPG")
+        {
+            ShootPurple(200,velocityPercentage,400);
+            ShootPurple(200, velocityPercentage, 600);//2000
+            ShootGreen(200, velocityPercentage, 400, false);
+
+        } else if(CurrentMotif=="GPP") {
+            ShootGreen(200, velocityPercentage, 400, true);
+            ShootPurple(200,velocityPercentage,400);
+            ShootPurple(200, velocityPercentage, 600);
+        }
+        else  // PGP
+        {
+            ShootPurple(200,velocityPercentage,400);
+            ShootGreen(200, velocityPercentage, 400, true);
+            ShootPurple(200, velocityPercentage, 600);
+
+        }
+    }
+
+    public void ShootSecondThreeShotsFast(double velocityPercentage)
+    {
+        if (CurrentMotif == "PPG")
+        {
+            ShootPurple(200,velocityPercentage,300);
+            ShootPurple(200, velocityPercentage, 600);//2000
+            ShootGreen(200, velocityPercentage, 600, false);
+
+        } else if(CurrentMotif=="GPP") {
+            ShootGreen(200, velocityPercentage, 600, true);
+            ShootPurple(200,velocityPercentage,300);
+            ShootPurple(200, velocityPercentage, 600);
+        }
+        else  // PGP
+        {
+            ShootPurple(200,velocityPercentage,300);
+            ShootGreen(200, velocityPercentage, 600, true);
+            ShootPurple(200, velocityPercentage, 600);
+
+        }
+    }
 
 }

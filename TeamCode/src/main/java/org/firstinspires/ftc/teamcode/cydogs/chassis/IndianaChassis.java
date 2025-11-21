@@ -133,7 +133,8 @@ public class IndianaChassis {
         ((DcMotorEx) FrontLeftWheel).setVelocityPIDFCoefficients(0,0,0,11.754006);
         ((DcMotorEx) FrontRightWheel).setVelocityPIDFCoefficients(0,0,0,10.175712);
         ((DcMotorEx) BackLeftWheel).setVelocityPIDFCoefficients(0,0,0,11.752998);
-        ((DcMotorEx) BackRightWheel).setVelocityPIDFCoefficients(0.7,0,0,11.398002);
+        ((DcMotorEx) BackRightWheel).setVelocityPIDFCoefficients(0,0,0,11.398002);
+// back right wheel parameter 1 was 0.7
 
         // Ensure motors are stopped, for predictable behavior and avoiding unintended motion
         FrontLeftWheel.setPower(0);

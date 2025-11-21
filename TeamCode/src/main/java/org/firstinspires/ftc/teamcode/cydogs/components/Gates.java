@@ -13,7 +13,9 @@ public class Gates {
     private double rightGateClose = 0.86;
     private double rightGateOpen = 0.06;
     private double leftGateClose = 0.83;
-    private double leftGateOpen = 0.07;
+    private double leftGateOpen = 0.02;
+
+    // left gate is now on port 5 of control.  was port 0 of expansion
     public Gates(LinearOpMode opMode)
     {
         this.opMode = opMode;
@@ -21,7 +23,7 @@ public class Gates {
         leftGate = opMode.hardwareMap.get(Servo.class,"LeftGate");
         rightGate = opMode.hardwareMap.get(Servo.class,"RightGate");
 
-        //rightGate.setDirection(CRServo.Direction.REVERSE);
+        leftGate.setDirection(Servo.Direction.REVERSE);
     }
 
     public void OpenLeftGate()
@@ -36,9 +38,24 @@ public class Gates {
     {
         rightGate.setPosition(rightGateOpen);
     }
+    public void OpenBothGates()
+    {
+        rightGate.setPosition(rightGateOpen);
+        leftGate.setPosition(leftGateOpen);
+    }
+    public void CloseBothGates()
+    {
+        leftGate.setPosition(leftGateClose);
+        rightGate.setPosition(rightGateClose);
+    }
     public void CloseRightGate()
     {
         rightGate.setPosition(rightGateClose);
+    }
+
+    public void WaitForGateToOpen()
+    {
+        opMode.sleep(1000);
     }
 
 

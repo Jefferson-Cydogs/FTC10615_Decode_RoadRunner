@@ -14,7 +14,6 @@ After selection you can control servos position using gamepad.
 */
 
 @TeleOp
-@Disabled
 public class Config_Servo2 extends LinearOpMode {
 
     //Declare the servos
@@ -61,6 +60,7 @@ public class Config_Servo2 extends LinearOpMode {
             } else if (gamepad1.b) {//Circle button
                 selectedServoName = "LeftGate";
                 selectedServo = initalizeServo(selectedServoName);
+                selectedServo.setDirection(Servo.Direction.REVERSE);
                 telemetry.addData("Selected Servo", selectedServoName);
                 telemetry.update();
                 sleep(300);
