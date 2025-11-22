@@ -10,10 +10,10 @@ public class Gates {
     private Servo leftGate;
     private Servo rightGate;
 
-    private double rightGateClose = 0.86;
-    private double rightGateOpen = 0.06;
-    private double leftGateClose = 0.83;
-    private double leftGateOpen = 0.02;
+    private double rightGateClose = 0.87;
+    private double rightGateOpen = 0.07;
+    private double leftGateClose = 0.84;
+    private double leftGateOpen = 0.03;
 
     // left gate is now on port 5 of control.  was port 0 of expansion
     public Gates(LinearOpMode opMode)
@@ -55,7 +55,7 @@ public class Gates {
 
     public void WaitForGateToOpen()
     {
-        opMode.sleep(1000);
+        opMode.sleep(300);
     }
 
 

@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.cydogs.autonomous;
+package org.firstinspires.ftc.teamcode.cydogs.z_archive;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -13,9 +13,9 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
 
-@Autonomous(name= "Blue Long Plus 3", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+@Autonomous(name= "Red Long Plus 3", group= "Autonomous", preselectTeleOp = "Cool People Blue")
 @Disabled
-public class BlueLongPlus3 extends LinearOpMode {
+public class RedLongPlus3 extends LinearOpMode {
 
     // declare variables
     private double velocityPercentage = 0.519;
@@ -31,7 +31,7 @@ public class BlueLongPlus3 extends LinearOpMode {
         // load 1 green on right side by launcher
 
 
-        indiana = new IndianaAuton(this, "blue");
+        indiana = new IndianaAuton(this, "red");
         indiana.InitializeAuton();
 
         currentTimer = new ElapsedTime();
@@ -55,7 +55,7 @@ public class BlueLongPlus3 extends LinearOpMode {
             sleep(200);
             indiana.ReverseFeeders(400);
 
-            indiana.RotateLeft(16,0.5,100);
+            indiana.RotateRight(16,0.5,100);
 
             indiana.Launchers.RunAtVelocity(velocityPercentage);
 
@@ -64,9 +64,9 @@ public class BlueLongPlus3 extends LinearOpMode {
             indiana.Launchers.TurnPowerOff();
             indiana.EjectAllArtifacts(2000);
 
-            indiana.MoveStraight(385,0.5,400);
+            indiana.MoveStraight(460,0.5,400);
             LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(indiana.Launchers.Launchers, 0.5,0.02,50);
-            indiana.RotateLeft(48, .3, 400);
+            indiana.RotateRight(48, .3, 400);
 
             GetGreenPurplePurple();
 
@@ -76,13 +76,13 @@ public class BlueLongPlus3 extends LinearOpMode {
             indiana.Launchers.RunAtVelocity(-.15);
             indiana.ReverseFeeders(500);
             indiana.Launchers.TurnPowerOff();
-            sleep(500);
+            //sleep(500);
 
-            indiana.RotateRight(46, .3, 400);
+            indiana.RotateLeft(46, .3, 400);
 
-            velocityPercentage = 0.521;
+            velocityPercentage = 0.52;
 
-            indiana.MoveStraight(-520, .4, 400);
+            indiana.MoveStraight(-450, .4, 400);
             indiana.Launchers.RunAtVelocity(velocityPercentage);
             sleep(800);
             indiana.ShootThreeShotsSecondTime(velocityPercentage);

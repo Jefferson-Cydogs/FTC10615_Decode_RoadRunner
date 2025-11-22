@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
-@TeleOp
+@TeleOp(name="Cool People TeleOp", group= "TeleOp")
 public class CoolPeopleBlueV2 extends LinearOpMode {
 
     /** declare variables here */
@@ -83,7 +83,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
             if(eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
                 telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocity);
-                //telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocity());
+                telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
                 telemetry.update();
             }
         }

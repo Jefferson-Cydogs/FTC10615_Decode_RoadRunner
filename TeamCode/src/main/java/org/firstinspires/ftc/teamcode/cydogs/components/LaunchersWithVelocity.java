@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode.cydogs.components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 public class LaunchersWithVelocity
@@ -14,7 +15,9 @@ public class LaunchersWithVelocity
     // Max TPS = (Motor's RPM / 60) * Motor's TicksPerRotation
     //public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04 with no modifications
     public static final double MaxTicksPerSecond = (4620.0 / 60.0) * 28.0; //TPS=2,156 without gearbox
-    private final double VelocityTolerance = 0.02; //1.5%
+    private final double VelocityTolerance = 0.022; //1.5%
+
+    private final double VelocityCorrection = 0.975;
 
     private LinearOpMode opMode;
     public DcMotorEx Launchers;
@@ -28,7 +31,7 @@ public class LaunchersWithVelocity
 
         Launchers = opMode.hardwareMap.get(DcMotorEx.class,"Launchers");
         Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
-        Launchers.setDirection(DcMotorEx.Direction.REVERSE);
+        Launchers.setDirection(DcMotorEx.Direction.FORWARD);
         Launchers.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         Launchers.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         Launchers.setVelocityPIDFCoefficients(75, 0, 0, 15.4863);
@@ -38,9 +41,14 @@ public class LaunchersWithVelocity
         return Launchers.getVelocity();
     }
 
+    public double GetCurrentVelocityPercent()
+    {
+        return Launchers.getVelocity()/MaxTicksPerSecond;
+    }
+
     public void RunAtVelocity(double TargetVelocityPercentage)
     {
-        Launchers.setVelocity(TargetVelocityPercentage * MaxTicksPerSecond);
+        Launchers.setVelocity(TargetVelocityPercentage*VelocityCorrection * MaxTicksPerSecond);
     }
 
     /** Fix from goBILDA for the Floodgate Power Switch disconnect issue.
@@ -124,4 +132,13 @@ public class LaunchersWithVelocity
         Launchers.setVelocity(0);
     }
 
+    public void WaitForLaunchersToBeAtSpeed(double targetSpeed, int giveUpMilliseconds)
+    {
+        long start = System.currentTimeMillis();
+        long elapsed;
+        while(!IsMotorAtSpeed(targetSpeed)) {
+            elapsed = System.currentTimeMillis() - start;
+            if (elapsed > giveUpMilliseconds) {break;}
+        }
+    }
 }

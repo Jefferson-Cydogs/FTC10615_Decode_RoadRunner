@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.cydogs.autonomous;
+package org.firstinspires.ftc.teamcode.cydogs.z_archive;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -11,9 +11,9 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
-@Autonomous(name= "Red Near Simple", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+@Autonomous(name= "Blue Near Simple", group= "Autonomous", preselectTeleOp = "Cool People Blue")
 @Disabled
-public class RedNearSimple extends LinearOpMode {
+public class BlueNearSimple extends LinearOpMode {
 
 
     private double velocityPercentage = .402;
@@ -27,7 +27,7 @@ public class RedNearSimple extends LinearOpMode {
         // load 1 green on right side by launcher
 
 
-        indiana = new IndianaAuton(this, "red");
+        indiana = new IndianaAuton(this, "blue");
         indiana.InitializeAuton();
         currentTimer = new ElapsedTime();
         eventTracker = new EventTracker();
@@ -43,18 +43,17 @@ public class RedNearSimple extends LinearOpMode {
             // this clears bumper servo bug
             indiana.Feeders.MoveBumpersToFixBug();
 
-            indiana.RedNearOpeningFlourish();
-            // rotated 13 less degrees
+            indiana.BlueNearOpeningFlourish();
 
             // #LauncherON
             indiana.Launchers.RunAtVelocity(velocityPercentage);
-            indiana.RotateRight(60, 0.55, 200);
+            indiana.RotateLeft(47, 0.55, 200);
 
 
             indiana.ShootThreeShots(velocityPercentage);
             sleep(500);
             indiana.MoveStraight(400, .6, 100);
-            indiana.StrafeLeft(500,.6,100);
+            indiana.StrafeRight(500,.6,100);
 
             indiana.ColorLEDForAlliance();
             sleep(2000);

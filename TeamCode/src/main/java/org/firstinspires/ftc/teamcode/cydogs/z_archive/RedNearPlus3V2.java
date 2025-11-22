@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.cydogs.autonomous;
+package org.firstinspires.ftc.teamcode.cydogs.z_archive;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -12,9 +12,9 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
-@Autonomous(name= "Blue Near Plus 3 V2", group= "Autonomous", preselectTeleOp = "Cool People Blue")
+@Autonomous(name= "Red Near Plus 3 V2", group= "Autonomous", preselectTeleOp = "Cool People Blue")
 @Disabled
-public class BlueNearPlus3V2 extends LinearOpMode {
+public class RedNearPlus3V2 extends LinearOpMode {
 
 
     private double velocityPercentage = 0.402;
@@ -32,7 +32,7 @@ public class BlueNearPlus3V2 extends LinearOpMode {
         // load 1 green on right side by launcher
 
 
-         indiana = new IndianaAuton(this, "blue");
+         indiana = new IndianaAuton(this, "red");
          indiana.InitializeAuton();
         currentTimer = new ElapsedTime();
         eventTracker = new EventTracker();
@@ -48,11 +48,12 @@ public class BlueNearPlus3V2 extends LinearOpMode {
             // this clears bumper servo bug
             indiana.Feeders.MoveBumpersToFixBug();
 
-            indiana.BlueNearOpeningFlourish();
+            indiana.RedNearOpeningFlourish();
 
     // #LauncherON
             indiana.Launchers.RunAtVelocity(velocityPercentage);
-            indiana.RotateLeft(47, 0.55, 200);
+            indiana.ReverseFeeders(300);
+            indiana.RotateRight(61, 0.55, 200);
 
 
             indiana.ShootThreeShots(velocityPercentage);
@@ -64,18 +65,45 @@ public class BlueNearPlus3V2 extends LinearOpMode {
             //indiana.Launchers.RunAtVelocity(0.2);
             //sleep(100);
             indiana.Launchers.RunAtVelocity(0.09);
+
             LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(indiana.Launchers.Launchers, 0.5,0.02,50);
 
             //sleep(50);
     // #LauncherOFF
 
-            indiana.RotateLeft(29,.5,100);
-            indiana.StrafeLeft(193, .45, 100);
+            indiana.RotateRight(30,.5,100);
+            indiana.StrafeRight(300, .45, 100);
 
-            GetPurplePurpleGreen();
+            // Get purple
+    // #Intake ON
+            indiana.Intake.turnIntakeOn();
+
+    // #LeftFeeder ON
+            indiana.Feeders.ActivateLeftBumper();
+            indiana.MoveStraight(415, .4, 100);
+            indiana.MoveStraight(300, .12, 300);
+
+    // #LeftFeeder OFF
+            indiana.Feeders.DeactivateLeftBumper();
+
+    // #LeftFeeder REVERSE
+            indiana.Feeders.ReverseLeftBumper();
+
+            // Get Green
+    // #RightFeeder ON
+            indiana.Feeders.ActivateRightBumper();
+            indiana.StrafeLeft(127,.4, 100);
+            indiana.MoveStraight(318, .3, 200);
+
+    // #LeftFeeder OFF
+            indiana.Feeders.DeactivateLeftBumper();
+
+    // #RightFeeder OFF
+            indiana.Feeders.DeactivateRightBumper();
+
 
             // Got green, back up
-            //indiana.Launchers.ResetLaunchersToFloat();
+            indiana.Launchers.ResetLaunchersToFloat();
 
     // #Launchers REVERSE
             indiana.Launchers.RunAtVelocity(-.15);
@@ -83,8 +111,9 @@ public class BlueNearPlus3V2 extends LinearOpMode {
 
 
 
-            indiana.MoveStraight(-970, .5, 100);
+            indiana.MoveStraight(-1070, .5, 100);
 
+            indiana.ReverseFeeders(200);
 
     // #Intake OFF
             indiana.Intake.turnIntakeOff();
@@ -95,11 +124,11 @@ public class BlueNearPlus3V2 extends LinearOpMode {
 
             // Go shoot
     // #Launchers ON
-            double lastShotVelocity = 0.38;
+            double lastShotVelocity = 0.39;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
             //indiana.RotateRight(32, .5, 100);
-            indiana.StrafeRight(1100, .6, 100);
-            indiana.RotateRight(13,.5,100);
+            indiana.StrafeLeft(1000, .6, 100);
+            indiana.RotateLeft(10,.5,100);
             //indiana.MoveStraight(350, .8, 0);
             //indiana.StrafeRight(400, .8, 200);
 
@@ -117,43 +146,6 @@ public class BlueNearPlus3V2 extends LinearOpMode {
         }
 
     }
-
-
-    private void GetPurplePurpleGreen()
-    {
-        // Get purple
-        // #Intake ON
-        indiana.Intake.turnIntakeOn();
-
-        // #LeftFeeder ON
-        indiana.Feeders.ActivateLeftBumper();
-        indiana.MoveStraight(425, .4, 100);
-        indiana.MoveStraight(320, .12, 300);
-
-        // #LeftFeeder OFF
-        indiana.Feeders.DeactivateLeftBumper();
-
-        // #LeftFeeder REVERSE
-        indiana.Feeders.ReverseLeftBumper();
-
-        // Get Green
-        // #RightFeeder ON
-        indiana.Feeders.ActivateRightBumper();
-        indiana.StrafeLeft(117,.4, 100);
-        indiana.MoveStraight(270, .3, 200);
-
-        // #LeftFeeder OFF
-        indiana.Feeders.DeactivateLeftBumper();
-
-        // #RightFeeder OFF
-        indiana.Feeders.DeactivateRightBumper();
-
-    }
-
-
-
-
-
 
 
 

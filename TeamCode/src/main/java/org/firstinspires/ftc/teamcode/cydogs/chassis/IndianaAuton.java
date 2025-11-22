@@ -39,6 +39,7 @@ public class IndianaAuton extends IndianaChassis {
         LeftLED = new ColorLED(currentOp,"LeftLED");
         RightLED = new ColorLED(currentOp,"RightLED");
         Gates = new Gates(currentOp);
+        Intake.standardSpeed = 0.75;
 
     }
 
@@ -48,9 +49,6 @@ public class IndianaAuton extends IndianaChassis {
         InitializeChassisAutonomous();
         TagReader.initAprilTag();
         Launchers.initLauncher();
-        LauncherLED.SetColorByName(Alliance);
-        LeftLED.SetColorByName(Alliance);
-        RightLED.SetColorByName(Alliance);
         Gates.CloseLeftGate();
         Gates.CloseRightGate();
     }
@@ -97,6 +95,20 @@ public class IndianaAuton extends IndianaChassis {
         RightLED.SetColorByName(Alliance);
     }
 
+    public void ColorLEDForAlliance(String NearOrFar)
+    {
+        if(NearOrFar.equalsIgnoreCase("near"))
+        {
+            LeftLED.SetColorByName("off");
+            LauncherLED.SetColorByName(Alliance);
+            RightLED.SetColorByName("off");
+        }
+        else {
+            LeftLED.SetColorByName(Alliance);
+            LauncherLED.SetColorByName(Alliance);
+            RightLED.SetColorByName(Alliance);
+        }
+    }
     public void ShootThreeShots(double velocityPercentage)
     {
         if (CurrentMotif == "PPG")
@@ -144,13 +156,13 @@ public class IndianaAuton extends IndianaChassis {
     public void ShootPurple(int sleepFirst, double velocityPercentage, int bumperRunTime)
     {
         myOpMode.sleep(sleepFirst);
-        while(!Launchers.IsMotorAtSpeed(velocityPercentage)){}
+        Launchers.WaitForLaunchersToBeAtSpeed(velocityPercentage, 2000);
         RunLeftIntakeAndBumper(bumperRunTime);
     }
     public void ShootGreen(int sleepFirst, double velocityPercentage, int bumperRunTime, boolean noIntake)
     {
         myOpMode.sleep(sleepFirst);
-        while(!Launchers.IsMotorAtSpeed(velocityPercentage)){}
+        Launchers.WaitForLaunchersToBeAtSpeed(velocityPercentage, 2000);
         if(noIntake) {RunRightBumperNoIntake(bumperRunTime);}
         else {RunRightIntakeAndBumper(bumperRunTime);}
 
@@ -230,9 +242,9 @@ public class IndianaAuton extends IndianaChassis {
 
     public void RedNearOpeningFlourish()
     {
-        MoveStraight(1100, 0.55, 100);
-        RotateRight(68, 0.55, 100);
-        myOpMode.sleep(150);
+        MoveStraight(1100, 0.6, 100);
+        RotateRight(68, 0.6, 100);
+        myOpMode.sleep(100);
         GetMotif();
         ColorLEDForMotif();
     }
@@ -258,48 +270,224 @@ public class IndianaAuton extends IndianaChassis {
         Feeders.DeactivateRightBumper();
     }
 
-    public void ShootFirstThreeShotsFast(double velocityPercentage)
+    public void ShootFirstThreeShotsFast(double velocityPercentage, int preShotWait)
     {
         if (CurrentMotif == "PPG")
         {
-            ShootPurple(200,velocityPercentage,400);
-            ShootPurple(200, velocityPercentage, 600);//2000
-            ShootGreen(200, velocityPercentage, 400, false);
+            ShootPurple(preShotWait,velocityPercentage,300);
+            ShootPurple(preShotWait, velocityPercentage, 600);//2000
+            ShootGreen(preShotWait, velocityPercentage, 400, false);
 
         } else if(CurrentMotif=="GPP") {
-            ShootGreen(200, velocityPercentage, 400, true);
-            ShootPurple(200,velocityPercentage,400);
-            ShootPurple(200, velocityPercentage, 600);
+            ShootGreen(preShotWait, velocityPercentage, 400, true);
+            ShootPurple(preShotWait,velocityPercentage,300);
+            ShootPurple(preShotWait, velocityPercentage, 600);
         }
         else  // PGP
         {
-            ShootPurple(200,velocityPercentage,400);
-            ShootGreen(200, velocityPercentage, 400, true);
-            ShootPurple(200, velocityPercentage, 600);
+            ShootPurple(preShotWait,velocityPercentage,300);
+            ShootGreen(preShotWait, velocityPercentage, 400, true);
+            ShootPurple(preShotWait, velocityPercentage, 600);
 
         }
     }
 
-    public void ShootSecondThreeShotsFast(double velocityPercentage)
+    public void ShootSecondThreeShotsFast(double velocityPercentage, int preShotWait)
     {
         if (CurrentMotif == "PPG")
         {
-            ShootPurple(200,velocityPercentage,300);
-            ShootPurple(200, velocityPercentage, 600);//2000
-            ShootGreen(200, velocityPercentage, 600, false);
+            ShootPurple(preShotWait,velocityPercentage,300);
+            ShootPurple(preShotWait, velocityPercentage, 600);//2000
+            ShootGreen(preShotWait, velocityPercentage, 600, false);
 
         } else if(CurrentMotif=="GPP") {
-            ShootGreen(200, velocityPercentage, 600, true);
-            ShootPurple(200,velocityPercentage,300);
-            ShootPurple(200, velocityPercentage, 600);
+            ShootGreen(preShotWait, velocityPercentage, 600, true);
+            ShootPurple(preShotWait,velocityPercentage,300);
+            ShootPurple(preShotWait, velocityPercentage, 600);
         }
         else  // PGP
         {
-            ShootPurple(200,velocityPercentage,300);
-            ShootGreen(200, velocityPercentage, 600, true);
-            ShootPurple(200, velocityPercentage, 600);
+            ShootPurple(preShotWait,velocityPercentage,300);
+            ShootGreen(preShotWait, velocityPercentage, 600, true);
+            ShootPurple(preShotWait, velocityPercentage, 600);
 
         }
     }
 
+    public void BlueCommonStart(double velocityPercentage, int preShotWait)
+    {
+
+        // this clears bumper servo bug
+        Feeders.MoveBumpersToFixBug();
+
+        //moved earlier
+        // #LauncherON
+        Launchers.RunAtVelocity(velocityPercentage);
+
+        BlueNearOpeningFlourish();
+
+        // reduce pressure on gates before shooting
+        ReverseFeeders(150);
+
+        // was .55.  was 47 degrees
+        RotateLeft(48, 0.55, 100);
+
+        // need to open gates
+        Gates.OpenBothGates();
+        // #GatesOpen
+        // sleep til Gates are open
+        Gates.WaitForGateToOpen();
+
+
+        ShootFirstThreeShotsFast(velocityPercentage, preShotWait);
+
+        // need to sleep so it doesn't move while shooting
+        myOpMode.sleep(200);
+        // TO ADD
+        // Check to see if color sensors see anything, if so, run
+        // ejection code
+
+
+        // was .5
+        RotateLeft(24,.55,100);
+
+
+
+        // #GatesClosed
+        // was .45
+        StrafeLeft(205, .5, 100);
+        Gates.CloseBothGates();
+
+        BlueAllianceNearPurplePurpleGreen();
+        // #Intake ON
+
+        // was .5
+        MoveStraight(-800, .6, 100);
+        Feeders.DeactivateRightBumper();
+
+        // #Intake OFF
+        Intake.turnIntakeOff();
+    }
+
+
+    private void BlueAllianceNearPurplePurpleGreen()
+    {
+        // Get purple
+        // #Intake ON
+        Intake.turnIntakeOn();
+
+        // #LeftFeeder ON
+        Feeders.ActivateLeftBumper();
+
+        MoveStraight(700, .3, 150);
+        //  indiana.MoveStraight(425, .4, 100);
+        //  indiana.MoveStraight(320, .2, 300);
+
+        // #LeftFeeder OFF
+        Feeders.DeactivateLeftBumper();
+
+        // Get Green
+        // #RightFeeder ON
+        Feeders.ActivateRightBumper();
+
+        StrafeLeft(117,.4, 100);
+
+        MoveStraight(230, .4, 100);
+
+        // #LeftFeeder OFF
+        Feeders.DeactivateLeftBumper();
+
+
+        // #RightFeeder OFF
+
+
+    }
+
+    public void EndAuton()
+    {
+
+
+        ColorLEDForAlliance();
+        LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(Launchers.Launchers, 0.5,0.02,50);
+
+        myOpMode.sleep(2000);
+    }
+
+
+    public void RedCommonStart(double velocityPercentage, int preShotWait)
+    {
+
+        // this clears bumper servo bug
+        Feeders.MoveBumpersToFixBug();
+
+        //moved earlier
+        // #LauncherON
+        Launchers.RunAtVelocity(velocityPercentage);
+
+        RedNearOpeningFlourish();
+
+        // reduce pressure on gates before shooting
+        ReverseFeeders(150);
+
+        // was .55.  was 47 degrees
+        RotateRight(61, 0.55, 100);
+
+        // need to open gates
+        Gates.OpenBothGates();
+        // #GatesOpen
+        // sleep til Gates are open
+        Gates.WaitForGateToOpen();
+
+
+        ShootFirstThreeShotsFast(velocityPercentage, preShotWait);
+
+        // was .5
+        RotateRight(28,.55,100);
+
+        // #GatesClosed
+        // was .45
+        StrafeRight(270, .5, 100);
+        Gates.CloseBothGates();
+
+        RedAllianceNearPurplePurpleGreen();
+        // #Intake ON
+
+        // was .5
+        MoveStraight(-800, .6, 100);
+        Feeders.DeactivateRightBumper();
+
+        // #Intake OFF
+        Intake.turnIntakeOff();
+    }
+
+    public void RedAllianceNearPurplePurpleGreen()
+    {
+        // Get purple
+        // #Intake ON
+        Intake.turnIntakeOn();
+
+        // #LeftFeeder ON
+        Feeders.ActivateLeftBumper();
+
+        MoveStraight(645, .25, 300);
+        //  indiana.MoveStraight(425, .4, 100);
+        //  indiana.MoveStraight(320, .2, 300);
+
+        // #LeftFeeder OFF
+        Feeders.DeactivateLeftBumper();
+
+        // Get Green
+        // #RightFeeder ON
+        Feeders.ActivateRightBumper();
+
+        StrafeLeft(135,.4, 100);
+
+        MoveStraight(220, .3, 200);
+
+        // #LeftFeeder OFF
+        Feeders.DeactivateLeftBumper();
+
+
+        // #RightFeeder OFF
+    }
 }
