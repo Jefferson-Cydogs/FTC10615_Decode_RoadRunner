@@ -168,6 +168,21 @@ public class IndianaAuton extends IndianaChassis {
 
     }
 
+    public void ShootPurpleNoWait(int sleepFirst, double velocityPercentage, int bumperRunTime)
+    {
+        myOpMode.sleep(sleepFirst);
+        //Launchers.WaitForLaunchersToBeAtSpeed(velocityPercentage, 2000);
+        RunLeftIntakeAndBumper(bumperRunTime);
+    }
+    public void ShootGreenNoWait(int sleepFirst, double velocityPercentage, int bumperRunTime, boolean noIntake)
+    {
+        myOpMode.sleep(sleepFirst);
+        //Launchers.WaitForLaunchersToBeAtSpeed(velocityPercentage, 2000);
+        if(noIntake) {RunRightBumperNoIntake(bumperRunTime);}
+        else {RunRightIntakeAndBumper(bumperRunTime);}
+
+    }
+
     private void RunLeftIntakeAndBumper(int ForHowLong)
     {
         Intake.turnIntakeOn();
@@ -379,7 +394,7 @@ public class IndianaAuton extends IndianaChassis {
         // #LeftFeeder ON
         Feeders.ActivateLeftBumper();
 
-        MoveStraight(700, .3, 150);
+        MoveStraight(700, .3, 100);
         //  indiana.MoveStraight(425, .4, 100);
         //  indiana.MoveStraight(320, .2, 300);
 
@@ -442,11 +457,11 @@ public class IndianaAuton extends IndianaChassis {
         ShootFirstThreeShotsFast(velocityPercentage, preShotWait);
 
         // was .5
-        RotateRight(28,.55,100);
+        RotateRight(27,.5,100);
 
         // #GatesClosed
         // was .45
-        StrafeRight(270, .5, 100);
+        StrafeRight(274, .5, 100);
         Gates.CloseBothGates();
 
         RedAllianceNearPurplePurpleGreen();
@@ -469,7 +484,7 @@ public class IndianaAuton extends IndianaChassis {
         // #LeftFeeder ON
         Feeders.ActivateLeftBumper();
 
-        MoveStraight(645, .25, 300);
+        MoveStraight(645, .25, 200);
         //  indiana.MoveStraight(425, .4, 100);
         //  indiana.MoveStraight(320, .2, 300);
 
@@ -480,7 +495,7 @@ public class IndianaAuton extends IndianaChassis {
         // #RightFeeder ON
         Feeders.ActivateRightBumper();
 
-        StrafeLeft(135,.4, 100);
+        StrafeLeft(128,.4, 100);
 
         MoveStraight(220, .3, 200);
 
@@ -489,5 +504,13 @@ public class IndianaAuton extends IndianaChassis {
 
 
         // #RightFeeder OFF
+    }
+
+    public void ShootThirdThreeShotsFast(double velocityPercentage, int preShotWait)
+    {
+        ShootPurpleNoWait(preShotWait,velocityPercentage,300);
+        ShootPurpleNoWait(preShotWait, velocityPercentage, 500);
+        ShootGreenNoWait(preShotWait, velocityPercentage, 300, false);
+        ShootGreenNoWait(preShotWait, velocityPercentage, 500, false);
     }
 }

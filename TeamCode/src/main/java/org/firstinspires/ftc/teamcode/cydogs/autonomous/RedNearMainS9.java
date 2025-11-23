@@ -47,7 +47,7 @@ public class RedNearMainS9 extends LinearOpMode {
             sleep(startWaitTime*1000);
 
 
-            indiana.RedCommonStart(velocityPercentage, 200);
+            indiana.RedCommonStart(velocityPercentage, 150);
 
             // Go shoot
 
@@ -70,34 +70,34 @@ public class RedNearMainS9 extends LinearOpMode {
 
             // begin run for last 3
 
-            indiana.RotateRight(24, .4, 100);
+            indiana.RotateRight(25, .4, 100);
             indiana.Gates.CloseBothGates();
             lastShotVelocity = 0.49;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
-            indiana.StrafeRight(910, .6, 100);
+            indiana.StrafeRight(1017, .65, 100);
 
             // we don't care what color the artifacts are at this point
             GetLastThreeArtifacts();
 
-            indiana.MoveStraight(-650, .7, 50);
+            indiana.MoveStraight(-650, .8, 50);
             indiana.Feeders.DeactivateRightBumper();
 
             // #Intake OFF
             indiana.Intake.turnIntakeOff();
 
-            indiana.StrafeLeft(1400, .8, 50);
+            indiana.StrafeLeft(1405, .8, 50);
 
             // reduce pressure on gates before shooting
-            indiana.ReverseFeeders(150);
+            indiana.ReverseFeeders(100);
 
-            indiana.RotateLeft(17,.5,100);
+            indiana.RotateLeft(19,.6,0);
 
             indiana.Gates.OpenBothGates();
             // sleep til gates are open
             indiana.Gates.WaitForGateToOpen();
 
-            indiana.ShootSecondThreeShotsFast(lastShotVelocity, 100);
+            indiana.ShootThirdThreeShotsFast(lastShotVelocity, 50);
 
             // need to sleep to finish shots
             sleep(200);
@@ -119,25 +119,25 @@ public class RedNearMainS9 extends LinearOpMode {
         indiana.Intake.turnIntakeOn();
 
         // #LeftFeeder ON
-        indiana.Feeders.ActivateLeftBumper();
+        indiana.Feeders.ActivateRightBumper();
 
-        indiana.MoveStraight(580, .3, 300);
+        indiana.MoveStraight(577, .3, 300);
         //  indiana.MoveStraight(425, .4, 100);
         //  indiana.MoveStraight(320, .2, 300);
 
         // #LeftFeeder OFF
-        indiana.Feeders.DeactivateLeftBumper();
+        indiana.Feeders.DeactivateRightBumper();
 
         // Get Green
         // #RightFeeder ON
-        indiana.Feeders.ActivateRightBumper();
+        indiana.Feeders.ActivateLeftBumper();
 
         indiana.StrafeRight(122,.4, 100);
 
-        indiana.MoveStraight(220, .3, 200);
+        indiana.MoveStraight(225, .3, 200);
 
         // #LeftFeeder OFF
-        indiana.Feeders.DeactivateRightBumper();
+        indiana.Feeders.DeactivateLeftBumper();
 
 
         // #RightFeeder OFF

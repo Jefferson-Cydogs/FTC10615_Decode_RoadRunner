@@ -98,7 +98,7 @@ public class BlueNearMainS9 extends LinearOpMode {
             // sleep til gates are open
             indiana.Gates.WaitForGateToOpen();
 
-            indiana.ShootSecondThreeShotsFast(lastShotVelocity, 100);
+            indiana.ShootThirdThreeShotsFast(lastShotVelocity, 100);
 
             // need to sleep to finish shots
             sleep(200);
