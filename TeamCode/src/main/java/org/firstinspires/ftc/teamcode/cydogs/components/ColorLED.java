@@ -12,12 +12,15 @@ public class ColorLED {
     private LinearOpMode opMode;
     private Servo myServo;
 
-    public ColorLED(LinearOpMode opMode, String LEDName) {
+    public ColorLED(LinearOpMode opMode, String LEDName)
+    {
         this.opMode = opMode;
+
         myServo = opMode.hardwareMap.get(Servo.class, LEDName);
     }
 
-    public void SetColor(double ColorNumber) {
+    public void SetColor(double ColorNumber)
+    {
         ColorNumber = Math.max(SERVO_MIN,
                                Math.min(SERVO_MAX, ColorNumber));
         myServo.setPosition(ColorNumber);
@@ -27,29 +30,19 @@ public class ColorLED {
     {
         switch (ColorName.toLowerCase()) {
             case "white":
-                //if (Math.abs(myServo.getPosition() - 1.0) > TOLERANCE) {
-                    myServo.setPosition(1.0);
-                //}
+                myServo.setPosition(1.0);
                 break;
             case "purple":
-                //if (Math.abs(myServo.getPosition() - 0.720) > TOLERANCE) {
-                    myServo.setPosition(0.720);
-                //}
+                myServo.setPosition(0.720);
                 break;
             case "blue":
-                //if (Math.abs(myServo.getPosition() - 0.611) > TOLERANCE) {
-                    myServo.setPosition(0.611);
-                //}
+                myServo.setPosition(0.611);
                 break;
             case "green":
-                //if (Math.abs(myServo.getPosition() - 0.500) > TOLERANCE) {
-                    myServo.setPosition(0.500);
-                //}
+                myServo.setPosition(0.500);
                 break;
             case "red":
-                //if (Math.abs(myServo.getPosition() - 0.280) > TOLERANCE) {
-                    myServo.setPosition(0.280);
-                //}
+                myServo.setPosition(0.280);
                 break;
             case "off":
             default:
@@ -67,6 +60,7 @@ public class ColorLED {
         WHITE(1.000),
         PURPLE(0.720),
         GREEN(0.500),
+        YELLOW(0.388),
         RED(0.280),
         OFF(0.000);
 

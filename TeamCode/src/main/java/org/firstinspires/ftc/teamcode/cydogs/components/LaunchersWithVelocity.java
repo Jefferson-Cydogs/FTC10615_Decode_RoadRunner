@@ -2,7 +2,6 @@ package org.firstinspires.ftc.teamcode.cydogs.components;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 
 
 public class LaunchersWithVelocity
@@ -15,8 +14,7 @@ public class LaunchersWithVelocity
     // Max TPS = (Motor's RPM / 60) * Motor's TicksPerRotation
     //public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04 with no modifications
     public static final double MaxTicksPerSecond = (4620.0 / 60.0) * 28.0; //TPS=2,156 without gearbox
-    private final double VelocityTolerance = 0.022; //1.5%
-
+    private final double VelocityTolerance = 0.022; //2.2%
     private final double VelocityCorrection = 0.975;
 
     private LinearOpMode opMode;
@@ -41,14 +39,11 @@ public class LaunchersWithVelocity
         return Launchers.getVelocity();
     }
 
-    public double GetCurrentVelocityPercent()
-    {
-        return Launchers.getVelocity()/MaxTicksPerSecond;
-    }
+    public double GetCurrentVelocityPercent() { return (Launchers.getVelocity() / MaxTicksPerSecond); }
 
     public void RunAtVelocity(double TargetVelocityPercentage)
     {
-        Launchers.setVelocity(TargetVelocityPercentage*VelocityCorrection * MaxTicksPerSecond);
+        Launchers.setVelocity((TargetVelocityPercentage * VelocityCorrection) * MaxTicksPerSecond);
     }
 
     /** Fix from goBILDA for the Floodgate Power Switch disconnect issue.
@@ -141,4 +136,5 @@ public class LaunchersWithVelocity
             if (elapsed > giveUpMilliseconds) {break;}
         }
     }
+
 }
