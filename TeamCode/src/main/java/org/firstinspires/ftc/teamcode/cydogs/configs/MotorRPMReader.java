@@ -1,13 +1,15 @@
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
+import com.acmerobotics.dashboard.config.Config;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-@TeleOp(name = "Motor RPM Reader", group = "Diagnostics")
-@Disabled
+@Config
+//@Disabled
+@TeleOp
 public class MotorRPMReader extends LinearOpMode {
 
     private DcMotor motor;
@@ -17,11 +19,11 @@ public class MotorRPMReader extends LinearOpMode {
     int currentPosition;
     double deltaTime;
     int deltaTicks;
-    private int lastEncoderPosition = 0;
-    private double lastTime = 0;
+    int lastEncoderPosition = 0;
+    double lastTime = 0;
     double ticksPerSecond;
     double rpm;
-    private double maxrpm = 0;
+    double maxrpm = 0;
 
     // Set this to the encoder ticks per revolution of the motor shaft
     private static final double TICKS_PER_REV = 28.0; //value at the shaft (without gearbox)

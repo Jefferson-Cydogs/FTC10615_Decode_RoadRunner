@@ -29,8 +29,8 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private LaunchersWithVelocity RocketLauncher3000;
     //50% launcher from top of short distance
     //67% launcher velocity from long distance
-    private final double NearLauncherVelocity = 0.5;
-    private final double FarLauncherVelocity = 0.67;
+    private final double NearLauncherVelocity = 0.48;
+    private final double FarLauncherVelocity = 0.64;
     private double TargetLauncherVelocity = NearLauncherVelocity;
 
     private ColorLED LauncherLED;
