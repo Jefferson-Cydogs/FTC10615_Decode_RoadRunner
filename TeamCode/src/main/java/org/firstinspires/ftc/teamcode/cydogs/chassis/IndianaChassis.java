@@ -103,6 +103,14 @@ public class IndianaChassis {
         BackRightWheel.setPower(0);
     }
 
+    public void ChassisTeleopBrakeWheels()
+    {
+        FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FrontRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
     public void InitializeChassisAutonomous()
     {
         // Set motors' ZeroPower behavior
@@ -134,7 +142,7 @@ public class IndianaChassis {
         ((DcMotorEx) FrontRightWheel).setVelocityPIDFCoefficients(0,0,0,10.175712);
         ((DcMotorEx) BackLeftWheel).setVelocityPIDFCoefficients(0,0,0,11.752998);
         ((DcMotorEx) BackRightWheel).setVelocityPIDFCoefficients(0,0,0,11.398002);
-// back right wheel parameter 1 was 0.7
+        // back right wheel parameter 1 was 0.7
 
         // Ensure motors are stopped, for predictable behavior and avoiding unintended motion
         FrontLeftWheel.setPower(0);

@@ -63,6 +63,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
         waitForStart();
         //tagReader.initAprilTag();
+        currentTimer.reset();
 
         while (opModeIsActive()) {
             /** Execute OpMode actions here */
@@ -104,6 +105,10 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         } else if (gamepad1.circleWasPressed()) {
             TargetLauncherVelocity = NearLauncherVelocity;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+        } else if (gamepad1.dpadDownWasPressed()) {
+            if (currentTimer.seconds() > 110) {
+                Wheels.ChassisTeleopBrakeWheels();
+            }
         }
         //else if (gamepad1.dpad_down) {
             //RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
