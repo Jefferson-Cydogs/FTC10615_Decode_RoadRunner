@@ -7,20 +7,28 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 public class LaunchersWithVelocity
 {
     // Specs for typical motors we use:
-    //    GoBilda 5203 Series Yellow Jacket 223 RPM, 751.8 PPR
-    //    GoBilda 5203 Series Yellow Jacket 312 RPM, 537.7 PPR
-    //       Without gearbox, theoretical 6,000RPM, empirical is 4,620RPM; ticks/second is always 28 at the motor shaft for goBILDA Yellow Jacket motors
-    //    GoBilda 5203 Series Yellow Jacket 435 RPM, 384.5 PPR
+    //    GoBILDA 5203 Series Yellow Jacket 223 RPM, 751.8 PPR
+    //    GoBILDA 5203 Series Yellow Jacket 312 RPM, 537.7 PPR
+    //       Without gearbox, theoretical 6,000RPM, empirical needs to be calculated; ticks/second is always 28 at the motor shaft for goBILDA Yellow Jacket motors
+    //    GoBILDA 5203 Series Yellow Jacket 435 RPM, 384.5 PPR
     // Max TPS = (Motor's RPM / 60) * Motor's TicksPerRotation
     //public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04 with no modifications
     //public static final double MaxTicksPerSecond = (4620.0 / 60.0) * 28.0; //TPS=2,156 without gearbox
     public static final double MaxTicksPerSecond = (4816.0 / 60.0) * 28.0; //TPS=2,247.47 without gearbox
-    private final double VelocityTolerance = 0.02; //2.2%
+    private final double VelocityTolerance = 0.022; //2.2%
     //private final double VelocityCorrection = 0.975;
-    private final double VelocityCorrection = 1;
 
     private LinearOpMode opMode;
     public DcMotorEx Launchers;
+    private static final double P = 65;
+    private static final double I = 0;
+    private static final double D = 0;
+    private static final double F = 13.19168;
+    //private double adjustedF;
+
+    private ColorLED LauncherLED;
+
+    //private double voltage;
 
     public void initLauncher() {
     }
@@ -34,7 +42,9 @@ public class LaunchersWithVelocity
         //Launchers.setDirection(DcMotorEx.Direction.FORWARD);
         Launchers.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
         Launchers.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
-        Launchers.setVelocityPIDFCoefficients(65, 0, 0, 13.19168);
+        Launchers.setVelocityPIDFCoefficients(P, I, D, F);
+
+        LauncherLED = new ColorLED(opMode,"LauncherLED");
     }
 
     public double GetCurrentVelocity() {
@@ -45,7 +55,16 @@ public class LaunchersWithVelocity
 
     public void RunAtVelocity(double TargetVelocityPercentage)
     {
-        Launchers.setVelocity((TargetVelocityPercentage * VelocityCorrection) * MaxTicksPerSecond);
+        /*voltage = opMode.hardwareMap.voltageSensor.iterator().next().getVoltage();
+        adjustedF = F * 12.0 / voltage;
+        Launchers.setVelocityPIDFCoefficients(P, I, D, adjustedF);*/
+        Launchers.setVelocity(TargetVelocityPercentage * MaxTicksPerSecond);
+        //Launchers.setVelocity((TargetVelocityPercentage * VelocityCorrection) * MaxTicksPerSecond);
+
+        /*opMode.telemetry.addData("Battery Voltage", "%.2f V", voltage);
+        opMode.telemetry.addData("Target Velocity", TargetVelocityPercentage * MaxTicksPerSecond);
+        opMode.telemetry.addData("Actual Velocity", Launchers.getVelocity());
+        opMode.telemetry.addData("Adjusted F", adjustedF);*/
     }
 
     /** Fix from goBILDA for the Floodgate Power Switch disconnect issue.
@@ -136,6 +155,19 @@ public class LaunchersWithVelocity
         while(!IsMotorAtSpeed(targetSpeed)) {
             elapsed = System.currentTimeMillis() - start;
             if (elapsed > giveUpMilliseconds) {break;}
+        }
+    }
+
+    public void CheckLaunchersVelocity(double LaunchersVelocity)
+    {
+        if (IsMotorTooStrong(LaunchersVelocity)) {
+            LauncherLED.SetColorName(ColorLED.ColorOption.RED);
+        }
+        else if (IsMotorAtSpeed(LaunchersVelocity)) {
+            LauncherLED.SetColorName(ColorLED.ColorOption.WHITE);
+        }
+        else {
+            LauncherLED.SetColorName(ColorLED.ColorOption.OFF);
         }
     }
 

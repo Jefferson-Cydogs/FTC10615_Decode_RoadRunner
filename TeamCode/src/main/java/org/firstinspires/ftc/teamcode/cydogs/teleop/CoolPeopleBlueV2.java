@@ -27,8 +27,8 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private Feeders BumperCars;
     private Gates Gates;
     private LaunchersWithVelocity RocketLauncher3000;
-    //50% launcher from top of short distance
-    //67% launcher velocity from long distance
+    //48% launcher from top of short distance
+    //64% launcher velocity from long distance
     private final double NearLauncherVelocity = 0.48;
     private final double FarLauncherVelocity = 0.64;
     private double TargetLauncherVelocity = NearLauncherVelocity;
@@ -38,6 +38,8 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private ColorLED RightChannelLED;
     private ArtifactSensors artifactSensors;
     //private ParkingSensors parkingSensors
+
+    private int ArtifactsInsideRobot = 0;
 
     //private AprilTagReaderDuo tagReader;
     private AprilTagDetection currentDetection;
@@ -50,8 +52,6 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     @Override
     public void runOpMode()
     {
-        //double voltage;
-
         /** Execute initialization actions here */
         Wheels = new IndianaChassis(this);
         Wheels.InitializeChassisTeleop(.8,.3,.7);
@@ -59,7 +59,6 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         initializePositions();
         currentTimer = new ElapsedTime();
         eventTracker = new EventTracker();
-        //VoltageSensor voltageSensor = hardwareMap.voltageSensor.iterator().next();
 
         waitForStart();
         //tagReader.initAprilTag();
@@ -72,17 +71,25 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             manageDriverControls();
             manageManipulatorControls();
 
-            if(eventTracker.doEvent("CheckLauncher",currentTimer.seconds(), 0.5)) {
-                checkRocketLauncherVelocity();
+            if (eventTracker.doEvent("CheckLaunchers", currentTimer.seconds(), 0.5)) {
+                RocketLauncher3000.CheckLaunchersVelocity(TargetLauncherVelocity);
+                //checkRocketLauncherVelocity();
             }
 
-            if (eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
+            if (currentTimer.seconds() < 75) {
+                if (eventTracker.doEvent("CheckGates", currentTimer.seconds(), 0.5)) {
+                    Gates.CheckGatesStatus();
+                }
+            } else {
+                if (eventTracker.doEvent("CheckArtifacts", currentTimer.seconds(), 0.5)) {
+                    ArtifactsInsideRobot = artifactSensors.CheckArtifactsColorAndCount();
+                }
+            }
+            /*if (eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
                 artifactSensors.CheckSensors();
-            }
+            }*/
 
-            //voltage = voltageSensor.getVoltage();
-
-            if(eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
+            if (eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
                 telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocity);
                 telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
                 telemetry.update();
@@ -110,7 +117,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
                 Wheels.ChassisTeleopBrakeWheels();
             }
         }
-        //else if (gamepad1.dpad_down) {
+        //else if (gamepad1.dpadUpWasPressed()) {
             //RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
             //currentDetection = tagReader.GetScoringTag("Red");
             // if (eventTracker.doEvent("TurnToTag", currentTimer.seconds(), 0.5)) {
@@ -148,7 +155,9 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             ArtifactEater.reverseIntake();
         }
         else if (gamepad2.left_bumper) {
-            ArtifactEater.turnIntakeOn();
+            if (ArtifactsInsideRobot < 3) {
+                ArtifactEater.turnIntakeOn();
+            }
             BumperCars.ActivateLeftBumper();
         }
         else if (gamepad2.dpad_left) {
@@ -160,10 +169,14 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         }
 
         if (gamepad2.right_trigger > 0.4) {
-            ArtifactEater.turnIntakeOn();
+            if (ArtifactsInsideRobot < 3) {
+                ArtifactEater.turnIntakeOn();
+            }
         }
         else if (gamepad2.right_bumper) {
-            ArtifactEater.turnIntakeOn();
+            if (ArtifactsInsideRobot < 3) {
+                ArtifactEater.turnIntakeOn();
+            }
             BumperCars.ActivateRightBumper();
         }
         else if (gamepad2.dpad_right) {
@@ -198,7 +211,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         RightChannelLED.SetColorName(ColorOption.OFF);
     }
 
-    private void checkRocketLauncherVelocity()
+    /*private void checkRocketLauncherVelocity()
     {
         if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocity)) {
             LauncherLED.SetColorName(ColorOption.RED);
@@ -209,6 +222,6 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         else {
             LauncherLED.SetColorName(ColorOption.OFF);
         }
-    }
+    }*/
 
 }
