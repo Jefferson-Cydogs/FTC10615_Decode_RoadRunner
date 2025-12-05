@@ -124,7 +124,7 @@ public class IndianaAuton extends IndianaChassis {
         }
         else  // PGP
         {
-            ShootPurple(900,velocityPercentage,300);
+            ShootPurple(900,velocityPercentage,250);
             ShootGreen(600, velocityPercentage, 800, true);
             ShootPurple(600, velocityPercentage, 1500);
 
@@ -146,7 +146,7 @@ public class IndianaAuton extends IndianaChassis {
         }
         else  // PGP
         {
-            ShootPurple(900,velocityPercentage,300);
+            ShootPurple(900,velocityPercentage,250);
             ShootGreen(600, velocityPercentage, 2500, true);
             ShootPurple(600, velocityPercentage, 1500);
 

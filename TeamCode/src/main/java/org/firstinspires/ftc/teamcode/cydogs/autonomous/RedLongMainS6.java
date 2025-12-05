@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class RedLongMainS6 extends LinearOpMode {
 
     // declare variables
-    private double velocityPercentage = 0.688;
+    private double velocityPercentage = 0.66;
 
     private IndianaAuton indiana;
 
@@ -61,7 +61,7 @@ public class RedLongMainS6 extends LinearOpMode {
             indiana.ReverseFeeders(150);
 
 
-            indiana.RotateRight(16.7,0.4,100);
+            indiana.RotateRight(17.5,0.4,100);
 
             // need to open gates
             indiana.Gates.OpenBothGates();
@@ -78,7 +78,7 @@ public class RedLongMainS6 extends LinearOpMode {
 
             indiana.Gates.CloseBothGates();
 
-            indiana.RotateRight(48, .4, 200);
+            indiana.RotateRight(47.2, .4, 200);
 
             GetGreenPurplePurple();
 
@@ -89,13 +89,13 @@ public class RedLongMainS6 extends LinearOpMode {
 
             indiana.ReverseFeeders(150);
 
-            indiana.RotateLeft(45, 4, 200);
+            indiana.RotateLeft(45.5, 4, 200);
 
-            velocityPercentage = 0.688;
+            velocityPercentage = 0.66;
 
             indiana.Launchers.RunAtVelocity(velocityPercentage);
 
-            indiana.MoveStraight(-440, .5, 200);
+            indiana.MoveStraight(-490, .5, 200);
 
             // need to open gates
             indiana.Gates.OpenBothGates();
@@ -106,7 +106,8 @@ public class RedLongMainS6 extends LinearOpMode {
             indiana.ShootSecondThreeShotsFast(velocityPercentage, 600);
 
 
-            indiana.MoveStraight(500, .5, 200);
+            indiana.MoveStraight(100, .6, 200);
+            indiana.StrafeRight(350, .6, 200);
 
             indiana.EndAuton();
         }
@@ -121,16 +122,16 @@ public class RedLongMainS6 extends LinearOpMode {
         // #LeftFeeder ON
         indiana.Feeders.ActivateRightBumper();
 
-        indiana.MoveStraight(378, .25, 400);
+        indiana.MoveStraight(350, .25, 400);
         //indiana.MoveStraight(170, .3, 200);
 
         // Get Purples
         // #RightFeeder ON
         indiana.Feeders.ActivateLeftBumper();
 
-        indiana.StrafeRight(120,.4, 300);
+        indiana.StrafeRight(120,.42, 300);
 
-        indiana.MoveStraight(390, .4, 200);
+        indiana.MoveStraight(390, .42, 200);
 
         // #LeftFeeder OFF
         indiana.Feeders.DeactivateRightBumper();
