@@ -75,11 +75,10 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
             if (eventTracker.doEvent("CheckLaunchers", currentTimer.seconds(), 0.25)) {
                 RocketLauncher3000.ReflectLaunchersVelocity(TargetLauncherVelocityPercent);
-                //checkRocketLauncherVelocity();
             }
 
             if (matchTimer.seconds() < 75) {
-                if (eventTracker.doEvent("CheckGates", currentTimer.seconds(), 0.5)) {
+                if (eventTracker.doEvent("CheckGates", currentTimer.seconds(), 0.25)) {
                     Gates.CheckGatesStatus();
                 }
             }
@@ -87,14 +86,11 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             if (eventTracker.doEvent("CheckArtifacts", currentTimer.seconds(), 0.5)) {
                 ArtifactsInsideRobot = artifactSensors.CheckArtifactsColorAndCount(matchTimer.seconds());
             }
-            /*if (eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
-                artifactSensors.CheckSensors();
-            }*/
 
             if (eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
                 telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocityPercent);
                 telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
-                telemetry.addData("Match Timer (s):", matchTimer.seconds());
+                telemetry.addData("Match Timer (s):", (int)matchTimer.seconds());
                 telemetry.update();
             }
         }
@@ -205,18 +201,5 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         LeftChannelLED.SetColorName(ColorOption.OFF);
         RightChannelLED.SetColorName(ColorOption.OFF);
     }
-
-    /*private void checkRocketLauncherVelocity()
-    {
-        if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocityPercent)) {
-            LauncherLED.SetColorName(ColorOption.RED);
-        }
-        else if (RocketLauncher3000.IsMotorAtSpeed(TargetLauncherVelocityPercent)) {
-            LauncherLED.SetColorName(ColorOption.WHITE);
-        }
-        else {
-            LauncherLED.SetColorName(ColorOption.OFF);
-        }
-    }*/
 
 }
