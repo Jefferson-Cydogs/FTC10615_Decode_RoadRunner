@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class BlueLongMainS6 extends LinearOpMode {
 
     // declare variables
-    private double velocityPercentage = 0.68;
+    private double velocityPercentage = 0.66;
 
     private IndianaAuton indiana;
 
@@ -62,7 +62,7 @@ public class BlueLongMainS6 extends LinearOpMode {
             indiana.ReverseFeeders(150);
 
 
-            indiana.RotateLeft(16,0.4,100);
+            indiana.RotateLeft(15,0.4,100);
 
             // need to open gates
             indiana.Gates.OpenBothGates();
@@ -79,7 +79,7 @@ public class BlueLongMainS6 extends LinearOpMode {
 
             indiana.Gates.CloseBothGates();
 
-            indiana.RotateLeft(48, .4, 200);
+            indiana.RotateLeft(49, .4, 200);
 
             GetGreenPurplePurple();
 
@@ -92,7 +92,7 @@ public class BlueLongMainS6 extends LinearOpMode {
 
             indiana.RotateRight(46, 4, 200);
 
-            velocityPercentage = 0.68;
+            velocityPercentage = 0.66;
 
             indiana.Launchers.RunAtVelocity(velocityPercentage);
 
@@ -107,7 +107,8 @@ public class BlueLongMainS6 extends LinearOpMode {
             indiana.ShootSecondThreeShotsFast(velocityPercentage, 400);
 
 
-            indiana.MoveStraight(500, .5, 200);
+            indiana.MoveStraight(200, .6, 200);
+            indiana.StrafeLeft(200, .6, 200);
 
             indiana.EndAuton();
         }
@@ -129,7 +130,7 @@ public class BlueLongMainS6 extends LinearOpMode {
         // #RightFeeder ON
         indiana.Feeders.ActivateLeftBumper();
 
-        indiana.StrafeRight(100,.4, 300);
+        indiana.StrafeRight(100, .4, 300);
 
         indiana.MoveStraight(370, .4, 200);
 

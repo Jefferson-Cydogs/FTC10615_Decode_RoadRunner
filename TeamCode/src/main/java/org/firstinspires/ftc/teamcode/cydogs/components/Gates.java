@@ -12,9 +12,9 @@ public class Gates {
     private ColorLED RightLED;
 
     private final double leftGateOpen = 0.03;
-    private final double leftGateClose = 0.84;
+    private final double leftGateClose = 0.85;
     private final double rightGateOpen = 0.07;
-    private final double rightGateClose = 0.87;
+    private final double rightGateClose = 0.88;
 
     public Gates(LinearOpMode opMode)
     {
