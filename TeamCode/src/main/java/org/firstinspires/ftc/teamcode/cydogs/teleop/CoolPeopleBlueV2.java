@@ -45,6 +45,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private AprilTagDetection currentDetection;
 
     private ElapsedTime currentTimer;
+    private ElapsedTime matchTimer;
     private EventTracker eventTracker;
 
     public String Team = "blue";
@@ -58,11 +59,12 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         initializeDevices();
         initializePositions();
         currentTimer = new ElapsedTime();
+        matchTimer = new ElapsedTime();
         eventTracker = new EventTracker();
 
         waitForStart();
         //tagReader.initAprilTag();
-        currentTimer.reset();
+        matchTimer.reset();
 
         while (opModeIsActive()) {
             /** Execute OpMode actions here */
@@ -76,7 +78,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
                 //checkRocketLauncherVelocity();
             }
 
-            if (currentTimer.seconds() < 75) {
+            if (matchTimer.seconds() < 75) {
                 if (eventTracker.doEvent("CheckGates", currentTimer.seconds(), 0.5)) {
                     Gates.CheckGatesStatus();
                 }
@@ -113,7 +115,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
             TargetLauncherVelocity = NearLauncherVelocity;
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
         } else if (gamepad1.dpadDownWasPressed()) {
-            if (currentTimer.seconds() > 110) {
+            if (matchTimer.seconds() > 110) {
                 Wheels.ChassisTeleopBrakeWheels();
             }
         }

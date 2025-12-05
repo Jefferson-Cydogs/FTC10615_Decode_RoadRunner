@@ -8,7 +8,8 @@ public class Gates {
     private LinearOpMode opMode;
     private Servo leftGate;
     private Servo rightGate;
-    private ColorLED LauncherLED;
+    private ColorLED LeftLED;
+    private ColorLED RightLED;
 
     private final double leftGateOpen = 0.03;
     private final double leftGateClose = 0.84;
@@ -23,7 +24,8 @@ public class Gates {
         rightGate = opMode.hardwareMap.get(Servo.class,"RightGate");
         leftGate.setDirection(Servo.Direction.REVERSE);
 
-        LauncherLED = new ColorLED(opMode,"LauncherLED");
+        LeftLED = new ColorLED(opMode,"LeftLED");
+        RightLED = new ColorLED(opMode,"RightLED");
     }
 
     public void OpenLeftGate()
@@ -65,10 +67,15 @@ public class Gates {
 
     public void CheckGatesStatus()
     {
-        if ((leftGate.getPosition() == leftGateClose) && (rightGate.getPosition() == rightGateClose)) {
-            LauncherLED.SetColorName(ColorLED.ColorOption.YELLOW);
+        if (leftGate.getPosition() == leftGateClose) {
+            LeftLED.SetColorName(ColorLED.ColorOption.YELLOW);
         } else {
-            LauncherLED.SetColorName(ColorLED.ColorOption.OFF);
+            LeftLED.SetColorName(ColorLED.ColorOption.OFF);
+        }
+        if (rightGate.getPosition() == rightGateClose) {
+            RightLED.SetColorName(ColorLED.ColorOption.YELLOW);
+        } else {
+            RightLED.SetColorName(ColorLED.ColorOption.OFF);
         }
     }
 
