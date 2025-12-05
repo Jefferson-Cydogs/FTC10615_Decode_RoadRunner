@@ -27,18 +27,17 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private Feeders BumperCars;
     private Gates Gates;
     private LaunchersWithVelocity RocketLauncher3000;
-    //48% launcher from top of short distance
-    //64% launcher velocity from long distance
-    private final double NearLauncherVelocity = 0.48;
-    private final double FarLauncherVelocity = 0.64;
-    private double TargetLauncherVelocity = NearLauncherVelocity;
-
+    private ArtifactSensors artifactSensors;
+    //private ParkingSensors parkingSensors
     private ColorLED LauncherLED;
     private ColorLED LeftChannelLED;
     private ColorLED RightChannelLED;
-    private ArtifactSensors artifactSensors;
-    //private ParkingSensors parkingSensors
 
+    //48% launcher from top of short distance
+    //64% launcher velocity from long distance
+    private final double NearLauncherVelocityPercent = 0.48;
+    private final double FarLauncherVelocityPercent = 0.64;
+    private double TargetLauncherVelocityPercent = NearLauncherVelocityPercent;
     private int ArtifactsInsideRobot = 0;
 
     //private AprilTagReaderDuo tagReader;
@@ -68,13 +67,14 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
         while (opModeIsActive()) {
             /** Execute OpMode actions here */
-            //tagReader.displayDetections(tagReader.GetDetections());
             Wheels.OptimizedTeleopDrive();
+
+            //tagReader.displayDetections(tagReader.GetDetections());
             manageDriverControls();
             manageManipulatorControls();
 
-            if (eventTracker.doEvent("CheckLaunchers", currentTimer.seconds(), 0.5)) {
-                RocketLauncher3000.CheckLaunchersVelocity(TargetLauncherVelocity);
+            if (eventTracker.doEvent("CheckLaunchers", currentTimer.seconds(), 0.25)) {
+                RocketLauncher3000.ReflectLaunchersVelocity(TargetLauncherVelocityPercent);
                 //checkRocketLauncherVelocity();
             }
 
@@ -82,18 +82,19 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
                 if (eventTracker.doEvent("CheckGates", currentTimer.seconds(), 0.5)) {
                     Gates.CheckGatesStatus();
                 }
-            } else {
-                if (eventTracker.doEvent("CheckArtifacts", currentTimer.seconds(), 0.5)) {
-                    ArtifactsInsideRobot = artifactSensors.CheckArtifactsColorAndCount();
-                }
+            }
+
+            if (eventTracker.doEvent("CheckArtifacts", currentTimer.seconds(), 0.5)) {
+                ArtifactsInsideRobot = artifactSensors.CheckArtifactsColorAndCount(matchTimer.seconds());
             }
             /*if (eventTracker.doEvent("ArtifactSensors",currentTimer.seconds(),0.5)) {
                 artifactSensors.CheckSensors();
             }*/
 
             if (eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
-                telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocity);
+                telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocityPercent);
                 telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
+                telemetry.addData("Match Timer (s):", matchTimer.seconds());
                 telemetry.update();
             }
         }
@@ -103,24 +104,24 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
     private void manageDriverControls()
     {
         if (gamepad1.triangleWasPressed()) {
-            TargetLauncherVelocity += 0.01;
-            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+            TargetLauncherVelocityPercent += 0.01;
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocityPercent);
         } else if (gamepad1.crossWasPressed()) {
-            TargetLauncherVelocity -= 0.01;
-            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+            TargetLauncherVelocityPercent -= 0.01;
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocityPercent);
         } else if (gamepad1.squareWasPressed()) {
-            TargetLauncherVelocity = FarLauncherVelocity;
-            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+            TargetLauncherVelocityPercent = FarLauncherVelocityPercent;
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocityPercent);
         } else if (gamepad1.circleWasPressed()) {
-            TargetLauncherVelocity = NearLauncherVelocity;
-            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+            TargetLauncherVelocityPercent = NearLauncherVelocityPercent;
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocityPercent);
         } else if (gamepad1.dpadDownWasPressed()) {
-            if (matchTimer.seconds() > 110) {
+            if (110 < matchTimer.seconds()) { //Only switch wheels to BRAKE mode in the last 10 seconds of the match
                 Wheels.ChassisTeleopBrakeWheels();
             }
         }
         //else if (gamepad1.dpadUpWasPressed()) {
-            //RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
+            //RocketLauncher3000.RunAtVelocity(TargetLauncherVelocityPercent);
             //currentDetection = tagReader.GetScoringTag("Red");
             // if (eventTracker.doEvent("TurnToTag", currentTimer.seconds(), 0.5)) {
                 //tagReader.displayDetections(tagReader.GetDetections());
@@ -133,58 +134,50 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
     private void manageManipulatorControls()
     {
+        boolean CanGetMoreArtifacts = (ArtifactsInsideRobot < 3);
+
         if (gamepad2.triangle) {
-            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocity);
-        }
-        else if (gamepad2.square) {
+            RocketLauncher3000.RunAtVelocity(TargetLauncherVelocityPercent);
+        } else if (gamepad2.square) {
             if (RocketLauncher3000.GetCurrentVelocity() <= 0) {
                 RocketLauncher3000.RunAtVelocity(-0.2);
             }
-        }
-        else if (gamepad2.cross) {
+        } else if (gamepad2.cross) {
             LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(RocketLauncher3000.Launchers, 0.5,0.02,50);
-        }
-        else if (gamepad2.dpadUpWasPressed()) {
+        } else if (gamepad2.dpadUpWasPressed()) {
             Gates.OpenLeftGate();
             Gates.OpenRightGate();
-        }
-        else if (gamepad2.dpadDownWasPressed()) {
+        } else if (gamepad2.dpadDownWasPressed()) {
             Gates.CloseRightGate();
             Gates.CloseLeftGate();
         }
 
-        if (gamepad2.left_trigger > 0.4) {
+        if (0.4 < gamepad2.left_trigger) {
             ArtifactEater.reverseIntake();
-        }
-        else if (gamepad2.left_bumper) {
-            if (ArtifactsInsideRobot < 3) {
+        } else if (gamepad2.left_bumper) {
+            if (CanGetMoreArtifacts) {
                 ArtifactEater.turnIntakeOn();
             }
             BumperCars.ActivateLeftBumper();
-        }
-        else if (gamepad2.dpad_left) {
+        } else if (gamepad2.dpad_left) {
             BumperCars.ReverseLeftBumper();
-        }
-        else {
+        } else {
             ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateLeftBumper();
         }
 
-        if (gamepad2.right_trigger > 0.4) {
-            if (ArtifactsInsideRobot < 3) {
+        if (0.4 < gamepad2.right_trigger) {
+            if (CanGetMoreArtifacts) {
                 ArtifactEater.turnIntakeOn();
             }
-        }
-        else if (gamepad2.right_bumper) {
-            if (ArtifactsInsideRobot < 3) {
+        } else if (gamepad2.right_bumper) {
+            if (CanGetMoreArtifacts) {
                 ArtifactEater.turnIntakeOn();
             }
             BumperCars.ActivateRightBumper();
-        }
-        else if (gamepad2.dpad_right) {
+        } else if (gamepad2.dpad_right) {
             BumperCars.ReverseRightBumper();
-        }
-        else {
+        } else {
             ArtifactEater.turnIntakeOff();
             BumperCars.DeactivateRightBumper();
         }
@@ -215,10 +208,10 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
     /*private void checkRocketLauncherVelocity()
     {
-        if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocity)) {
+        if (RocketLauncher3000.IsMotorTooStrong(TargetLauncherVelocityPercent)) {
             LauncherLED.SetColorName(ColorOption.RED);
         }
-        else if (RocketLauncher3000.IsMotorAtSpeed(TargetLauncherVelocity)) {
+        else if (RocketLauncher3000.IsMotorAtSpeed(TargetLauncherVelocityPercent)) {
             LauncherLED.SetColorName(ColorOption.WHITE);
         }
         else {

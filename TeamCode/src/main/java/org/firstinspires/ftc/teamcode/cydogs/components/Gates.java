@@ -15,6 +15,7 @@ public class Gates {
     private final double leftGateClose = 0.85;
     private final double rightGateOpen = 0.07;
     private final double rightGateClose = 0.88;
+    private final double positionTolerance = 0.05;
 
     public Gates(LinearOpMode opMode)
     {
@@ -67,12 +68,12 @@ public class Gates {
 
     public void CheckGatesStatus()
     {
-        if (leftGate.getPosition() == leftGateClose) {
+        if (Math.abs(leftGate.getPosition() - leftGateClose) <= (leftGateClose * positionTolerance)) {
             LeftLED.SetColorName(ColorLED.ColorOption.YELLOW);
         } else {
             LeftLED.SetColorName(ColorLED.ColorOption.OFF);
         }
-        if (rightGate.getPosition() == rightGateClose) {
+        if (Math.abs(rightGate.getPosition() - rightGateClose) <= (rightGateClose * positionTolerance)) {
             RightLED.SetColorName(ColorLED.ColorOption.YELLOW);
         } else {
             RightLED.SetColorName(ColorLED.ColorOption.OFF);

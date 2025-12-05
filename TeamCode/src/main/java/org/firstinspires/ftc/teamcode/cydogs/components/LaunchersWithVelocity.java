@@ -15,7 +15,7 @@ public class LaunchersWithVelocity
     //public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04 with no modifications
     //public static final double MaxTicksPerSecond = (4620.0 / 60.0) * 28.0; //TPS=2,156 without gearbox
     public static final double MaxTicksPerSecond = (4816.0 / 60.0) * 28.0; //TPS=2,247.47 without gearbox
-    private final double VelocityTolerance = 0.017; //1.7%
+    private final double VelocityTolerance = 0.018; //1.8%
     //private final double VelocityCorrection = 0.975;
 
     private LinearOpMode opMode;
@@ -158,15 +158,13 @@ public class LaunchersWithVelocity
         }
     }
 
-    public void CheckLaunchersVelocity(double LaunchersVelocity)
+    public void ReflectLaunchersVelocity(double LaunchersVelocityPercentage)
     {
-        if (IsMotorTooStrong(LaunchersVelocity)) {
+        if (IsMotorTooStrong(LaunchersVelocityPercentage)) {
             LauncherLED.SetColorName(ColorLED.ColorOption.RED);
-        }
-        else if (IsMotorAtSpeed(LaunchersVelocity)) {
+        } else if (IsMotorAtSpeed(LaunchersVelocityPercentage)) {
             LauncherLED.SetColorName(ColorLED.ColorOption.WHITE);
-        }
-        else {
+        } else {
             LauncherLED.SetColorName(ColorLED.ColorOption.OFF);
         }
     }
