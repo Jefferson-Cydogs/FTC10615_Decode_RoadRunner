@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class RedNearMainS9 extends LinearOpMode {
 
 
-    private double velocityPercentage = 0.52;
+    private double velocityPercentage = 0.50;
 
     private IndianaAuton indiana;
     private ElapsedTime currentTimer;
@@ -52,7 +52,7 @@ public class RedNearMainS9 extends LinearOpMode {
             // Go shoot
 
             // launchers already on but adjust shot velocity
-            double lastShotVelocity = 0.50;
+            double lastShotVelocity = 0.48;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
             // was .6 and .5
@@ -61,21 +61,21 @@ public class RedNearMainS9 extends LinearOpMode {
             // reduce pressure on gates before shooting
             indiana.ReverseFeeders(150);
 
-            indiana.RotateLeft(26,.5,100);
+            indiana.RotateLeft(22,.5,100);
 
             indiana.Gates.OpenBothGates();
             // sleep til gates are open
             indiana.Gates.WaitForGateToOpen();
             indiana.ShootSecondThreeShotsFast(lastShotVelocity, 100);
-
+            sleep(200);
             // begin run for last 3
 
             indiana.RotateRight(25, .4, 100);
             indiana.Gates.CloseBothGates();
-            lastShotVelocity = 0.49;
+            lastShotVelocity = 0.475;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
-            indiana.StrafeRight(1017, .65, 100);
+            indiana.StrafeRight(980, .55, 100);
 
             // we don't care what color the artifacts are at this point
             GetLastThreeArtifacts();
@@ -91,7 +91,7 @@ public class RedNearMainS9 extends LinearOpMode {
             // reduce pressure on gates before shooting
             indiana.ReverseFeeders(100);
 
-            indiana.RotateLeft(19,.6,0);
+            indiana.RotateLeft(21,.6,0);
 
             indiana.Gates.OpenBothGates();
             // sleep til gates are open

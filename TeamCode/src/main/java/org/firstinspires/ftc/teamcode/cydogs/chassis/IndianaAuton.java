@@ -370,7 +370,7 @@ public class IndianaAuton extends IndianaChassis {
 
         // #GatesClosed
         // was .45
-        StrafeLeft(205, .5, 100);
+        StrafeLeft(195, .5, 100);
         Gates.CloseBothGates();
 
         BlueAllianceNearPurplePurpleGreen();
@@ -455,6 +455,7 @@ public class IndianaAuton extends IndianaChassis {
 
 
         ShootFirstThreeShotsFast(velocityPercentage, preShotWait);
+        myOpMode.sleep(200);
 
         // was .5
         RotateRight(27,.5,100);
