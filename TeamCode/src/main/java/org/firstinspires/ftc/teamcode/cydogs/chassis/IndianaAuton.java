@@ -4,11 +4,14 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.cydogs.components.AprilTagReaderDuo;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
+import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.z_archive.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
 import org.firstinspires.ftc.teamcode.cydogs.components.Gates;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
+
+import java.util.Objects;
 
 public class IndianaAuton extends IndianaChassis {
     // declare devices
@@ -514,4 +517,51 @@ public class IndianaAuton extends IndianaChassis {
         ShootGreenNoWait(preShotWait, velocityPercentage, 300, false);
         ShootGreenNoWait(preShotWait, velocityPercentage, 500, false);
     }
+
+    public void ColorLEDsKITTSequence(int DurationInSeconds, String AllianceColor) {
+        // Define Knight Rider style sequence
+        ColorLED[][] Sequence = {
+                {LeftLED},
+                {LeftLED, LauncherLED},
+                {LauncherLED, RightLED},
+                {RightLED},
+                {LauncherLED, RightLED},
+                {LeftLED, LauncherLED},
+        };
+
+        long EndTime = System.currentTimeMillis() + (DurationInSeconds * 1000L);
+        int StepDelay = 250; // ms per step, can be tuned
+
+        while (System.currentTimeMillis() < EndTime) {
+            for (ColorLED[] Step : Sequence) {
+                //Turn all LEDs off
+                LeftLED.SetColorName(ColorOption.OFF);
+                LauncherLED.SetColorName(ColorOption.OFF);
+                RightLED.SetColorName(ColorOption.OFF);
+
+                //Turn current step LED on
+                for (ColorLED LED : Step) {
+                    if (Objects.equals(AllianceColor, "RED")) {
+                        LED.SetColorName(ColorOption.RED);
+                    } else if (Objects.equals(AllianceColor, "BLUE")) {
+                        LED.SetColorName(ColorOption.BLUE);
+                    }
+                }
+
+                //Wait for step delay
+                try {
+                    Thread.sleep(StepDelay);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+        }
+
+        // Clear all LEDs at the end
+        LeftLED.SetColorName(ColorOption.OFF);
+        LauncherLED.SetColorName(ColorOption.OFF);
+        RightLED.SetColorName(ColorOption.OFF);
+    }
+
 }

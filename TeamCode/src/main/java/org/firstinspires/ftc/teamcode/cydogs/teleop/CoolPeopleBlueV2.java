@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
 import org.firstinspires.ftc.teamcode.cydogs.components.ArtifactSensors;
-//import org.firstinspires.ftc.teamcode.cydogs.components.ParkingSensors;
+//import org.firstinspires.ftc.teamcode.cydogs.components.ParkingSensors; //Will try to develop for States
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
@@ -198,52 +198,6 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         Gates.CloseRightGate();
         LauncherLED.SetColorName(ColorOption.OFF);
         LeftChannelLED.SetColorName(ColorOption.OFF);
-        RightChannelLED.SetColorName(ColorOption.OFF);
-    }
-
-    public void ColorLEDKITTChase(int DurationInSeconds, String AllianceColor) {
-        // Define Knight Rider style sequence
-        ColorLED[][] Sequence = {
-                {LeftChannelLED},
-                {LeftChannelLED, LauncherLED},
-                {LauncherLED, RightChannelLED},
-                {RightChannelLED},
-                {LauncherLED, RightChannelLED},
-                {LeftChannelLED, LauncherLED},
-        };
-
-        long EndTime = System.currentTimeMillis() + (DurationInSeconds * 1000L);
-        int StepDelay = 250; // ms per step
-
-        while (System.currentTimeMillis() < EndTime) {
-            for (ColorLED[] Step : Sequence) {
-                //Turn all LEDs off
-                LeftChannelLED.SetColorName(ColorOption.OFF);
-                LauncherLED.SetColorName(ColorOption.OFF);
-                RightChannelLED.SetColorName(ColorOption.OFF);
-
-                //Turn current Step LED on
-                for (ColorLED LED : Step) {
-                    if (AllianceColor == "RED") {
-                        LED.SetColorName(ColorOption.RED);
-                    } else if (AllianceColor == "BLUE") {
-                        LED.SetColorName(ColorOption.BLUE);
-                    }
-                }
-
-                //Wait for step delay
-                try {
-                    Thread.sleep(StepDelay);
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                    return;
-                }
-            }
-        }
-
-        // Clear all LEDs at the end
-        LeftChannelLED.SetColorName(ColorOption.OFF);
-        LauncherLED.SetColorName(ColorOption.OFF);
         RightChannelLED.SetColorName(ColorOption.OFF);
     }
 
