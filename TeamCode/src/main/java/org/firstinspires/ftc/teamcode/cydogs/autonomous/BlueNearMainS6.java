@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class BlueNearMainS6 extends LinearOpMode {
 
 
-    private double velocityPercentage = 0.534;
+    private double velocityPercentage = 0.528;
 
     private IndianaAuton indiana;
     private ElapsedTime currentTimer;

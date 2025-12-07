@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class BlueNearMainS9 extends LinearOpMode {
 
 
-    private double velocityPercentage = 0.534;
+    private double velocityPercentage = 0.52;
 
     private IndianaAuton indiana;
     private ElapsedTime currentTimer;
@@ -53,7 +53,7 @@ public class BlueNearMainS9 extends LinearOpMode {
             // Go shoot
 
             // launchers already on but adjust shot velocity
-            double lastShotVelocity = 0.53;
+            double lastShotVelocity = 0.508;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
             // was .6 and .5
@@ -68,20 +68,21 @@ public class BlueNearMainS9 extends LinearOpMode {
             // sleep til gates are open
             indiana.Gates.WaitForGateToOpen();
             indiana.ShootSecondThreeShotsFast(lastShotVelocity, 100);
-
+            sleep(200);
             // begin run for last 3
 
             indiana.RotateLeft(26, .5, 100);
             indiana.Gates.CloseBothGates();
-            lastShotVelocity = 0.505;
+            lastShotVelocity = 0.49;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
-            indiana.StrafeLeft(820, .7, 100);
+            // was 820
+            indiana.StrafeLeft(790, .7, 100);
 
             // we don't care what color the artifacts are at this point
             GetLastThreeArtifacts();
 
-            indiana.MoveStraight(-790, .7, 50);
+            indiana.MoveStraight(-770, .7, 50);
             indiana.Feeders.DeactivateRightBumper();
 
             // #Intake OFF
