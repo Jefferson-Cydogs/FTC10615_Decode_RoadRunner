@@ -66,7 +66,7 @@ public class Gates {
         opMode.sleep(300);
     }
 
-    public void CheckGatesStatus()
+    public void ReflectGatesStatus()
     {
         if (Math.abs(leftGate.getPosition() - leftGateClose) <= (leftGateClose * positionTolerance)) {
             LeftLED.SetColorName(ColorLED.ColorOption.YELLOW);

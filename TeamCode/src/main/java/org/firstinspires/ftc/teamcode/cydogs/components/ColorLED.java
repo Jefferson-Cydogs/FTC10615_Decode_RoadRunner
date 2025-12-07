@@ -59,8 +59,9 @@ public class ColorLED {
     public enum ColorOption {
         WHITE(1.000),
         PURPLE(0.720),
+        BLUE(0.611),
         GREEN(0.500),
-        YELLOW(0.388),
+        YELLOW(0.377),
         RED(0.280),
         OFF(0.000);
 

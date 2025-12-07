@@ -79,7 +79,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
             if (matchTimer.seconds() < 75) {
                 if (eventTracker.doEvent("CheckGates", currentTimer.seconds(), 0.25)) {
-                    Gates.CheckGatesStatus();
+                    Gates.ReflectGatesStatus();
                 }
             }
 
@@ -89,13 +89,12 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
             if (eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
                 telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocityPercent);
-                telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
-                telemetry.addData("Match Timer (s):", (int)matchTimer.seconds());
+                //telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
+                //telemetry.addData("Match Timer (s):", (int)matchTimer.seconds());
                 telemetry.update();
             }
         }
     }
-
 
     private void manageDriverControls()
     {
@@ -199,6 +198,52 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
         Gates.CloseRightGate();
         LauncherLED.SetColorName(ColorOption.OFF);
         LeftChannelLED.SetColorName(ColorOption.OFF);
+        RightChannelLED.SetColorName(ColorOption.OFF);
+    }
+
+    public void ColorLEDKITTChase(int DurationInSeconds, String AllianceColor) {
+        // Define Knight Rider style sequence
+        ColorLED[][] Sequence = {
+                {LeftChannelLED},
+                {LeftChannelLED, LauncherLED},
+                {LauncherLED, RightChannelLED},
+                {RightChannelLED},
+                {LauncherLED, RightChannelLED},
+                {LeftChannelLED, LauncherLED},
+        };
+
+        long EndTime = System.currentTimeMillis() + (DurationInSeconds * 1000L);
+        int StepDelay = 250; // ms per step
+
+        while (System.currentTimeMillis() < EndTime) {
+            for (ColorLED[] Step : Sequence) {
+                //Turn all LEDs off
+                LeftChannelLED.SetColorName(ColorOption.OFF);
+                LauncherLED.SetColorName(ColorOption.OFF);
+                RightChannelLED.SetColorName(ColorOption.OFF);
+
+                //Turn current Step LED on
+                for (ColorLED LED : Step) {
+                    if (AllianceColor == "RED") {
+                        LED.SetColorName(ColorOption.RED);
+                    } else if (AllianceColor == "BLUE") {
+                        LED.SetColorName(ColorOption.BLUE);
+                    }
+                }
+
+                //Wait for step delay
+                try {
+                    Thread.sleep(StepDelay);
+                } catch (InterruptedException e) {
+                    Thread.currentThread().interrupt();
+                    return;
+                }
+            }
+        }
+
+        // Clear all LEDs at the end
+        LeftChannelLED.SetColorName(ColorOption.OFF);
+        LauncherLED.SetColorName(ColorOption.OFF);
         RightChannelLED.SetColorName(ColorOption.OFF);
     }
 
