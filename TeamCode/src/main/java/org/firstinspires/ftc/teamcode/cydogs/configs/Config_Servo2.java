@@ -14,6 +14,7 @@ After selection you can control servos position using gamepad.
 */
 
 @TeleOp
+@Disabled
 public class Config_Servo2 extends LinearOpMode {
 
     //Declare the servos

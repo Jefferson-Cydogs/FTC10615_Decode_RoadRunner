@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 
 @Config
-//@Disabled
+@Disabled
 @TeleOp
 public class FlywheelVelocityGraph extends LinearOpMode {
 
