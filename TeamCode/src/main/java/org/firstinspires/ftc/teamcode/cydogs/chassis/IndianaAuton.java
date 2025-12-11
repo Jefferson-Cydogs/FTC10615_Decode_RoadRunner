@@ -541,9 +541,9 @@ public class IndianaAuton extends IndianaChassis {
 
                 //Turn current step LED on
                 for (ColorLED LED : Step) {
-                    if (Objects.equals(AllianceColor, "RED")) {
+                    if (Objects.equals(AllianceColor.toLowerCase(), "red")) {
                         LED.SetColorName(ColorOption.RED);
-                    } else if (Objects.equals(AllianceColor, "BLUE")) {
+                    } else if (Objects.equals(AllianceColor.toLowerCase(), "blue")) {
                         LED.SetColorName(ColorOption.BLUE);
                     }
                 }
