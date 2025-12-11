@@ -15,7 +15,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class BlueNearMainS9 extends LinearOpMode {
 
 
-    private double velocityPercentage = 0.52;
+    private double velocityPercentage = 0.50;
 
     private IndianaAuton indiana;
     private ElapsedTime currentTimer;
@@ -53,7 +53,7 @@ public class BlueNearMainS9 extends LinearOpMode {
             // Go shoot
 
             // launchers already on but adjust shot velocity
-            double lastShotVelocity = 0.508;
+            double lastShotVelocity = 0.495;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
             // was .6 and .5
@@ -62,7 +62,7 @@ public class BlueNearMainS9 extends LinearOpMode {
             // reduce pressure on gates before shooting
             indiana.ReverseFeeders(150);
 
-            indiana.RotateRight(26,.5,100);
+            indiana.RotateRight(27,.5,100);
 
             indiana.Gates.OpenBothGates();
             // sleep til gates are open
@@ -71,9 +71,9 @@ public class BlueNearMainS9 extends LinearOpMode {
             sleep(200);
             // begin run for last 3
 
-            indiana.RotateLeft(26, .5, 100);
+            indiana.RotateLeft(27, .5, 100);
             indiana.Gates.CloseBothGates();
-            lastShotVelocity = 0.49;
+            lastShotVelocity = 0.475;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
             // was 820
@@ -93,7 +93,7 @@ public class BlueNearMainS9 extends LinearOpMode {
             // reduce pressure on gates before shooting
             indiana.ReverseFeeders(150);
 
-            indiana.RotateRight(17,.5,100);
+            indiana.RotateRight(18,.5,100);
 
             indiana.Gates.OpenBothGates();
             // sleep til gates are open

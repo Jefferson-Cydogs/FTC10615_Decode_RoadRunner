@@ -89,7 +89,7 @@ public class CoolPeopleBlueV2 extends LinearOpMode {
 
             if (eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
                 telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocityPercent);
-                //telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
+                telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
                 //telemetry.addData("Match Timer (s):", (int)matchTimer.seconds());
                 telemetry.update();
             }

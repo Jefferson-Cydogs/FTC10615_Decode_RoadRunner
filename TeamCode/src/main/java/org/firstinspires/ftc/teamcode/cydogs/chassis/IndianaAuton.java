@@ -332,6 +332,14 @@ public class IndianaAuton extends IndianaChassis {
         }
     }
 
+    public void ShootAllFourSlots(double velocityPercentage, int preShotWait)
+    {
+        ShootPurple(preShotWait,velocityPercentage,300);
+        ShootPurple(preShotWait, velocityPercentage, 600);//2000
+        ShootGreen(preShotWait, velocityPercentage, 300, false);
+        ShootGreen(preShotWait, velocityPercentage, 600, false);
+    }
+
     public void BlueCommonStart(double velocityPercentage, int preShotWait)
     {
 
@@ -373,7 +381,7 @@ public class IndianaAuton extends IndianaChassis {
 
         // #GatesClosed
         // was .45
-        StrafeLeft(195, .5, 100);
+        StrafeLeft(190, .5, 100);
         Gates.CloseBothGates();
 
         BlueAllianceNearPurplePurpleGreen();
