@@ -12,11 +12,11 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.
 //    @Autonomous puts this code in the autonomous category on driver station
 
-@Autonomous(name= "Blue Long S5", group= "Autonomous", preselectTeleOp = "Cool People TeleOp")
-public class BlueLongMainS5 extends LinearOpMode {
+@Autonomous(name= "Red Long S5", group= "Autonomous", preselectTeleOp = "Cool People TeleOp")
+public class RedLongMainS5 extends LinearOpMode {
 
     // declare variables
-    private double velocityPercentage = 0.66;
+    private double velocityPercentage = 0.655;
 
     private IndianaAuton indiana;
 
@@ -31,7 +31,7 @@ public class BlueLongMainS5 extends LinearOpMode {
         // load 1 green on right side by launcher
 
 
-        indiana = new IndianaAuton(this, "blue");
+        indiana = new IndianaAuton(this, "red");
         indiana.InitializeAuton();
 
         currentTimer = new ElapsedTime();
@@ -61,7 +61,7 @@ public class BlueLongMainS5 extends LinearOpMode {
             indiana.ReverseFeeders(150);
 
 
-            indiana.RotateLeft(16,0.4,100);
+            indiana.RotateRight(16,0.4,100);
 
             // need to open gates
             indiana.Gates.OpenBothGates();
@@ -69,7 +69,7 @@ public class BlueLongMainS5 extends LinearOpMode {
             // sleep til Gates are open
             indiana.Gates.WaitForGateToOpen();
 
-            indiana.ShootFirstThreeShotsFast(velocityPercentage, 400);
+            indiana.ShootFirstThreeShotsFast(velocityPercentage, 800);
 
             // needs this sleep or robot starts moving while taking last shot
             sleep(300);
@@ -77,13 +77,14 @@ public class BlueLongMainS5 extends LinearOpMode {
             indiana.Gates.CloseBothGates();
 
             // go get wall side
-            indiana.RotateLeft(50, .5, 100);
-            indiana.StrafeLeft(150, .5, 100);
+            indiana.RotateRight(50, .5, 100);
+            indiana.StrafeRight(150, .5, 100);
             indiana.Intake.turnIntakeOn();
             indiana.Feeders.ActivateLeftBumper();
             indiana.Feeders.ActivateRightBumper();
             CodeDebugger("a");
             indiana.MoveStraight(1180, .7, 500);
+            CodeDebugger("b");
             CodeDebugger("d");
             sleep(2000);
             indiana.Feeders.DeactivateLeftBumper();
@@ -94,33 +95,33 @@ public class BlueLongMainS5 extends LinearOpMode {
             CodeDebugger("g");
             indiana.Launchers.RunAtVelocity(velocityPercentage);
             CodeDebugger("h");
-            indiana.RotateRight(10, .5, 100);
-            indiana.MoveStraight(-1180, .5, 100);
+            indiana.RotateLeft(10, .5, 100);
+            indiana.MoveStraight(-1100, .5, 100);
             CodeDebugger("i");
-            indiana.RotateRight(70, .5, 100);
+            indiana.RotateLeft(63, .5, 100);
             CodeDebugger("j");
             indiana.MoveStraight(120,0.5,100);
             CodeDebugger("k");
             indiana.ReverseFeeders(150);
-            indiana.RotateLeft(18,0.5,100);
+            indiana.RotateRight(13,0.5,100);
             // need to open gates
             indiana.Gates.OpenBothGates();
             // #GatesOpen
             // sleep til Gates are open
             indiana.Gates.WaitForGateToOpen();
-            indiana.ShootAllFourSlots(velocityPercentage,400);
+            indiana.ShootAllFourSlots(velocityPercentage,800);
 
 
 
-            indiana.RotateRight(16.5,0.4,100);
+            indiana.RotateLeft(17,0.4,100);
 
             indiana.MoveStraight(-180, .6, 200);
             indiana.Launchers.TurnPowerOff();
 
             //sleep(Math.max(4000-startWaitTime*1000,0));
-            indiana.ColorLEDsKITTSequence(Math.max(4-startWaitTime,0),"blue");
+            indiana.ColorLEDsKITTSequence(Math.max(2-startWaitTime,0),"red");
                     
-            indiana.StrafeLeft(650, .6, 200);
+            indiana.StrafeRight(600, .6, 200);
 
             indiana.EndAuton();
         }
