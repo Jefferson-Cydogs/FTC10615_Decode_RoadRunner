@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAutonBlue;
+import org.firstinspires.ftc.teamcode.cydogs.components.DriverConfigQuestions;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
@@ -34,7 +35,7 @@ public class BlueLongMainS5 extends LinearOpMode {
         indiana.ColorLEDForAlliance("far");
 
 
-        int startWaitTime = indiana.AskStartWaitTime();
+        int startWaitTime = DriverConfigQuestions.AskStartWaitTime(this);
 
         waitForStart();
 

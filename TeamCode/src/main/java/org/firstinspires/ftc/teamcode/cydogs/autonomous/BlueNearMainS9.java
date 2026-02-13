@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAutonBlue;
+import org.firstinspires.ftc.teamcode.cydogs.components.DriverConfigQuestions;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 
@@ -36,7 +37,7 @@ public class BlueNearMainS9 extends LinearOpMode {
         indiana.ColorLEDForAlliance("near");
 
 
-        int startWaitTime = indiana.AskStartWaitTime();
+        int startWaitTime = DriverConfigQuestions.AskStartWaitTime(this);
 
         // Wait for the start button to be pressed on the driver station
         waitForStart();

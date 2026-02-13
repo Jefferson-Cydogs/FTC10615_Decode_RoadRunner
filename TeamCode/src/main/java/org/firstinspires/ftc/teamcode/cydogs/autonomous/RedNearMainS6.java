@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAutonRed;
+import org.firstinspires.ftc.teamcode.cydogs.components.DriverConfigQuestions;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 
@@ -35,7 +36,7 @@ public class RedNearMainS6 extends LinearOpMode {
 
 
         // this has to be last line of code before wait for start
-        int startWaitTime = indiana.AskStartWaitTime();
+        int startWaitTime = DriverConfigQuestions.AskStartWaitTime(this);
 
         // Wait for the start button to be pressed on the driver station
         waitForStart();
