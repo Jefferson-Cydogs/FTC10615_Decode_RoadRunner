@@ -118,49 +118,7 @@ public class IndianaAuton extends IndianaChassis {
             RightLED.SetColorByName(Alliance);
         }
     }
-    public void ShootThreeShots(double velocityPercentage)
-    {
-        if (CurrentMotif == "PPG")
-        {
-            ShootPurple(900,velocityPercentage,300);
-            ShootPurple(600, velocityPercentage, 1500);//2000
-            ShootGreen(600, velocityPercentage, 800, false);
 
-        } else if(CurrentMotif=="GPP") {
-            ShootGreen(900, velocityPercentage, 800, true);
-            ShootPurple(600,velocityPercentage,300);
-            ShootPurple(600, velocityPercentage, 1500);
-        }
-        else  // PGP
-        {
-            ShootPurple(900,velocityPercentage,250);
-            ShootGreen(600, velocityPercentage, 800, true);
-            ShootPurple(600, velocityPercentage, 1500);
-
-        }
-    }
-
-    public void ShootThreeShotsSecondTime(double velocityPercentage)
-    {
-        if (CurrentMotif == "PPG")
-        {
-            ShootPurple(900,velocityPercentage,300);
-            ShootPurple(600, velocityPercentage, 1500);//2000
-            ShootGreen(600, velocityPercentage, 2500, false);
-
-        } else if(CurrentMotif=="GPP") {
-            ShootGreen(900, velocityPercentage, 2500, true);
-            ShootPurple(600,velocityPercentage,300);
-            ShootPurple(600, velocityPercentage, 1500);
-        }
-        else  // PGP
-        {
-            ShootPurple(900,velocityPercentage,250);
-            ShootGreen(600, velocityPercentage, 2500, true);
-            ShootPurple(600, velocityPercentage, 1500);
-
-        }
-    }
 
     public void ShootPurple(int sleepFirst, double velocityPercentage, int bumperRunTime)
     {
@@ -204,12 +162,6 @@ public class IndianaAuton extends IndianaChassis {
        Intake.turnIntakeOn();
         Feeders.MoveRightBumper(ForHowLong);
       Intake.turnIntakeOff();
-    }
-    private void RunLeftBumperNoIntake(int ForHowLong)
-    {
-
-        Feeders.MoveLeftBumper(ForHowLong);
-
     }
 
     private void RunRightBumperNoIntake(int ForHowLong)
