@@ -47,6 +47,9 @@ public class IndianaAuton extends IndianaChassis {
         Gates = new Gates(currentOp);
         Intake.standardSpeed = 0.75;
     }
+
+    // This says no uses but is important to keep so that the constructor can be
+    //  called without setDebugMode
     public IndianaAuton(LinearOpMode currentOp, String alliance)
     {
         this(currentOp, alliance, false);
@@ -171,11 +174,6 @@ public class IndianaAuton extends IndianaChassis {
 
     }
 
-
-
-
-
-
     public void EjectAllArtifacts(int forHowLong)
     {
         Intake.reverseIntake();
@@ -256,8 +254,6 @@ public class IndianaAuton extends IndianaChassis {
 
     public void EndAuton()
     {
-
-
         ColorLEDForAlliance();
         LaunchersWithVelocity.LauncherDecelerator.decelerateAsync(Launchers.Launchers, 0.5,0.02,50);
 
