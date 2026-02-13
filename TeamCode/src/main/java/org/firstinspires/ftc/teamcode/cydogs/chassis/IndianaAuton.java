@@ -141,13 +141,11 @@ public class IndianaAuton extends IndianaChassis {
     public void ShootPurpleNoWait(int sleepFirst, double velocityPercentage, int bumperRunTime)
     {
         myOpMode.sleep(sleepFirst);
-        //Launchers.WaitForLaunchersToBeAtSpeed(velocityPercentage, 2000);
         RunLeftIntakeAndBumper(bumperRunTime);
     }
     public void ShootGreenNoWait(int sleepFirst, double velocityPercentage, int bumperRunTime, boolean noIntake)
     {
         myOpMode.sleep(sleepFirst);
-        //Launchers.WaitForLaunchersToBeAtSpeed(velocityPercentage, 2000);
         if(noIntake) {RunRightBumperNoIntake(bumperRunTime);}
         else {RunRightIntakeAndBumper(bumperRunTime);}
 
@@ -217,6 +215,8 @@ public class IndianaAuton extends IndianaChassis {
         }
     }
 
+    // maybe create variables for the frist and second times, so you can call it and pass
+    //  first or second and then it uses the correct variables
     public void ShootSecondThreeShotsFast(double velocityPercentage, int preShotWait)
     {
         if (CurrentMotif == "PPG")
