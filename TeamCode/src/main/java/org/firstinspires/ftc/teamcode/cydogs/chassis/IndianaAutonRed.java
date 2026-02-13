@@ -6,7 +6,10 @@ public class IndianaAutonRed extends IndianaAuton {
 
     public IndianaAutonRed(LinearOpMode currentOp)
     {
-        super(currentOp, "red");
+        this(currentOp,false);
+    }
+    public IndianaAutonRed(LinearOpMode currentOp, boolean setDebugMode)  {
+        super(currentOp, "red", setDebugMode);
     }
 
     public void RedCommonStart(double velocityPercentage, int preShotWait)

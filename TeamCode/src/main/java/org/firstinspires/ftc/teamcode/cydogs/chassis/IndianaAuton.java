@@ -27,13 +27,15 @@ public class IndianaAuton extends IndianaChassis {
     public String CurrentMotif = "None";
     public String Alliance;
 
+    private boolean debugMode = false;
+
     // This is called a constructor method, it is the same name as the class
     //  and used when first instantiating the class in the place it's used
-    public IndianaAuton(LinearOpMode currentOp, String alliance)
+    public IndianaAuton(LinearOpMode currentOp, String alliance, boolean setDebugMode)
     {
         // this is how you call the constructor of the class you're extending
         super(currentOp);
-
+        debugMode = setDebugMode;
         Alliance = alliance.toLowerCase();
         TagReader = new AprilTagReaderDuo(currentOp,Alliance);
         Feeders = new Feeders(currentOp);
@@ -44,7 +46,10 @@ public class IndianaAuton extends IndianaChassis {
         RightLED = new ColorLED(currentOp,"RightLED");
         Gates = new Gates(currentOp);
         Intake.standardSpeed = 0.75;
-
+    }
+    public IndianaAuton(LinearOpMode currentOp, String alliance)
+    {
+        this(currentOp, alliance, false);
     }
 
 
@@ -396,4 +401,11 @@ public class IndianaAuton extends IndianaChassis {
         RightLED.SetColorName(ColorOption.OFF);
     }
 
+    public void CodeDebugger(String message)
+    {
+        if(debugMode) {
+            myOpMode.telemetry.addData("Debugger: ", message);
+            myOpMode.telemetry.update();
+        }
+    }
 }

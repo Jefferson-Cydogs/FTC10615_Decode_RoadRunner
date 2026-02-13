@@ -144,15 +144,4 @@ public class BlueLongMainS6 extends LinearOpMode {
     }
 
 
-    int debugCounter = 0;
-    public void CodeDebugger(String message)
-    {
-        if(debugCode) {
-            debugCounter += 1;
-            telemetry.addData(message, debugCounter);
-            telemetry.update();
-        }
-
-
-    }
 }

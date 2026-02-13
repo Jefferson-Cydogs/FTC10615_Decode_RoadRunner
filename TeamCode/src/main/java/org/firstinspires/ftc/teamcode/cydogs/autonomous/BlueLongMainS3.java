@@ -30,7 +30,7 @@ public class BlueLongMainS3 extends LinearOpMode {
         // load 2 purple on left side
         // load 1 green on right side by launcher
 
-
+        // pass setDebugMode to true in constructor to enable the debug method
         indiana = new IndianaAutonBlue(this);
         indiana.InitializeAuton();
 
@@ -80,7 +80,7 @@ public class BlueLongMainS3 extends LinearOpMode {
             indiana.Launchers.TurnPowerOff();
 
             sleep(18000-startWaitTime*1000);
-            //indiana.ColorLEDsKITTSequence(18-startWaitTime,"blue");
+
 
             indiana.StrafeLeft(500, .6, 200);
 
@@ -88,44 +88,4 @@ public class BlueLongMainS3 extends LinearOpMode {
         }
     }
 
-    private void GetGreenPurplePurple()
-    {
-        // Get Green
-        // #Intake ON
-        indiana.Intake.turnIntakeOn();
-
-        // #LeftFeeder ON
-        indiana.Feeders.ActivateRightBumper();
-
-        indiana.MoveStraight(390, .3, 400);
-        //indiana.MoveStraight(170, .3, 200);
-
-        // Get Purples
-        // #RightFeeder ON
-        indiana.Feeders.ActivateLeftBumper();
-
-        indiana.StrafeRight(100, .4, 300);
-
-        indiana.MoveStraight(370, .4, 200);
-
-        // #LeftFeeder OFF
-        indiana.Feeders.DeactivateRightBumper();
-
-        // #RightFeeder OFF
-        indiana.Feeders.DeactivateLeftBumper();
-
-    }
-
-
-    int debugCounter = 0;
-    public void CodeDebugger(String message)
-    {
-        if(debugCode) {
-            debugCounter += 1;
-            telemetry.addData(message, debugCounter);
-            telemetry.update();
-        }
-
-
-    }
 }
