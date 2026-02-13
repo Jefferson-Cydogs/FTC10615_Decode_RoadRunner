@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 public class IndianaAutonBlue extends IndianaAuton {
 
     public IndianaAutonBlue(LinearOpMode currentOp) {
-        this(currentOp,false);;
+        this(currentOp,false);
     }
     public IndianaAutonBlue(LinearOpMode currentOp, boolean setDebugMode)  {
         super(currentOp, "blue", setDebugMode);
