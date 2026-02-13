@@ -5,7 +5,6 @@ import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaChassis;
-import org.firstinspires.ftc.teamcode.cydogs.chassis.WheelieChassis;
 
 
 // The 'extends LinearOpMode' is needed so this code can run the build in op mode code from FIRST.

@@ -1,10 +1,13 @@
 package org.firstinspires.ftc.teamcode.cydogs.chassis;
 
+import static java.lang.Math.abs;
+import static java.lang.Math.max;
+import static java.lang.Math.pow;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
-import static java.lang.Math.*;
 
 
 public class IndianaChassis {

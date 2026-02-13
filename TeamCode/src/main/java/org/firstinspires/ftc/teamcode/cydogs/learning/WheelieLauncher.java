@@ -1,8 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.learning;
 
-import com.qualcomm.robotcore.hardware.DcMotor;
-
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
 
 public class WheelieLauncher {
     public static final double MOTOR_MIN = -1.0;
