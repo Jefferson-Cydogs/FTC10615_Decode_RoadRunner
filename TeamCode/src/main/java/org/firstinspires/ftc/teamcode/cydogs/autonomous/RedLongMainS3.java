@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
+import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAutonRed;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 
@@ -17,7 +17,7 @@ public class RedLongMainS3 extends LinearOpMode {
     // declare variables
     private double velocityPercentage = 0.66;
 
-    private IndianaAuton indiana;
+    private IndianaAutonRed indiana;
 
     private ElapsedTime currentTimer;
     private EventTracker eventTracker;
@@ -30,7 +30,7 @@ public class RedLongMainS3 extends LinearOpMode {
         // load 1 green on right side by launcher
 
 
-        indiana = new IndianaAuton(this, "red");
+        indiana = new IndianaAutonRed(this);
         indiana.InitializeAuton();
 
         currentTimer = new ElapsedTime();
@@ -84,34 +84,6 @@ public class RedLongMainS3 extends LinearOpMode {
 
             indiana.EndAuton();
         }
-    }
-
-    private void GetGreenPurplePurple()
-    {
-        // Get Green
-        // #Intake ON
-        indiana.Intake.turnIntakeOn();
-
-        // #LeftFeeder ON
-        indiana.Feeders.ActivateRightBumper();
-
-        indiana.MoveStraight(350, .25, 400);
-        //indiana.MoveStraight(170, .3, 200);
-
-        // Get Purples
-        // #RightFeeder ON
-        indiana.Feeders.ActivateLeftBumper();
-
-        indiana.StrafeRight(120,.42, 300);
-
-        indiana.MoveStraight(390, .42, 200);
-
-        // #LeftFeeder OFF
-        indiana.Feeders.DeactivateRightBumper();
-
-        // #RightFeeder OFF
-        indiana.Feeders.DeactivateLeftBumper();
-
     }
 
 

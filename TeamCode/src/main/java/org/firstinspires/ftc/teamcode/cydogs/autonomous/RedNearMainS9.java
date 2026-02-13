@@ -5,6 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAuton;
+import org.firstinspires.ftc.teamcode.cydogs.chassis.IndianaAutonRed;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 
 
@@ -16,7 +17,7 @@ public class RedNearMainS9 extends LinearOpMode {
 
     private double velocityPercentage = 0.50;
 
-    private IndianaAuton indiana;
+    private IndianaAutonRed indiana;
     private ElapsedTime currentTimer;
     private EventTracker eventTracker;
 
@@ -29,7 +30,7 @@ public class RedNearMainS9 extends LinearOpMode {
         // load 1 green on right side by launcher
 
 
-         indiana = new IndianaAuton(this, "red");
+         indiana = new IndianaAutonRed(this);
          indiana.InitializeAuton();
         currentTimer = new ElapsedTime();
         eventTracker = new EventTracker();
