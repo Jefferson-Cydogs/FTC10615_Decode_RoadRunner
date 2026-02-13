@@ -2,14 +2,27 @@ package org.firstinspires.ftc.teamcode.cydogs.chassis;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
-public class IndianaAutonRed extends IndianaAuton {
+public class IndianaAutonBlue extends IndianaAuton {
 
-    public IndianaAutonRed(LinearOpMode currentOp)
-    {
-        super(currentOp, "red");
+    public IndianaAutonBlue(LinearOpMode currentOp) {
+        super(currentOp, "blue");
     }
 
-    public void RedCommonStart(double velocityPercentage, int preShotWait)
+
+    public void BlueNearOpeningFlourish()
+    {
+        // was .55
+        MoveStraight(1100, 0.6, 100);
+        RotateLeft(83, 0.6, 100);
+
+        // was 150
+        myOpMode.sleep(100);
+        GetMotif();
+        ColorLEDForMotif();
+    }
+
+
+    public void BlueCommonStart(double velocityPercentage, int preShotWait)
     {
 
         // this clears bumper servo bug
@@ -19,13 +32,13 @@ public class IndianaAutonRed extends IndianaAuton {
         // #LauncherON
         Launchers.RunAtVelocity(velocityPercentage);
 
-        RedNearOpeningFlourish();
+        BlueNearOpeningFlourish();
 
         // reduce pressure on gates before shooting
         ReverseFeeders(150);
 
         // was .55.  was 47 degrees
-        RotateRight(61, 0.55, 100);
+        RotateLeft(48, 0.55, 100);
 
         // need to open gates
         Gates.OpenBothGates();
@@ -35,17 +48,25 @@ public class IndianaAutonRed extends IndianaAuton {
 
 
         ShootFirstThreeShotsFast(velocityPercentage, preShotWait);
+
+        // need to sleep so it doesn't move while shooting
         myOpMode.sleep(200);
+        // TO ADD
+        // Check to see if color sensors see anything, if so, run
+        // ejection code
+
 
         // was .5
-        RotateRight(27,.5,100);
+        RotateLeft(24,.55,100);
+
+
 
         // #GatesClosed
         // was .45
-        StrafeRight(274, .5, 100);
+        StrafeLeft(190, .5, 100);
         Gates.CloseBothGates();
 
-        RedAllianceNearPurplePurpleGreen();
+        BlueAllianceNearPurplePurpleGreen();
         // #Intake ON
 
         // was .5
@@ -58,16 +79,7 @@ public class IndianaAutonRed extends IndianaAuton {
 
 
 
-    public void RedNearOpeningFlourish()
-    {
-        MoveStraight(1100, 0.6, 100);
-        RotateRight(68, 0.6, 100);
-        myOpMode.sleep(100);
-        GetMotif();
-        ColorLEDForMotif();
-    }
-
-    public void RedAllianceNearPurplePurpleGreen()
+    private void BlueAllianceNearPurplePurpleGreen()
     {
         // Get purple
         // #Intake ON
@@ -76,7 +88,7 @@ public class IndianaAutonRed extends IndianaAuton {
         // #LeftFeeder ON
         Feeders.ActivateLeftBumper();
 
-        MoveStraight(645, .25, 200);
+        MoveStraight(700, .3, 100);
         //  indiana.MoveStraight(425, .4, 100);
         //  indiana.MoveStraight(320, .2, 300);
 
@@ -87,14 +99,16 @@ public class IndianaAutonRed extends IndianaAuton {
         // #RightFeeder ON
         Feeders.ActivateRightBumper();
 
-        StrafeLeft(128,.4, 100);
+        StrafeLeft(117,.4, 100);
 
-        MoveStraight(220, .3, 200);
+        MoveStraight(230, .4, 100);
 
         // #LeftFeeder OFF
         Feeders.DeactivateLeftBumper();
 
 
         // #RightFeeder OFF
+
+
     }
 }
