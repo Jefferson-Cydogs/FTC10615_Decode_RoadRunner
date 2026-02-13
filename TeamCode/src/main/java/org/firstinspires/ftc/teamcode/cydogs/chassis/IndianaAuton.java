@@ -27,10 +27,13 @@ public class IndianaAuton extends IndianaChassis {
     public String CurrentMotif = "None";
     public String Alliance;
 
-    // add code to light LED for motif
+    // This is called a constructor method, it is the same name as the class
+    //  and used when first instantiating the class in the place it's used
     public IndianaAuton(LinearOpMode currentOp, String alliance)
     {
+        // this is how you call the constructor of the class you're extending
         super(currentOp);
+
         Alliance = alliance.toLowerCase();
         TagReader = new AprilTagReaderDuo(currentOp,Alliance);
         Feeders = new Feeders(currentOp);
