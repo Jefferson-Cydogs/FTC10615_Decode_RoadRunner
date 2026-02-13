@@ -19,10 +19,7 @@ public class RedLongMainS3 extends LinearOpMode {
 
     private IndianaAutonRed indiana;
 
-    private ElapsedTime currentTimer;
-    private EventTracker eventTracker;
 
-    private boolean debugCode = false;
 
     @Override
     public void runOpMode() {
@@ -33,8 +30,7 @@ public class RedLongMainS3 extends LinearOpMode {
         indiana = new IndianaAutonRed(this);
         indiana.InitializeAuton();
 
-        currentTimer = new ElapsedTime();
-        eventTracker = new EventTracker();
+
 
         indiana.ColorLEDForAlliance("far");
 

@@ -17,8 +17,6 @@ public class RedNearMainS6 extends LinearOpMode {
     private double velocityPercentage = 0.525;
 
     private IndianaAutonRed indiana;
-    private ElapsedTime currentTimer;
-    private EventTracker eventTracker;
 
 
 
@@ -31,10 +29,10 @@ public class RedNearMainS6 extends LinearOpMode {
 
          indiana = new IndianaAutonRed(this);
          indiana.InitializeAuton();
-        currentTimer = new ElapsedTime();
+
 
         indiana.ColorLEDForAlliance("near");
-        eventTracker = new EventTracker();
+
 
         // this has to be last line of code before wait for start
         int startWaitTime = indiana.AskStartWaitTime();
