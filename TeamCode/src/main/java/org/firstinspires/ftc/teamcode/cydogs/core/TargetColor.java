@@ -50,7 +50,7 @@ public enum TargetColor {
     public boolean matches2(float hue)
     {
         boolean inPrimaryRange = (low1 <= hue) && (hue <= high1);
-        boolean inSecondaryRange = (0 <= low2) && (low2 <= hue) && (hue <= high2); // Only check if second range exists
+        boolean inSecondaryRange = (0 <= low2) && ((low2 <= hue) && (hue <= high2)); // Only check if second range exists (different from -1)
 
         return inPrimaryRange || inSecondaryRange;
     }

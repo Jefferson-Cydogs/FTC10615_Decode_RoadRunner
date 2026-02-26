@@ -15,12 +15,8 @@ import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 
 public class ColorFinder {
 
-    //public static final float MIN_SATURATION = 0.5f;
-    public static final int REQUIRED_CONSECUTIVE_HITS = 3;
     private static final double DISTANCE_THRESHOLD_CM = 5.5;
     private static final int REQUIRED_MATCHES = 2;
-    //private long lastArtifactCheckTime = 0;
-    //private boolean lastArtifactResult = false;
 
     private final LinearOpMode opMode;
     private final NormalizedColorSensor colorSensor;
@@ -36,64 +32,6 @@ public class ColorFinder {
         // 30.0 is a safe default for FTC
         colorSensor.setGain(30);
     }
-
-    public boolean SeeColor(TargetColor targetColor)
-    {
-        int consecutiveHits = 0;
-        int escapeCounter = 0;
-
-        while (consecutiveHits < REQUIRED_CONSECUTIVE_HITS && escapeCounter < 10) {
-            NormalizedRGBA colors = colorSensor.getNormalizedColors();
-            float[] hsv = new float[3];
-            int r = (int) (colors.red * 255);
-            int g = (int) (colors.green * 255);
-            int b = (int) (colors.blue * 255);
-            Color.RGBToHSV(r, g, b, hsv);
-
-            if (targetColor.matches(hsv)) {
-                consecutiveHits++;
-                escapeCounter = 0;
-            } else {
-                escapeCounter++;
-            }
-
-            if (consecutiveHits >= REQUIRED_CONSECUTIVE_HITS) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    /*public boolean SeeArtifactColorWithTimer(TargetColor targetColor)
-    {
-        long currentTime = System.currentTimeMillis();
-        if (currentTime - lastArtifactCheckTime < 500) {
-            return lastArtifactResult; // Return cached result
-        }
-
-        int matchCount = 0;
-
-        for (int i = 0; i < 3; i++) {
-            double Distance = ((DistanceSensor) colorSensor).getDistance(DistanceUnit.CM);
-            if (Distance > DISTANCE_THRESHOLD_CM) {
-                continue; // Too far, skip this reading
-            }
-
-            NormalizedRGBA NormalizedColors = colorSensor.getNormalizedColors();
-            int RawColor = NormalizedColors.toColor();
-            float Hue = JavaUtil.colorToHue(RawColor);
-
-            if (targetColor.matches2(Hue)) {
-                matchCount++;
-            }
-        }
-
-        lastArtifactResult = matchCount >= REQUIRED_MATCHES;
-        lastArtifactCheckTime = currentTime;
-
-        return lastArtifactResult;
-    }*/
 
     public boolean SeeArtifactColor(TargetColor targetColor)
     {
