@@ -1,10 +1,12 @@
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
 import com.qualcomm.hardware.rev.RevColorSensorV3;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 
+@Disabled
 @TeleOp(name="Color Sensor HSV Calibration", group="Configs")
 public class ColorSensorHSVCalibration extends LinearOpMode {
 
