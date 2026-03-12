@@ -47,7 +47,7 @@ public class ColorFinder {
             int RawColor = NormalizedColors.toColor();
             float Hue = JavaUtil.colorToHue(RawColor);
 
-            if (targetColor.matches2(Hue)) {
+            if (targetColor.matches(Hue)) {
                 matchCount++;
             }
         }
@@ -64,7 +64,7 @@ public class ColorFinder {
             int RawColor = NormalizedColors.toColor();
             float Hue = JavaUtil.colorToHue(RawColor);
 
-            if (targetColor.matches2(Hue)) {
+            if (targetColor.matches(Hue)) {
                 matchCount++;
             }
         }
