@@ -13,10 +13,8 @@ public class LaunchersWithVelocity
     //    GoBILDA 5203 Series Yellow Jacket 435 RPM, 384.5 PPR
     // Max TPS = (Motor's RPM / 60) * Motor's TicksPerRotation
     //public static final double MaxTicksPerSecond = (312.0 / 60.0) * 537.7; //TPS=2,796.04 with no modifications
-    //public static final double MaxTicksPerSecond = (4620.0 / 60.0) * 28.0; //TPS=2,156 without gearbox
     public static final double MaxTicksPerSecond = (4816.0 / 60.0) * 28.0; //TPS=2,247.47 without gearbox
-    private final double VelocityTolerance = 0.018; //1.8%
-    //private final double VelocityCorrection = 0.975;
+    private final double VelocityTolerance = 0.018; //= 1.8%
 
     private LinearOpMode opMode;
     public DcMotorEx Launchers;
@@ -24,11 +22,9 @@ public class LaunchersWithVelocity
     private static final double I = 0;
     private static final double D = 0;
     private static final double F = 13.19168;
-    //private double adjustedF;
 
     private ColorLED LauncherLED;
 
-    //private double voltage;
 
     public void initLauncher() {
     }
@@ -55,51 +51,10 @@ public class LaunchersWithVelocity
 
     public void RunAtVelocity(double TargetVelocityPercentage)
     {
-        /*voltage = opMode.hardwareMap.voltageSensor.iterator().next().getVoltage();
-        adjustedF = F * 12.0 / voltage;
-        Launchers.setVelocityPIDFCoefficients(P, I, D, adjustedF);*/
         Launchers.setVelocity(TargetVelocityPercentage * MaxTicksPerSecond);
-        //Launchers.setVelocity((TargetVelocityPercentage * VelocityCorrection) * MaxTicksPerSecond);
 
-        /*opMode.telemetry.addData("Battery Voltage", "%.2f V", voltage);
-        opMode.telemetry.addData("Target Velocity", TargetVelocityPercentage * MaxTicksPerSecond);
-        opMode.telemetry.addData("Actual Velocity", Launchers.getVelocity());
-        opMode.telemetry.addData("Adjusted F", adjustedF);*/
-    }
-
-    /** Fix from goBILDA for the Floodgate Power Switch disconnect issue.
-        Would need to be called in a loop, until reaching targetVelocity. Needs testing* */
-    void setSafeVelocity(double targetVelocity)
-    {
-        final double SLEW_RATE = 0.2 * MaxTicksPerSecond;
-        double currentVelocity = Launchers.getVelocity();
-
-        double desiredChange = targetVelocity - currentVelocity;
-        double limitedChange = Math.max(-SLEW_RATE,
-                                        Math.min(desiredChange, SLEW_RATE));
-
-        Launchers.setVelocity(currentVelocity += limitedChange);
-    }
-
-    public void StopLaunchersSafely()
-    {
-        /*double IntermediateVelocity = Launchers.getVelocity() / 3;
-
-        Launchers.setVelocity(IntermediateVelocity * 2);
-        opMode.sleep(200);
-        Launchers.setVelocity(IntermediateVelocity);
-        opMode.sleep(200);
-        Launchers.setVelocity(0);*/
-        while (Launchers.getVelocity() > (MaxTicksPerSecond * 0.1)) {
-        }
-
-        Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.BRAKE);
-        Launchers.setVelocity(0);
-    }
-
-    public void ResetLaunchersToFloat()
-    {
-        Launchers.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
+        /*opMode.telemetry.addData("Target Velocity", TargetVelocityPercentage * MaxTicksPerSecond);
+        opMode.telemetry.addData("Actual Velocity", Launchers.getVelocity());*/
     }
 
     public static class LauncherDecelerator
