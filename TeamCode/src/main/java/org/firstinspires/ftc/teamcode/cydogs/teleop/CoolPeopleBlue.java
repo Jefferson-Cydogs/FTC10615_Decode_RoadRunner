@@ -17,7 +17,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
 @TeleOp(name="Cool People TeleOp", group= "TeleOp")
-public class CoolPeopleBlueV2 extends LinearOpMode {
+public class CoolPeopleBlue extends LinearOpMode {
 
     /** declare variables here */
     private IndianaChassis Wheels;
