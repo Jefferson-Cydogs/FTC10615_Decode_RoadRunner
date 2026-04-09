@@ -7,7 +7,7 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Gates;
-import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
+import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 
 import java.util.Objects;
@@ -15,7 +15,7 @@ import java.util.Objects;
 public class IndianaAuton extends IndianaChassis {
     // declare devices
     public AprilTagReaderDuo TagReader;
-    public IntakeV2 Intake;
+    public org.firstinspires.ftc.teamcode.cydogs.components.Intake Intake;
     public Feeders Feeders;
     public LaunchersWithVelocity Launchers;
     public ColorLED LauncherLED;
@@ -39,7 +39,7 @@ public class IndianaAuton extends IndianaChassis {
         Alliance = alliance.toLowerCase();
         TagReader = new AprilTagReaderDuo(currentOp,Alliance);
         Feeders = new Feeders(currentOp);
-        Intake = new IntakeV2(currentOp);
+        Intake = new Intake(currentOp);
         LauncherLED = new ColorLED(currentOp,"LauncherLED");
         Launchers = new LaunchersWithVelocity(currentOp);
         LeftLED = new ColorLED(currentOp,"LeftLED");

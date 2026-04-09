@@ -4,7 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 
 
-public class IntakeV2
+public class Intake
 {
     private LinearOpMode opMode;
     private DcMotorEx intake;
@@ -12,7 +12,7 @@ public class IntakeV2
     public double standardSpeed = 0.70;
     public double standardReverseSpeed = -0.75;
 
-    public IntakeV2(LinearOpMode opMode)
+    public Intake(LinearOpMode opMode)
     {
         this.opMode = opMode;
 

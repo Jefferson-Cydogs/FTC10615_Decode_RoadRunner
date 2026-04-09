@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED;
 import org.firstinspires.ftc.teamcode.cydogs.components.ColorLED.ColorOption;
 import org.firstinspires.ftc.teamcode.cydogs.components.Feeders;
 import org.firstinspires.ftc.teamcode.cydogs.components.Gates;
-import org.firstinspires.ftc.teamcode.cydogs.components.IntakeV2;
+import org.firstinspires.ftc.teamcode.cydogs.components.Intake;
 import org.firstinspires.ftc.teamcode.cydogs.components.LaunchersWithVelocity;
 import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -22,7 +22,7 @@ public class CoolPeopleBlue extends LinearOpMode {
     /** declare variables here */
     private IndianaChassis Wheels;
 
-    private IntakeV2 ArtifactEater;
+    private Intake ArtifactEater;
     private Feeders BumperCars;
     private Gates Gates;
     private LaunchersWithVelocity RocketLauncher3000;
@@ -180,7 +180,7 @@ public class CoolPeopleBlue extends LinearOpMode {
     private void initializeDevices()
     {
         RocketLauncher3000 = new LaunchersWithVelocity(this);
-        ArtifactEater = new IntakeV2(this);
+        ArtifactEater = new Intake(this);
         BumperCars = new Feeders(this);
         Gates = new Gates(this);
         LauncherLED = new ColorLED(this,"LauncherLED");
