@@ -53,16 +53,14 @@ public class IndianaChassis {
         it to store and use the current op mode.  The four wheels' direction is initialized here. */
     public IndianaChassis(LinearOpMode currentOp)
     {
-        // The op mode is important code provided by first.  It has the hardwareMap, sleep function,
-        //   and telemetry functions.
+        // The op mode is important code provided by first. It has the hardwareMap, sleep function, and telemetry functions.
         myOpMode = currentOp;
         HardwareMap hardwareMap = myOpMode.hardwareMap;
 
         // This gets the devices from the configuration on the robot.
-        //    This call basically says "Get me the thing called FrontRightWheel from the
-        //    configuration, and trust me it can be mapped to the DCMotor class. If it's
-        //    not a motor, then code later on will throw errors when it tries to do motor
-        //    things with a non motor.
+        //    This call basically says "Get me the thing called FrontRightWheel from the configuration,
+        //    and trust me it can be mapped to the DCMotor class. If it's not a motor, then
+        //    code later on will throw errors when it tries to do motor things with a non motor.
         FrontLeftWheel = hardwareMap.get(DcMotor.class, "FrontLeftWheel");
         FrontRightWheel = hardwareMap.get(DcMotor.class, "FrontRightWheel");
         BackLeftWheel = hardwareMap.get(DcMotor.class, "BackLeftWheel");
@@ -86,14 +84,7 @@ public class IndianaChassis {
         BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
         BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.FLOAT);
 
-        // Clear Encoders of prior data; only necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
-        // or their encoders data will be read (even when using RUN_WITHOUT_ENCODER)
-        //FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        //BackRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default); suggested anyway if Auton was using RUN_TO_POSITION
+        // > Set some motors' modes different from RUN_WITHOUT_ENCODER (default); suggested anyway if Autonomous is using RUN_TO_POSITION
         FrontLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         FrontRightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         BackLeftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -122,7 +113,8 @@ public class IndianaChassis {
         BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        // Clear Encoders of prior data
+        // Clear Encoders of prior data; only necessary if motors will be configured to RUN_USING_ENCODER (for Velocity instead of Power)
+        // or their encoders data will be read (under RUN_TO_POSITION or even when using RUN_WITHOUT_ENCODER)
         FrontLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         FrontRightWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         BackLeftWheel.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -145,7 +137,6 @@ public class IndianaChassis {
         ((DcMotorEx) FrontRightWheel).setVelocityPIDFCoefficients(0,0,0,10.175712);
         ((DcMotorEx) BackLeftWheel).setVelocityPIDFCoefficients(0,0,0,11.752998);
         ((DcMotorEx) BackRightWheel).setVelocityPIDFCoefficients(0,0,0,11.398002);
-        // back right wheel parameter 1 was 0.7
 
         // Ensure motors are stopped, for predictable behavior and avoiding unintended motion
         FrontLeftWheel.setPower(0);
@@ -283,8 +274,6 @@ public class IndianaChassis {
         ((DcMotorEx) FrontRightWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) BackLeftWheel).setVelocity(TicksPerSecond);
         ((DcMotorEx) BackRightWheel).setVelocity(TicksPerSecond);
-
-      //  myOpMode.telemetry.addData()
 
         while (myOpMode.opModeIsActive() &&
                FrontLeftWheel.isBusy() && FrontRightWheel.isBusy() && BackLeftWheel.isBusy() && BackRightWheel.isBusy()) {
