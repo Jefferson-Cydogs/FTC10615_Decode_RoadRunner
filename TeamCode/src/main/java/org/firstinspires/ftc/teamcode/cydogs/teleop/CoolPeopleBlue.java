@@ -85,11 +85,16 @@ public class CoolPeopleBlue extends LinearOpMode {
             if (eventTracker.doEvent("CheckArtifacts", currentTimer.seconds(), 0.5)) {
                 ArtifactsInsideRobot = artifactSensors.CheckArtifactsColorAndCount(matchTimer.seconds());
             }
+            if (ArtifactsInsideRobot > 3) {
+                ArtifactEater.turnIntakeOff();
+                ArtifactEater.reverseIntake();
+                sleep(200);
+                ArtifactEater.turnIntakeOff();
+            }
 
             if (eventTracker.doEvent("Telemetry",currentTimer.seconds(),0.5)) {
                 telemetry.addData("Target Launcher Velocity %:", TargetLauncherVelocityPercent);
                 telemetry.addData("Current Launcher Velocity (ticks/s):", RocketLauncher3000.GetCurrentVelocityPercent());
-                //telemetry.addData("Match Timer (s):", (int)matchTimer.seconds());
                 telemetry.update();
             }
         }
