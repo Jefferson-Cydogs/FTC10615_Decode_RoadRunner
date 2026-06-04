@@ -17,7 +17,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
 @TeleOp(name="Cool People TeleOp", group= "TeleOp")
-public class CoolPeopleBlue extends LinearOpMode {
+public class CoolPeople extends LinearOpMode {
 
     /** declare variables here */
     private IndianaChassis Wheels;
@@ -88,7 +88,7 @@ public class CoolPeopleBlue extends LinearOpMode {
             if (ArtifactsInsideRobot > 3) {
                 ArtifactEater.turnIntakeOff();
                 ArtifactEater.reverseIntake();
-                sleep(200);
+                sleep(50);
                 ArtifactEater.turnIntakeOff();
             }
 
