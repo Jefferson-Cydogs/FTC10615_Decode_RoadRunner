@@ -55,7 +55,6 @@ public class IndianaAuton extends IndianaChassis {
         this(currentOp, alliance, false);
     }
 
-
     public void InitializeAuton()
     {
         InitializeChassisAutonomous();
@@ -69,34 +68,28 @@ public class IndianaAuton extends IndianaChassis {
     {
         int counter = 0;
 
-        while(CurrentMotif == "None" && counter<20) {
+        while (CurrentMotif=="None" && counter<20) {
             CurrentMotif = TagReader.getObelisk();
             counter++;
             myOpMode.telemetry.addData("Found Motif: ", CurrentMotif);
             myOpMode.telemetry.update();
         }
-
     }
 
     public void ColorLEDForMotif()
     {
-        if (CurrentMotif == "PPG")
-        {
+        if (CurrentMotif=="PPG") {
             LeftLED.SetColorByName("purple");
             LauncherLED.SetColorByName("purple");
             RightLED.SetColorByName("green");
-
-        } else if(CurrentMotif=="GPP") {
+        } else if (CurrentMotif=="GPP") {
             LeftLED.SetColorByName("green");
             LauncherLED.SetColorByName("purple");
             RightLED.SetColorByName("purple");
-        }
-        else  // PGP
-        {
+        } else { // PGP
             LeftLED.SetColorByName("purple");
             LauncherLED.SetColorByName("green");
             RightLED.SetColorByName("purple");
-
         }
     }
 
@@ -109,19 +102,16 @@ public class IndianaAuton extends IndianaChassis {
 
     public void ColorLEDForAlliance(String NearOrFar)
     {
-        if(NearOrFar.equalsIgnoreCase("near"))
-        {
+        if (NearOrFar.equalsIgnoreCase("near")) {
             LeftLED.SetColorByName("off");
             LauncherLED.SetColorByName(Alliance);
             RightLED.SetColorByName("off");
-        }
-        else {
+        } else {
             LeftLED.SetColorByName(Alliance);
             LauncherLED.SetColorByName(Alliance);
             RightLED.SetColorByName(Alliance);
         }
     }
-
 
     public void ShootPurple(int sleepFirst, double velocityPercentage, int bumperRunTime)
     {
@@ -129,13 +119,16 @@ public class IndianaAuton extends IndianaChassis {
         Launchers.WaitForLaunchersToBeAtSpeed(velocityPercentage, 2000);
         RunLeftIntakeAndBumper(bumperRunTime);
     }
+
     public void ShootGreen(int sleepFirst, double velocityPercentage, int bumperRunTime, boolean noIntake)
     {
         myOpMode.sleep(sleepFirst);
         Launchers.WaitForLaunchersToBeAtSpeed(velocityPercentage, 2000);
-        if(noIntake) {RunRightBumperNoIntake(bumperRunTime);}
-        else {RunRightIntakeAndBumper(bumperRunTime);}
-
+        if (noIntake) {
+            RunRightBumperNoIntake(bumperRunTime);
+        } else {
+            RunRightIntakeAndBumper(bumperRunTime);
+        }
     }
 
     public void ShootPurpleNoWait(int sleepFirst, double velocityPercentage, int bumperRunTime)
@@ -143,33 +136,34 @@ public class IndianaAuton extends IndianaChassis {
         myOpMode.sleep(sleepFirst);
         RunLeftIntakeAndBumper(bumperRunTime);
     }
+
     public void ShootGreenNoWait(int sleepFirst, double velocityPercentage, int bumperRunTime, boolean noIntake)
     {
         myOpMode.sleep(sleepFirst);
-        if(noIntake) {RunRightBumperNoIntake(bumperRunTime);}
-        else {RunRightIntakeAndBumper(bumperRunTime);}
-
+        if (noIntake) {
+            RunRightBumperNoIntake(bumperRunTime);
+        } else {
+            RunRightIntakeAndBumper(bumperRunTime);
+        }
     }
 
     private void RunLeftIntakeAndBumper(int ForHowLong)
     {
         Intake.turnIntakeOn();
         Feeders.MoveLeftBumper(ForHowLong);
-       Intake.turnIntakeOff();
+        Intake.turnIntakeOff();
     }
 
     private void RunRightIntakeAndBumper(int ForHowLong)
     {
-       Intake.turnIntakeOn();
+        Intake.turnIntakeOn();
         Feeders.MoveRightBumper(ForHowLong);
-      Intake.turnIntakeOff();
+        Intake.turnIntakeOff();
     }
 
     private void RunRightBumperNoIntake(int ForHowLong)
     {
-
         Feeders.MoveRightBumper(ForHowLong);
-
     }
 
     public void EjectAllArtifacts(int forHowLong)
@@ -181,7 +175,6 @@ public class IndianaAuton extends IndianaChassis {
         Feeders.DeactivateLeftBumper();
         Feeders.DeactivateRightBumper();
         Intake.turnIntakeOff();
-
     }
 
     public void ReverseFeeders(int forHowLong)
@@ -195,47 +188,37 @@ public class IndianaAuton extends IndianaChassis {
 
     public void ShootFirstThreeShotsFast(double velocityPercentage, int preShotWait)
     {
-        if (CurrentMotif == "PPG")
-        {
+        if (CurrentMotif=="PPG") {
             ShootPurple(preShotWait,velocityPercentage,300);
             ShootPurple(preShotWait, velocityPercentage, 600);//2000
             ShootGreen(preShotWait, velocityPercentage, 400, false);
-
         } else if(CurrentMotif=="GPP") {
             ShootGreen(preShotWait, velocityPercentage, 400, true);
             ShootPurple(preShotWait,velocityPercentage,300);
             ShootPurple(preShotWait, velocityPercentage, 600);
-        }
-        else  // PGP
-        {
+        } else { // PGP
             ShootPurple(preShotWait,velocityPercentage,300);
             ShootGreen(preShotWait, velocityPercentage, 400, true);
             ShootPurple(preShotWait, velocityPercentage, 600);
-
         }
     }
 
-    // maybe create variables for the frist and second times, so you can call it and pass
+    // maybe create variables for the first and second times, so you can call it and pass
     //  first or second and then it uses the correct variables
     public void ShootSecondThreeShotsFast(double velocityPercentage, int preShotWait)
     {
-        if (CurrentMotif == "PPG")
-        {
+        if (CurrentMotif=="PPG") {
             ShootPurple(preShotWait,velocityPercentage,300);
             ShootPurple(preShotWait, velocityPercentage, 600);//2000
             ShootGreen(preShotWait, velocityPercentage, 600, false);
-
         } else if(CurrentMotif=="GPP") {
             ShootGreen(preShotWait, velocityPercentage, 600, true);
             ShootPurple(preShotWait,velocityPercentage,300);
             ShootPurple(preShotWait, velocityPercentage, 600);
-        }
-        else  // PGP
-        {
+        } else { // PGP
             ShootPurple(preShotWait,velocityPercentage,300);
             ShootGreen(preShotWait, velocityPercentage, 600, true);
             ShootPurple(preShotWait, velocityPercentage, 600);
-
         }
     }
 
@@ -247,11 +230,6 @@ public class IndianaAuton extends IndianaChassis {
         ShootGreen(preShotWait, velocityPercentage, 600, false);
     }
 
-
-
-
-
-
     public void EndAuton()
     {
         ColorLEDForAlliance();
@@ -259,10 +237,6 @@ public class IndianaAuton extends IndianaChassis {
 
         myOpMode.sleep(2000);
     }
-
-
-
-
 
     public void ShootThirdThreeShotsFast(double velocityPercentage, int preShotWait)
     {
@@ -272,7 +246,8 @@ public class IndianaAuton extends IndianaChassis {
         ShootGreenNoWait(preShotWait, velocityPercentage, 500, false);
     }
 
-    public void ColorLEDsKITTSequence(int DurationInSeconds, String AllianceColor) {
+    public void ColorLEDsKITTSequence(int DurationInSeconds, String AllianceColor)
+    {
         // Define Knight Rider style sequence
         ColorLED[][] Sequence = {
                 {LeftLED},
@@ -284,15 +259,15 @@ public class IndianaAuton extends IndianaChassis {
         };
 
         long EndTime = System.currentTimeMillis() + (DurationInSeconds * 1000L);
-        int StepDelay = 250; // ms per step, can be tuned
+        int StepDelay = 150; // ms per step, can be tuned
+
+        //Turn all LEDs off before starting
+        LeftLED.SetColorName(ColorOption.OFF);
+        LauncherLED.SetColorName(ColorOption.OFF);
+        RightLED.SetColorName(ColorOption.OFF);
 
         while (System.currentTimeMillis() < EndTime) {
             for (ColorLED[] Step : Sequence) {
-                //Turn all LEDs off
-                LeftLED.SetColorName(ColorOption.OFF);
-                LauncherLED.SetColorName(ColorOption.OFF);
-                RightLED.SetColorName(ColorOption.OFF);
-
                 //Turn current step LED on
                 for (ColorLED LED : Step) {
                     if (Objects.equals(AllianceColor.toLowerCase(), "red")) {
@@ -312,7 +287,7 @@ public class IndianaAuton extends IndianaChassis {
             }
         }
 
-        // Clear all LEDs at the end
+        //Clear all LEDs at the end
         LeftLED.SetColorName(ColorOption.OFF);
         LauncherLED.SetColorName(ColorOption.OFF);
         RightLED.SetColorName(ColorOption.OFF);
@@ -320,7 +295,7 @@ public class IndianaAuton extends IndianaChassis {
 
     public void CodeDebugger(String message)
     {
-        if(debugMode) {
+        if (debugMode) {
             myOpMode.telemetry.addData("Debugger: ", message);
             myOpMode.telemetry.update();
         }
