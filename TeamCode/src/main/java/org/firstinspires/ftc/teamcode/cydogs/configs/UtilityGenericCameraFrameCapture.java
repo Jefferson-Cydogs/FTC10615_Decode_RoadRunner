@@ -96,6 +96,7 @@ public class UtilityGenericCameraFrameCapture extends LinearOpMode
         }
         sleep(1500);
 
+        waitForStart();
         while (opModeIsActive())
         {
             boolean x = gamepad1.x;
