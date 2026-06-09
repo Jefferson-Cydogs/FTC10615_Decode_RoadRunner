@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.cydogs.learning;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -21,6 +22,7 @@ import java.util.List;
  *
  */
 @TeleOp(name = "AprilTag Face Align", group = "Vision")
+@Disabled
 public class AprilTagAlign extends LinearOpMode {
 
     // ── Target tag ────────────────────────────────────────────────────────────
