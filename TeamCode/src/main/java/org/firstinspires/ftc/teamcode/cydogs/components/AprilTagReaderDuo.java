@@ -1,5 +1,7 @@
 package org.firstinspires.ftc.teamcode.cydogs.components;
 
+import android.util.Size;
+
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -15,18 +17,19 @@ import java.util.List;
 import java.util.Objects;
 
 public class AprilTagReaderDuo {
-    private String Obelisk;
+    //private String Obelisk;
     private  LinearOpMode opMode;
     private  AprilTagProcessor aprilTag;
     private  VisionPortal visionPortal;
     private String team;
-    private int leftMost=0;
-    private int rightMost=0;
+    //private int leftMost=0;
+    //private int rightMost=0;
     private static final boolean USE_WEBCAM = true;
+    private static final int RESOLUTION_WIDTH = 1280;
+    private static final int RESOLUTION_HEIGHT = 720;
     public int AprilTagId;
 
     public AprilTagDetection CurrentScoringTag;
-
 
 
     public AprilTagReaderDuo(LinearOpMode opModeIn, String TeamIn)
@@ -34,12 +37,15 @@ public class AprilTagReaderDuo {
         opMode = opModeIn;
         team=TeamIn;
     }
-    public void initAprilTag() {
 
+    public void initAprilTag()
+    {
         if (visionPortal != null) return; // Already initialized
 
         // Create the AprilTag processor.
-        aprilTag = new AprilTagProcessor.Builder().build();
+        aprilTag = new AprilTagProcessor.Builder()
+                //.setLensIntrinsics(fx, fy, cx, cy) //Specific to each webcam, parameters calculated from multiple pictures of a standard chessboard
+                .build();
 
         // Create the vision portal by using a builder.
         VisionPortal.Builder builder = new VisionPortal.Builder().addProcessor(aprilTag);
@@ -47,16 +53,18 @@ public class AprilTagReaderDuo {
         // Set the camera (webcam vs. built-in RC phone camera).
         if (USE_WEBCAM) {
             builder.setCamera(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"));
+            builder.setCameraResolution(new Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
         } else {
             builder.setCamera(BuiltinCameraDirection.BACK);
+            builder.setCameraResolution(new Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
         }
 
         // Build the Vision Portal, using the above settings.
         visionPortal = builder.build();
-
     }
 
-    public String getObelisk() {
+    public String getObelisk()
+    {
         if (aprilTag == null) return "None"; // protect against processor not being initialized
 
         List<AprilTagDetection> detections = aprilTag.getDetections();
@@ -88,7 +96,6 @@ public class AprilTagReaderDuo {
             }
         }
 
-
         if (selectedTag != null) {
             switch (selectedTag.id) {
                 case 21: return "GPP";
@@ -96,45 +103,41 @@ public class AprilTagReaderDuo {
                 case 23: return "PPG";
             }
         }
-
         return "None";
     }
 
-    public AprilTagDetection GetScoringTag(String team){
+    public AprilTagDetection GetScoringTag(String team)
+    {
         // need a variable to store target apriltag ID in
 
-        if (Objects.equals(team, "red")){
-            // set target ID to be correct number
+        if (Objects.equals(team, "red")) { // set Goal ID to the correct number
             AprilTagId=24;
         } else if (Objects.equals(team, "blue")) {
             AprilTagId=20;
         }
-        // else set it to the other number
 
         if (aprilTag == null) return null; // protect against processor not being initialized
 
         List<AprilTagDetection> AprilTagList = aprilTag.getDetections();
-        if(AprilTagList==null )
-        {
+        if(AprilTagList==null) {
             opMode.telemetry.addLine("No april tags found");
             return null;
         }
         displayDetections(AprilTagList);
         // create a variable to store a list of detections
         // call GetDetections to return a list of april tags found
-        // call display detections to write them to the telemtry
-
+        // call display detections to write them to the telemetry
         for (AprilTagDetection detection : AprilTagList) {
             if (detection.metadata == null) continue;
 
-            if (detection.id==AprilTagId){
+            if (detection.id==AprilTagId) {
                 return detection;
             }
             // check to see if current detection is the correct ID
             // if so, return it
-
         }
-       return null; // if my code makes it here, I didn't find the right one.  return null;
+
+       return null; // if my code makes it here, I didn't find the right one; return null
     }
 
     public List<AprilTagDetection> GetDetections()
@@ -142,19 +145,18 @@ public class AprilTagReaderDuo {
         if (aprilTag == null) return null; // protect against processor not being initialized
 
         List<AprilTagDetection> detections = aprilTag.getDetections();
-        if(detections==null )
-        {
+        if(detections==null) {
             opMode.telemetry.addLine("No april tags found");
             return null;
         }
         opMode.telemetry.addData("# AprilTags Detected", detections.size());
+
         return detections;
     }
 
     public void displayDetections(List<AprilTagDetection> detections)
     {
-        if(detections==null )
-        {
+        if (detections==null) {
             opMode.telemetry.addLine("No april tags found");
             return;
         }
@@ -171,16 +173,16 @@ public class AprilTagReaderDuo {
         }   // end for() loop
     }
 
-    public void turnToFaceAprilTagTeleop(IndianaChassis indiana, String team, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker) {
+    public void turnToFaceAprilTagTeleop(IndianaChassis indiana, String team, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker)
+    {
         // Get the yaw angle to the tag in degrees.
         AprilTagDetection scoringTag = GetScoringTag(team);
-        if(scoringTag == null) return;
+        if (scoringTag == null) return;
 
         CurrentScoringTag = scoringTag;
 
         double bearing = scoringTag.ftcPose.bearing;
         opMode.telemetry.addData("Bearing:", bearing);
-
 
         // Turn until facing the tag (yaw ≈ 0)
         while (Math.abs(bearing) > angleThresholdDeg) {
@@ -194,10 +196,8 @@ public class AprilTagReaderDuo {
                 indiana.setTurnPower(-turnPower);
             }
 
-
             scoringTag = GetScoringTag(team);
-            if(scoringTag == null)
-            {
+            if (scoringTag == null) {
                 indiana.stopMotors();
                 return;
             }
@@ -206,22 +206,20 @@ public class AprilTagReaderDuo {
 
         // Stop the robot
         indiana.stopMotors();
-
     }
-    public void turnToFaceAprilTagAuton(IndianaChassis indiana, String team, double angleAdjustment, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker) {
+
+    public void turnToFaceAprilTagAuton(IndianaChassis indiana, String team, double angleAdjustment, double turnPower, double angleThresholdDeg, ElapsedTime currentTimer, EventTracker eventTracker)
+    {
         // Get the yaw angle to the tag in degrees.
         AprilTagDetection scoringTag = GetScoringTag(team);
-        if(scoringTag == null) return;
+        if (scoringTag == null) return;
 
         CurrentScoringTag = scoringTag;
 
         double bearing = scoringTag.ftcPose.bearing;
         opMode.telemetry.addData("Bearing:", bearing);
 
-
         indiana.RotateLeft(bearing+angleAdjustment,.3,100);
-
     }
-
 
 }
