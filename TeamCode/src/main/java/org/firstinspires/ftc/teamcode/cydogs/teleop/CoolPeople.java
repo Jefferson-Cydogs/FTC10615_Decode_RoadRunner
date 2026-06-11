@@ -85,9 +85,10 @@ public class CoolPeople extends LinearOpMode {
             if (eventTracker.doEvent("CheckArtifacts", currentTimer.seconds(), 0.5)) {
                 ArtifactsInsideRobot = artifactSensors.CheckArtifactsColorAndCount(matchTimer.seconds());
                 if (ArtifactsInsideRobot > 3) {
-                    ArtifactEater.turnIntakeOff();
+                    if (ArtifactEater.isIntakeOn())
+                        ArtifactEater.turnIntakeOff();
                     ArtifactEater.reverseIntake();
-                    sleep(50);
+                    sleep(150);
                     ArtifactEater.turnIntakeOff();
                 }
             }

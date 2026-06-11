@@ -48,4 +48,6 @@ public class Intake
         intake.setPower(0);
     }
 
+    public boolean isIntakeOn () { return intake.getPower()>0; }
+
 }
