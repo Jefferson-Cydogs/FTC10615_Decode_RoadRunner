@@ -33,9 +33,6 @@
 
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
-import android.util.Size;
-
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -60,7 +57,7 @@ import java.util.Locale;
  */
 
 @TeleOp(name = "Utility: Camera Frame Capture", group = "Utility")
-public class UtilityGenericCameraFrameCapture extends LinearOpMode
+public class UtilityGenericCameraFrameCapture_Init extends LinearOpMode
 {
     /*
      * EDIT THESE PARAMETERS AS NEEDED
@@ -94,38 +91,64 @@ public class UtilityGenericCameraFrameCapture extends LinearOpMode
                     //.setCameraResolution(new Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT))
                     .build();
         }
-        sleep(1500);
-        portal.resumeStreaming();
+        sleep(1000);
 
-        waitForStart();
-        while (opModeIsActive())
+        telemetry.addLine("Camera initializing...");
+        telemetry.update();
+
+        // Wait for camera to actually start streaming
+        while (!isStopRequested()
+                && portal.getCameraState() != VisionPortal.CameraState.STREAMING)
+        {
+            telemetry.addData("Camera State", portal.getCameraState());
+            telemetry.update();
+            sleep(50);
+        }
+
+        telemetry.addLine("Camera ready.");
+        telemetry.addLine("Move checkerboard while watching preview.");
+        telemetry.addLine("Press X to capture images.");
+        telemetry.addLine("Press STOP when done.");
+        telemetry.update();
+
+        // IMPORTANT: do NOT use waitForStart()
+
+        while (!isStopRequested())
         {
             boolean x = gamepad1.x;
 
             if (x && !lastX)
             {
-                portal.saveNextFrameRaw(String.format(Locale.US, "CameraFrameCapture-%06d", frameCount++));
+                portal.saveNextFrameRaw(
+                        String.format(Locale.US,
+                                "CameraFrameCapture-%06d",
+                                frameCount++)
+                );
+
                 capReqTime = System.currentTimeMillis();
             }
 
             lastX = x;
 
-            telemetry.addLine("######## Camera Capture Utility ########");
-            //telemetry.addLine(String.format(Locale.US, " > Resolution: %dx%d", RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
-            telemetry.addLine(" > Press X (or Square) to capture a frame");
-            telemetry.addData(" > Camera Status", portal.getCameraState());
+            telemetry.addLine("=== Calibration Capture Mode ===");
+            telemetry.addData("Camera State", portal.getCameraState());
+            telemetry.addData("Frames saved", frameCount);
+            telemetry.addLine("Press X to capture frame");
 
             if (capReqTime != 0)
             {
-                telemetry.addLine("\nCaptured Frame!");
-            }
-
-            if (capReqTime != 0 && System.currentTimeMillis() - capReqTime > 1000)
-            {
-                capReqTime = 0;
+                telemetry.addLine("Captured frame!");
+                if (System.currentTimeMillis() - capReqTime > 1000)
+                {
+                    capReqTime = 0;
+                }
             }
 
             telemetry.update();
+            sleep(20);
         }
+
+        portal.close();
     }
 }
+
