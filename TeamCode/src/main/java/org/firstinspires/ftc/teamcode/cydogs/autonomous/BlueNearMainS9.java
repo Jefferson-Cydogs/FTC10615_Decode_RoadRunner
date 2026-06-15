@@ -75,7 +75,7 @@ public class BlueNearMainS9 extends LinearOpMode {
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
             // was 820
-            indiana.StrafeLeft(790, .7, 100);
+            indiana.StrafeLeft(810, .7, 100);
 
             // we don't care what color the artifacts are at this point
             GetLastThreeArtifacts();

@@ -45,7 +45,7 @@ public class IndianaAutonRed extends IndianaAuton {
 
         // #GatesClosed
         // was .45
-        StrafeRight(274, .5, 100);
+        StrafeRight(279, .5, 100);
         Gates.CloseBothGates();
 
         RedAllianceNearPurplePurpleGreen();

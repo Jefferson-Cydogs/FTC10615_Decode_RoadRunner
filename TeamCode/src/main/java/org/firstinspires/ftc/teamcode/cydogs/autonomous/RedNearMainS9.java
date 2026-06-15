@@ -71,7 +71,7 @@ public class RedNearMainS9 extends LinearOpMode {
             lastShotVelocity = 0.475;
             indiana.Launchers.RunAtVelocity(lastShotVelocity);
 
-            indiana.StrafeRight(980, .55, 100);
+            indiana.StrafeRight(990, .55, 100);
 
             // we don't care what color the artifacts are at this point
             GetLastThreeArtifacts();
