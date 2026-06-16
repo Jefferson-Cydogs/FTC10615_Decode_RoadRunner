@@ -33,6 +33,7 @@
 
 package org.firstinspires.ftc.teamcode.cydogs.configs;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -57,6 +58,7 @@ import java.util.Locale;
  */
 
 @TeleOp(name = "Utility: Camera Frame Capture Init", group = "Utility")
+@Disabled
 public class UtilityGenericCameraFrameCapture_Init extends LinearOpMode
 {
     /*
