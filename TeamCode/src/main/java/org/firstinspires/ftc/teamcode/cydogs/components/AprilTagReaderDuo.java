@@ -18,15 +18,15 @@ import java.util.Objects;
 
 public class AprilTagReaderDuo {
     //private String Obelisk;
-    private  LinearOpMode opMode;
-    private  AprilTagProcessor aprilTag;
-    private  VisionPortal visionPortal;
+    private LinearOpMode opMode;
+    private AprilTagProcessor aprilTag;
+    private VisionPortal visionPortal;
     private String team;
     //private int leftMost=0;
     //private int rightMost=0;
     private static final boolean USE_WEBCAM = true;
-    //private static final int RESOLUTION_WIDTH = 1280;
-    //private static final int RESOLUTION_HEIGHT = 720;
+    private static final int RESOLUTION_WIDTH = 640; //Default FTC resolution
+    private static final int RESOLUTION_HEIGHT = 480; //Default FTC resolution
     public int AprilTagId;
 
     public AprilTagDetection CurrentScoringTag;
@@ -44,7 +44,8 @@ public class AprilTagReaderDuo {
 
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
-                //.setLensIntrinsics(fx, fy, cx, cy) //Specific to each webcam, parameters calculated from multiple pictures of a standard chessboard
+                //.setLensIntrinsics(fx, fy, cx, cy) //Specific to each webcam, parameters calculated from multiple captures of a standard chessboard
+                .setLensIntrinsics(1229.89, 1229.89, 229.651, 83.679) //generated for our B.W.T.LINK HD-100 HD 720p Mini USB web camera
                 .build();
 
         // Create the vision portal by using a builder.
@@ -53,10 +54,10 @@ public class AprilTagReaderDuo {
         // Set the camera (webcam vs. built-in RC phone camera).
         if (USE_WEBCAM) {
             builder.setCamera(opMode.hardwareMap.get(WebcamName.class, "Webcam 1"));
-            //builder.setCameraResolution(new Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
+            builder.setCameraResolution(new Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
         } else {
             builder.setCamera(BuiltinCameraDirection.BACK);
-            //builder.setCameraResolution(new Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
+            builder.setCameraResolution(new Size(RESOLUTION_WIDTH, RESOLUTION_HEIGHT));
         }
 
         // Build the Vision Portal, using the above settings.
