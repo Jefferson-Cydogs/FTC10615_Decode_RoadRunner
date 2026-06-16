@@ -7,8 +7,8 @@ import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 
 
 public class ParkingSensors {
-    public String LeftSquareColor;
-    public String BackSquareColor;
+    public String SquareLeftColor;
+    public String SquareBackColor;
     private ColorFinder LeftParkingSensor;
     private ColorFinder BackParkingSensor;
     private ColorLED LeftLED;
@@ -29,38 +29,43 @@ public class ParkingSensors {
         RightLED = new ColorLED(opMode,"RightLED");
     }
 
-    public void CheckSensors()
+    public boolean TouchingRearTape()
     {
-        if (LeftParkingSensor.SeeSquareColor(TargetColor.RED)) {
-            LeftSquareColor = "Red";
+        if (BackParkingSensor.SeeSquareColor(TargetColor.RED)) {
+            SquareBackColor = "Red";
             CenterLED.SetColorName(ColorOption.RED);
         }
-        else if (LeftParkingSensor.SeeSquareColor(TargetColor.BLUE)) {
-            LeftSquareColor = "Blue";
+        else if (BackParkingSensor.SeeSquareColor(TargetColor.BLUE)) {
+            SquareBackColor = "Blue";
             CenterLED.SetColorName(ColorOption.BLUE);
         }
         else {
-            LeftSquareColor = "Nothing";
+            SquareBackColor = "Nothing";
             CenterLED.SetColorName(ColorOption.OFF);
         }
-        myOpMode.telemetry.addData("Left Square Color:", LeftSquareColor);
+        //myOpMode.telemetry.addData("Square Back Color:", SquareBackColor);
+        return (SquareBackColor.equals("Red")) || (SquareBackColor.equals("Blue"));
+    }
 
-        if (BackParkingSensor.SeeSquareColor(TargetColor.RED)) {
-            BackSquareColor = "Red";
+    public boolean TouchingLeftTape()
+    {
+        if (LeftParkingSensor.SeeSquareColor(TargetColor.RED)) {
+            SquareLeftColor = "Red";
             LeftLED.SetColorName(ColorOption.RED);
             RightLED.SetColorName(ColorOption.RED);
         }
-        else if (BackParkingSensor.SeeSquareColor(TargetColor.BLUE)) {
-            BackSquareColor = "Blue";
+        else if (LeftParkingSensor.SeeSquareColor(TargetColor.BLUE)) {
+            SquareLeftColor = "Blue";
             LeftLED.SetColorName(ColorOption.BLUE);
             RightLED.SetColorName(ColorOption.BLUE);
         }
         else {
-            BackSquareColor = "Nothing";
+            SquareLeftColor = "Nothing";
             LeftLED.SetColorName(ColorOption.OFF);
             RightLED.SetColorName(ColorOption.OFF);
         }
-        myOpMode.telemetry.addData("Back Square Color:", BackSquareColor);
+        //myOpMode.telemetry.addData("Square Left Color:", SquareLeftColor);
+        return (SquareLeftColor.equals("Red")) || (SquareLeftColor.equals("Blue"));
     }
 
 }
