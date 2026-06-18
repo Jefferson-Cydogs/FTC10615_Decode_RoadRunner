@@ -7,15 +7,14 @@ import org.firstinspires.ftc.teamcode.cydogs.core.TargetColor;
 
 
 public class ParkingSensors {
-    public String SquareLeftColor;
-    public String SquareBackColor;
     private ColorFinder LeftParkingSensor;
     private ColorFinder BackParkingSensor;
     private ColorLED LeftLED;
     private ColorLED CenterLED;
     private ColorLED RightLED;
     private LinearOpMode myOpMode;
-
+    public String SquareLeftColor;
+    public String SquareBackColor;
 
     public ParkingSensors(LinearOpMode opMode)
     {
