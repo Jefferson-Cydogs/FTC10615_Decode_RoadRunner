@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.cydogs.components.ParkingSensors;
+
 
 public class IndianaChassis {
     public DcMotor FrontLeftWheel;
@@ -48,6 +50,7 @@ public class IndianaChassis {
     private final double mmPer90DegreesRotation=785;
     private final double strafeCompensation = 1.081;
     //public static final int OneTileMM = 610;
+    private ParkingSensors parkingSensors;
 
     /** This is the constructor for the class.  It takes a parameter for currentOp, which allows
         it to store and use the current op mode.  The four wheels' direction is initialized here. */
@@ -70,6 +73,8 @@ public class IndianaChassis {
         //FrontRightWheel.setDirection(DcMotor.Direction.FORWARD); * not needed as FORWARD is default
         //BackLeftWheel.setDirection(DcMotor.Direction.FORWARD); * not needed as FORWARD is default
         BackRightWheel.setDirection(DcMotor.Direction.REVERSE);
+
+        parkingSensors = new ParkingSensors(myOpMode);
     }
 
     public void InitializeChassisTeleop(double highSpeed, double lowSpeed, double rotateSpeed)
@@ -169,8 +174,7 @@ public class IndianaChassis {
             FrontRightWheel.setPower(FastStraight + Straight - FastStrafe - Strafe - Rotate);
             BackLeftWheel.setPower(FastStraight + Straight - FastStrafe - Strafe + Rotate);
             BackRightWheel.setPower(FastStraight + Straight + FastStrafe + Strafe - Rotate);
-        }
-        else {
+        } else {
             // Stop all motors if their controls are not touched
             FrontLeftWheel.setPower(0);
             FrontRightWheel.setPower(0);
@@ -188,11 +192,9 @@ public class IndianaChassis {
         TriggersValue = myOpMode.gamepad1.right_trigger - myOpMode.gamepad1.left_trigger;
         if (myOpMode.gamepad1.right_bumper) {
             BumpersValue = rotateLowSpeedDrive;
-        }
-        else if (myOpMode.gamepad1.left_bumper) {
+        } else if (myOpMode.gamepad1.left_bumper) {
             BumpersValue = -rotateLowSpeedDrive;
-        }
-        else {
+        } else {
             BumpersValue = 0;
         }
 
@@ -322,6 +324,22 @@ public class IndianaChassis {
         RotateLeft(-1*degree, VelocityPercentage, WaitTime);
     }
 
+    public void setStraightPower(double power)
+    {
+        FrontLeftWheel.setPower(power);
+        FrontRightWheel.setPower(power);
+        BackLeftWheel.setPower(power);
+        BackRightWheel.setPower(power);
+    }
+
+    public void setStrafePower(double power)
+    {
+        FrontLeftWheel.setPower(power);
+        FrontRightWheel.setPower(-power);
+        BackLeftWheel.setPower(-power);
+        BackRightWheel.setPower(power);
+    }
+
     public void setTurnPower(double power)
     {
         FrontLeftWheel.setPower(-power);
@@ -330,13 +348,44 @@ public class IndianaChassis {
         BackRightWheel.setPower(power);
     }
 
-    // Stop all motors
-    public void stopMotors()
+    public void stopMotors() // Stop all motors
     {
         FrontLeftWheel.setPower(0);
         FrontRightWheel.setPower(0);
         BackLeftWheel.setPower(0);
         BackRightWheel.setPower(0);
+    }
+
+    public void ParkInsideSquare()
+    {
+        stopMotors();
+
+        FrontLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        FrontRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackLeftWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        BackRightWheel.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        //Reverse until seeing the tape
+        setStraightPower(-0.25);
+        while (!parkingSensors.TouchingRearTape()) {
+            // just wait for rear tape
+        }
+        stopMotors();
+        // small forward safety buffer (fully inside square)
+        setStraightPower(0.2);
+        myOpMode.sleep(200);
+        stopMotors();
+
+        //Strafe left until seeing the tape
+        setStrafePower(-0.25);
+        while (!parkingSensors.TouchingLeftTape()) {
+            // just wait for left tape
+        }
+        stopMotors();
+        // small strafe right buffer inward
+        setStrafePower(0.2);
+        myOpMode.sleep(200);
+        stopMotors();
     }
 
 }

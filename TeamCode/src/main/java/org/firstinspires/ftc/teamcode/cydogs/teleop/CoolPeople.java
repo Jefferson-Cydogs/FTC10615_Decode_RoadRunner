@@ -117,7 +117,8 @@ public class CoolPeople extends LinearOpMode {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocityPercent);
         } else if (gamepad1.dpadDownWasPressed()) {
             if (110 < matchTimer.seconds()) { //Only switch wheels to BRAKE mode in the last 10 seconds of the match
-                Wheels.ChassisTeleopBrakeWheels();
+                //Wheels.ChassisTeleopBrakeWheels();
+                Wheels.ParkInsideSquare();
             }
         }
         //else if (gamepad1.dpadUpWasPressed()) {
