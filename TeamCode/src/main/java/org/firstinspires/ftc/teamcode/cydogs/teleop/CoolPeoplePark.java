@@ -17,7 +17,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
 @TeleOp(name="Cool People TeleOp", group= "TeleOp")
-public class CoolPeople extends LinearOpMode {
+public class CoolPeoplePark extends LinearOpMode {
 
     /** declare variables here */
     private IndianaChassis Wheels;
@@ -116,8 +116,8 @@ public class CoolPeople extends LinearOpMode {
             RocketLauncher3000.RunAtVelocity(TargetLauncherVelocityPercent);
         } else if (gamepad1.dpadDownWasPressed()) {
             if (110 < matchTimer.seconds()) { //Only switch wheels to BRAKE mode in the last 10 seconds of the match
-                Wheels.ChassisTeleopBrakeWheels();
-                //Wheels.ParkInsideSquare();
+                //Wheels.ChassisTeleopBrakeWheels();
+                Wheels.ParkInsideSquare();
             }
         }
         //else if (gamepad1.dpadUpWasPressed()) {
