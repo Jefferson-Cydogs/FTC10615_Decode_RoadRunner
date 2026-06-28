@@ -17,7 +17,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class RedLongMainS5 extends LinearOpMode {
 
     // declare variables
-    private double velocityPercentage = 0.655;
+    private double velocityPercentage = 0.653;
 
     private IndianaAutonRed indiana;
 
@@ -74,7 +74,7 @@ public class RedLongMainS5 extends LinearOpMode {
             indiana.Gates.CloseBothGates();
 
             // go get wall side
-            indiana.RotateRight(50, .5, 100);
+            indiana.RotateRight(47, .5, 100);
             indiana.StrafeRight(150, .5, 100);
             indiana.Intake.turnIntakeOn();
             indiana.Feeders.ActivateLeftBumper();
@@ -92,7 +92,7 @@ public class RedLongMainS5 extends LinearOpMode {
             indiana.CodeDebugger("g");
             indiana.Launchers.RunAtVelocity(velocityPercentage);
             indiana.CodeDebugger("h");
-            indiana.RotateLeft(10, .5, 100);
+            indiana.RotateLeft(6, .5, 100); // It was 10
             indiana.MoveStraight(-1100, .5, 100);
             indiana.CodeDebugger("i");
             indiana.RotateLeft(63, .5, 100);
@@ -100,7 +100,7 @@ public class RedLongMainS5 extends LinearOpMode {
             indiana.MoveStraight(120,0.5,100);
             indiana.CodeDebugger("k");
             indiana.ReverseFeeders(150);
-            indiana.RotateRight(13,0.5,100);
+            indiana.RotateRight(11,0.5,100); //Was 13
             // need to open gates
             indiana.Gates.OpenBothGates();
             // #GatesOpen

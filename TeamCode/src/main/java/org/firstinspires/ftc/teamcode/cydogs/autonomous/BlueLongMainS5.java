@@ -89,10 +89,10 @@ public class BlueLongMainS5 extends LinearOpMode {
             indiana.CodeDebugger("g");
             indiana.Launchers.RunAtVelocity(velocityPercentage);
             indiana.CodeDebugger("h");
-            indiana.RotateRight(10, .5, 100);
-            indiana.MoveStraight(-1180, .5, 100);
+            indiana.RotateRight(8, .5, 100);
+            indiana.MoveStraight(-1170, .5, 100);
             indiana.CodeDebugger("i");
-            indiana.RotateRight(70, .5, 100);
+            indiana.RotateRight(65, .5, 100);
             indiana.CodeDebugger("j");
             indiana.MoveStraight(120,0.5,100);
             indiana.CodeDebugger("k");

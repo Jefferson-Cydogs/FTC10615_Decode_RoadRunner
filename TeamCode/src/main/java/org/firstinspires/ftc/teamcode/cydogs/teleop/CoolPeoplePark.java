@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.cydogs.teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -16,7 +17,8 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 
-@TeleOp(name="Cool People TeleOp", group= "TeleOp")
+@TeleOp(name="Cool People TeleOp Park", group= "TeleOp")
+@Disabled
 public class CoolPeoplePark extends LinearOpMode {
 
     /** declare variables here */

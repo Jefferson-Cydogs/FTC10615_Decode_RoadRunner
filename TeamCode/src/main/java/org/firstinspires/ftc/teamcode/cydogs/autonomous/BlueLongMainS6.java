@@ -16,7 +16,7 @@ import org.firstinspires.ftc.teamcode.cydogs.core.EventTracker;
 public class BlueLongMainS6 extends LinearOpMode {
 
     // declare variables
-    private double velocityPercentage = 0.66;
+    private double velocityPercentage = 0.64;
 
     private IndianaAutonBlue indiana;
 
@@ -69,7 +69,7 @@ public class BlueLongMainS6 extends LinearOpMode {
             // needs this sleep or robot starts moving while taking last shot
             sleep(300);
 
-            indiana.MoveStraight(415,0.5,200);
+            indiana.MoveStraight(400,0.5,200); //used to be 415
 
             indiana.Gates.CloseBothGates();
 
@@ -84,9 +84,9 @@ public class BlueLongMainS6 extends LinearOpMode {
 
             indiana.ReverseFeeders(150);
 
-            indiana.RotateRight(46, 4, 200);
+            indiana.RotateRight(43, 4, 200);
 
-            velocityPercentage = 0.66;
+            velocityPercentage = 0.64;
 
             indiana.Launchers.RunAtVelocity(velocityPercentage);
 
