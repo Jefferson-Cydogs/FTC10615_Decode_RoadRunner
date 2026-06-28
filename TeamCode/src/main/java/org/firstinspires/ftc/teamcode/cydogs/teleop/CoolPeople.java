@@ -31,10 +31,8 @@ public class CoolPeople extends LinearOpMode {
     private ColorLED LeftChannelLED;
     private ColorLED RightChannelLED;
 
-    //48% launcher from top of short distance
-    //64% launcher velocity from long distance
-    private final double NearLauncherVelocityPercent = 0.48;
-    private final double FarLauncherVelocityPercent = 0.64;
+    private final double NearLauncherVelocityPercent = 0.48; //48% launcher from top of short distance
+    private final double FarLauncherVelocityPercent = 0.64; //64% launcher velocity from long distance
     private double TargetLauncherVelocityPercent = NearLauncherVelocityPercent;
     private int ArtifactsInsideRobot = 0;
 
@@ -83,8 +81,8 @@ public class CoolPeople extends LinearOpMode {
 
             if (eventTracker.doEvent("CheckArtifacts", currentTimer.seconds(), 0.5)) {
                 ArtifactsInsideRobot = artifactSensors.CheckArtifactsColorAndCount(matchTimer.seconds());
-                if (ArtifactsInsideRobot > 3) {
-                    if (ArtifactEater.isIntakeOn())
+                if (ArtifactsInsideRobot > 3) { //If 4 Artifacts are detected, eject both at the Intake (can't eject just one)
+                    if (ArtifactEater.isIntakeOn()) //If Intake is moving, stop it before reversing (to protect Servos)
                         ArtifactEater.turnIntakeOff();
                     ArtifactEater.reverseIntake();
                     sleep(150);
@@ -193,7 +191,6 @@ public class CoolPeople extends LinearOpMode {
         LeftChannelLED = new ColorLED(this,"LeftLED");
         RightChannelLED = new ColorLED(this,"RightLED");
         artifactSensors = new ArtifactSensors(this);
-        //parkingSensors = new ParkingSensors (this);
         //tagReader = new AprilTagReaderDuo(this, "Red");
     }
 
